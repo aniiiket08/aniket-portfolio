@@ -19,7 +19,7 @@ const certificateCatalog = [
   ["Forage Deloitte Australia Data Analytics.pdf", "Deloitte Australia Data Analytics", "Forage"],
   ["Infosys DEVOPS.pdf", "DevOps Mindset", "Infosys"],
   ["Infosys JENKIN.pdf", "Jenkins for DevOps", "Infosys"],
-  ["SGCNSP 2025 Presentation Certificate.pdf", "SCGNSP 2025 – Presentation Certificate", "SCGNSP 2025"],
+  ["SGCNSP 2025 Presentation Certificate.pdf", "SCGNSP 2025 - Presentation Certificate", "SCGNSP 2025"],
   ["NABH Certificate.pdf", "Digital Health", "NABH"],
   ["PrepInsta CN.pdf", "Computer Networks", "PrepInsta"],
   ["PrepInsta CPP.pdf", "C++", "PrepInsta"],
@@ -67,13 +67,19 @@ export default function Certificates() {
       className="section-rule py-16 md:py-24 border-t border-border/40"
     >
       <div className="max-w-[1100px] mx-auto px-6">
-        {/* Section Heading — consistent typography system */}
+        {/* Section Heading - consistent typography system */}
         <div className="mb-10 md:mb-14">
+          <div className="flex items-center gap-3 font-eyebrow mb-3">
+            <span className="h-px w-8 bg-accent-soft" />
+            <span className="josefin-sans-2 text-xs uppercase tracking-[0.2em] text-accent-soft">
+              CREDENTIALS &amp; CERTIFICATIONS
+            </span>
+          </div>
           <h2 className="h-section text-[clamp(1.75rem,4vw,3rem)]">
-            Certifications &amp; Credentials
+            Certificates
           </h2>
           <p className="josefin-sans-1 text-subheading mt-2.5 max-w-xl">
-            Verified certifications, academic credentials, and technical achievements.
+            Course certifications, technical training, and academic credentials.
           </p>
         </div>
 

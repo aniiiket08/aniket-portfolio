@@ -64,8 +64,8 @@ export default function Hero() {
           >
             {/* 1. Restrained Uppercase Availability Badge */}
             <div className="mb-5">
-              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-border/80 bg-[var(--surface-soft)] backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#A78BFA] shadow-[0_0_10px_rgba(167,139,250,0.9)]" />
+              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md border border-border/80 bg-[var(--surface-soft)] backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
                 <span className="josefin-sans-2 text-[10px] font-eyebrow uppercase tracking-[0.22em] text-foreground">
                   AVAILABLE
                 </span>
@@ -90,10 +90,10 @@ export default function Hero() {
                 warpStrength={0.04}
                 warpScale={1.6}
                 speed={0.3}
-                pointerInfluence={0.3}
-                pointerStrength={0.24}
+                pointerInfluence={0}
+                pointerStrength={0}
                 refraction={0.01}
-                ripple={true}
+                ripple={false}
                 className="min-h-[96px] sm:min-h-[120px] md:min-h-[148px] lg:min-h-[175px]"
               />
             </div>
@@ -116,7 +116,7 @@ export default function Hero() {
                 whileHover={{ y: -1 }}
                 whileTap={{ y: 0 }}
                 transition={{ duration: 0.2 }}
-                className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-accent/50 bg-transparent text-foreground font-medium text-sm hover:border-accent hover:text-accent-soft hover:shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-200"
+                className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-accent/50 bg-transparent text-foreground font-medium text-sm hover:border-accent hover:text-accent-soft transition-all duration-200"
               >
                 <span>Get in touch</span>
                 <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
@@ -156,13 +156,13 @@ export default function Hero() {
                 className="w-72 h-72 rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(109,40,217,0.22) 0%, rgba(53,21,85,0.08) 55%, transparent 72%)",
+                    "radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 55%, transparent 72%)",
                   filter: "blur(48px)",
                 }}
               />
             </div>
 
-            {/* Lanyard container — canvas fills the right column, band anchor maps
+            {/* Lanyard container - canvas fills the right column, band anchor maps
               to above the visible area, card hangs naturally in the mid section */}
             <div
               className="w-full flex items-start justify-center"
@@ -211,10 +211,10 @@ export default function Hero() {
             warpStrength={0.04}
             warpScale={1.6}
             speed={0.32}
-            pointerInfluence={0.3}
-            pointerStrength={0.24}
+            pointerInfluence={0}
+            pointerStrength={0}
             refraction={0.01}
-            ripple={true}
+            ripple={false}
             className="min-h-[130px] sm:min-h-[150px] md:min-h-[180px]"
           />
         </motion.div>

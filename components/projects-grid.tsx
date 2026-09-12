@@ -27,33 +27,33 @@ export default function ProjectsGrid() {
       number: "01",
       category: "RF SIGNAL PROCESSING & SDR",
       title: "3D Wi-Fi Based Floor Localization System",
-      image: "/projects/wifi-localization.png",
+      image: "/projects/wifi-localization.webp",
       description:
         "Indoor floor localization system using Wi-Fi RSSI fingerprinting with a USRP B210 SDR and a 1D CNN, achieving 93.34% validation accuracy. Published at IEEE ICONAT 2026.",
       tags: ["Python", "SDR", "Deep Learning", "CNN"],
-      githubUrl: "https://github.com/githubaniket08/indoor-floor-prediction-wifi-sdr",
+      githubUrl: "https://github.com/aniiiket08/indoor-floor-prediction-wifi-sdr",
       visualAlign: "right",
     },
     {
       number: "02",
       category: "EDGE AI & MEDICAL HISTOPATHOLOGY",
       title: "Automated Prostate Cancer Detection",
-      image: "/projects/prostate-detection.png",
+      image: "/projects/prostate-detection.webp",
       description:
         "Edge-optimized prostate cancer detection pipeline from histopathology images using MobileNetV3 and XGBoost, achieving 84.37% accuracy and 0.9243 ROC-AUC on the SICAPv2 dataset. Presented at SGCNSP 2025, Singapore.",
       tags: ["MobileNetV3", "XGBoost", "Medical Imaging", "Edge AI"],
-      githubUrl: "https://github.com/githubaniket08/automated-prostate-cancer-detection",
+      githubUrl: "https://github.com/aniiiket08/automated-prostate-cancer-detection",
       visualAlign: "left",
     },
     {
       number: "03",
       category: "EMBEDDED IOT & BIOMETRICS",
       title: "Smart Wearable Attendance System",
-      image: "/projects/wearable-attendance.png",
+      image: "/projects/wearable-attendance.webp",
       description:
         "ESP32-based wearable for automated attendance using ECG-based authentication and GPS geofencing, with real-time sync to Firebase.",
       tags: ["ESP32", "IoT", "Firebase", "ECG Biometrics"],
-      githubUrl: "https://github.com/githubaniket08/smart-wearable-attendance-esp32",
+      githubUrl: "https://github.com/aniiiket08/smart-wearable-attendance-esp32",
       visualAlign: "right",
     },
   ];
@@ -64,11 +64,11 @@ export default function ProjectsGrid() {
       number: "04",
       category: "COMPUTATIONAL BIOLOGY & DIGITAL TWINS",
       title: "NeuroSleep Digital Twin Platform",
-      image: "/projects/neurosleep-digital-twin.png",
+      image: "/projects/neurosleep-digital-twin.webp",
       description:
         "A multi-scale computational Digital Twin linking cellular metabolic simulation (VCell), a spiking neuronal model, brain connectivity mapping (Cytoscape.js), and ML-based brain-state classification into one interactive dashboard for studying simulated sleep-deprivation effects.",
       tags: ["Python", "React", "VCell", "Cytoscape.js"],
-      githubUrl: "https://github.com/githubaniket08/neurosleep-digital-twin",
+      githubUrl: "https://github.com/aniiiket08/neurosleep-digital-twin",
       visualAlign: "left",
     },
   ];
@@ -94,7 +94,7 @@ export default function ProjectsGrid() {
 
         {/* Vertical Editorial Sequence (Alternating Left/Right) */}
         <div className="space-y-24 md:space-y-36">
-          {featuredProjects.map((project, idx) => {
+          {featuredProjects.map((project) => {
             const isVisualRight = project.visualAlign === "right";
 
             return (
@@ -195,7 +195,7 @@ export default function ProjectsGrid() {
                           src={project.image}
                           alt={project.title}
                           fill
-                          loading="eager"
+                          loading="lazy"
                           sizes="(max-width: 1024px) 100vw, 55vw"
                           className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                         />
@@ -316,7 +316,7 @@ export default function ProjectsGrid() {
                                 src={project.image}
                                 alt={project.title}
                                 fill
-                                loading="eager"
+                                loading="lazy"
                                 sizes="(max-width: 1024px) 100vw, 55vw"
                                 className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                               />
@@ -338,7 +338,7 @@ export default function ProjectsGrid() {
           <button
             type="button"
             onClick={() => setShowAll((prev) => !prev)}
-            className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-xl border border-white/[0.15] bg-[#0B0616]/90 hover:border-accent/70 hover:bg-[#13092A] text-xs sm:text-[13px] font-body font-medium text-foreground transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_34px_rgba(139,92,246,0.5),0_10px_34px_rgba(0,0,0,0.65)] cursor-pointer"
+            className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-xl border border-white/[0.15] bg-[#0B0616]/90 hover:border-accent/70 hover:bg-[#13092A] text-xs sm:text-[13px] font-body font-medium text-foreground transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.8)] cursor-pointer"
           >
             <span>{showAll ? "Show Less" : "View All Projects"}</span>
             <ChevronDown

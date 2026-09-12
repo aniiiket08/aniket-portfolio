@@ -1,19 +1,20 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import {
-  GlobalWorkerOptions,
-  getDocument,
-} from "pdfjs-dist/legacy/build/pdf.mjs";
-import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   ChevronLeft,
   ChevronRight,
   Award,
   X,
   ExternalLink,
+  FileText,
 } from "lucide-react";
+
+const PdfCanvas = dynamic(() => import("./pdf-canvas"), {
+  ssr: false,
+});
 
 export interface CertificateItem {
   id: string;
@@ -28,72 +29,118 @@ interface CertificatesCarouselProps {
   certificates: CertificateItem[];
 }
 
-GlobalWorkerOptions.workerSrc =
-  "https://unpkg.com/pdfjs-dist@6.3.289/build/pdf.worker.min.mjs";
-
-function PdfCanvas({
-  src,
-  className,
-}: {
-  src: string;
-  className?: string;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const loadingTask = getDocument({ url: src });
-
-    loadingTask.promise
-      .then(async (pdf) => {
-        if (cancelled) return;
-        const page = await pdf.getPage(1);
-        if (cancelled || !canvasRef.current) return;
-
-        const viewport = page.getViewport({ scale: 2 });
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        if (!context) return;
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        await page.render({ canvas, canvasContext: context, viewport }).promise;
-      })
-      .catch(() => undefined);
-
-    return () => {
-      cancelled = true;
-      void loadingTask.destroy();
-    };
-  }, [src]);
-
-  return <canvas ref={canvasRef} className={className} aria-label="Certificate" />;
-}
-
 export default function CertificatesCarousel({
   certificates,
 }: CertificatesCarouselProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const lastTriggerRef = useRef<HTMLElement | null>(null);
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pointerRef = useRef<{
-    active: boolean;
-    startX: number;
-    startScrollLeft: number;
-    moved: boolean;
-    target: HTMLElement | null;
-  }>({ active: false, startX: 0, startScrollLeft: 0, moved: false, target: null });
+  const groupWidthRef = useRef<number>(0);
+  const scrollPosRef = useRef<number>(0);
+
+  const isDraggingRef = useRef<boolean>(false);
+  const dragStartRef = useRef<{ startX: number; scrollLeft: number } | null>(null);
+
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
   const [isHoverPaused, setIsHoverPaused] = useState(false);
   const [isInteractionPaused, setIsInteractionPaused] = useState(false);
-  const [animationDirection, setAnimationDirection] = useState<"normal" | "reverse">(
-    "normal"
-  );
+  const [inView, setInView] = useState(true);
 
-  const handleCardClick = (cert: CertificateItem, trigger: HTMLElement) => {
-    if (pointerRef.current.moved) return;
-    lastTriggerRef.current = trigger;
+  // Measure group width and set initial scroll position to middle group
+  const measureGroupWidth = useCallback(() => {
+    if (trackRef.current && trackRef.current.children.length > 0) {
+      const firstGroup = trackRef.current.children[0] as HTMLElement;
+      if (firstGroup) {
+        const width = firstGroup.offsetWidth;
+        if (width > 0) {
+          groupWidthRef.current = width;
+          if (scrollContainerRef.current && scrollContainerRef.current.scrollLeft === 0) {
+            scrollContainerRef.current.scrollLeft = width;
+            scrollPosRef.current = width;
+          }
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    measureGroupWidth();
+    const handleResize = () => measureGroupWidth();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [measureGroupWidth, certificates]);
+
+  // Pause off-screen rendering
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Infinite Auto-Scroll RAF Loop
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let rafId: number;
+    let lastTime = performance.now();
+
+    const loop = (time: number) => {
+      const dt = Math.min((time - lastTime) / 1000, 0.1);
+      lastTime = time;
+
+      const gw = groupWidthRef.current;
+      if (
+        gw > 0 &&
+        !isHoverPaused &&
+        !isInteractionPaused &&
+        !selectedCert &&
+        inView
+      ) {
+        scrollPosRef.current += 38 * dt;
+
+        // Infinite wrap check
+        if (scrollPosRef.current >= 2 * gw) {
+          scrollPosRef.current -= gw;
+        } else if (scrollPosRef.current <= 50) {
+          scrollPosRef.current += gw;
+        }
+
+        container.scrollLeft = scrollPosRef.current;
+      }
+
+      rafId = requestAnimationFrame(loop);
+    };
+
+    rafId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafId);
+  }, [isHoverPaused, isInteractionPaused, selectedCert, inView]);
+
+  // Wrap check on native scroll (touch, wheel, etc.)
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (!container || groupWidthRef.current <= 0) return;
+    const gw = groupWidthRef.current;
+
+    scrollPosRef.current = container.scrollLeft;
+    if (container.scrollLeft >= 2 * gw) {
+      container.scrollLeft -= gw;
+      scrollPosRef.current = container.scrollLeft;
+    } else if (container.scrollLeft <= 50) {
+      container.scrollLeft += gw;
+      scrollPosRef.current = container.scrollLeft;
+    }
+  };
+
+  const openCertificate = (cert: CertificateItem) => {
     setSelectedCert(cert);
   };
 
@@ -104,7 +151,7 @@ export default function CertificatesCarousel({
 
   const resumeAfterInteraction = () => {
     if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    resumeTimerRef.current = setTimeout(() => setIsInteractionPaused(false), 1100);
+    resumeTimerRef.current = setTimeout(() => setIsInteractionPaused(false), 1400);
   };
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
@@ -112,62 +159,47 @@ export default function CertificatesCarousel({
     event.preventDefault();
     pauseForInteraction();
     scrollContainerRef.current.scrollLeft += event.deltaX;
+    scrollPosRef.current = scrollContainerRef.current.scrollLeft;
     resumeAfterInteraction();
   };
 
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse" && event.button !== 0) return;
-    const viewport = event.currentTarget;
-    pointerRef.current = {
-      active: true,
-      startX: event.clientX,
-      startScrollLeft: viewport.scrollLeft,
-      moved: false,
-      target: event.target instanceof HTMLElement ? event.target : null,
+  // Mouse drag handlers that don't block clicks
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0 || !scrollContainerRef.current) return;
+    dragStartRef.current = {
+      startX: e.clientX,
+      scrollLeft: scrollContainerRef.current.scrollLeft,
     };
-    viewport.setPointerCapture(event.pointerId);
+    isDraggingRef.current = false;
     pauseForInteraction();
   };
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const pointer = pointerRef.current;
-    if (!pointer.active) return;
-    const distance = event.clientX - pointer.startX;
-    if (Math.abs(distance) > 5) pointer.moved = true;
-    if (!pointer.moved) return;
-    event.preventDefault();
-    event.currentTarget.scrollLeft = pointer.startScrollLeft - distance;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!dragStartRef.current || !scrollContainerRef.current) return;
+    const dx = e.clientX - dragStartRef.current.startX;
+    if (Math.abs(dx) > 6) {
+      isDraggingRef.current = true;
+    }
+    if (isDraggingRef.current) {
+      scrollContainerRef.current.scrollLeft = dragStartRef.current.scrollLeft - dx;
+      scrollPosRef.current = scrollContainerRef.current.scrollLeft;
+    }
   };
 
-  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!pointerRef.current.active) return;
-    const { moved, target } = pointerRef.current;
-    pointerRef.current.active = false;
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-    if (!moved && target && !target.closest("button")) {
-      const cardElement = target.closest<HTMLElement>("[data-certificate-id]");
-      const certificate = certificates.find(
-        (cert) => cert.id === cardElement?.dataset.certificateId
-      );
-      if (certificate && cardElement) handleCardClick(certificate, cardElement);
-    }
+  const handleMouseUp = () => {
+    dragStartRef.current = null;
     resumeAfterInteraction();
     window.setTimeout(() => {
-      pointerRef.current.moved = false;
-    }, 0);
+      isDraggingRef.current = false;
+    }, 80);
   };
-
-  useEffect(() => () => {
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-  }, []);
 
   const handleScrollNav = (direction: "left" | "right") => {
     const viewport = scrollContainerRef.current;
     if (!viewport) return;
     pauseForInteraction();
-    viewport.scrollBy({ left: direction === "left" ? -320 : 320, behavior: "smooth" });
+    const delta = direction === "left" ? -340 : 340;
+    viewport.scrollBy({ left: delta, behavior: "smooth" });
     resumeAfterInteraction();
   };
 
@@ -178,12 +210,10 @@ export default function CertificatesCarousel({
       return () => {
         cancelAnimationFrame(frame);
         document.body.style.overflow = "unset";
-        lastTriggerRef.current?.focus();
       };
     }
 
     document.body.style.overflow = "unset";
-    lastTriggerRef.current?.focus();
     return undefined;
   }, [selectedCert]);
 
@@ -191,107 +221,69 @@ export default function CertificatesCarousel({
     if (event.key === "Escape") {
       event.preventDefault();
       setSelectedCert(null);
-      return;
     }
-
-    if (event.key !== "Tab" || !modalRef.current) return;
-
-    const focusableElements = Array.from(
-      modalRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
-    ).filter((element) => !element.hasAttribute("disabled"));
-    if (focusableElements.length === 0) return;
-
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-    if (event.shiftKey && document.activeElement === firstElement) {
-      event.preventDefault();
-      lastElement.focus();
-    } else if (!event.shiftKey && document.activeElement === lastElement) {
-      event.preventDefault();
-      firstElement.focus();
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-      },
-    },
   };
 
   const renderCertificateGroup = (copy: number) => (
     <div className="certificates-marquee-group" aria-hidden={copy > 0} key={copy}>
       {certificates.map((cert, idx) => (
-        <motion.div
+        <div
           key={`${copy}-${cert.id || idx}`}
-          variants={itemVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ delay: Math.min(idx * 0.05, 0.4) }}
-          whileHover={{ y: -6 }}
-          data-certificate-id={cert.id}
-          onClick={(event) => handleCardClick(cert, event.currentTarget)}
-          onTouchEnd={(event) => handleCardClick(cert, event.currentTarget)}
-          tabIndex={-1}
-          className="group flex-shrink-0 w-[245px] sm:w-[290px] lg:w-[310px] flex flex-col rounded-2xl surface-glass certificate-card-glow transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent"
+          onClick={() => {
+            if (!isDraggingRef.current) {
+              openCertificate(cert);
+            }
+          }}
+          className="group flex-shrink-0 w-[250px] sm:w-[295px] lg:w-[315px] flex flex-col rounded-2xl surface-glass certificate-card-glow transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent select-none"
         >
-          {/* Thumbnail Area */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border bg-black/40 flex items-center justify-center p-4">
+          {/* Thumbnail Preview without overlaid badge */}
+          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/40 bg-black/40 flex items-center justify-center p-4">
             {cert.type === "image" ? (
               <>
                 <Image
                   src={cert.fileUrl}
                   alt={cert.title}
                   fill
-                  sizes="(max-width: 640px) 245px, (max-width: 1024px) 290px, 310px"
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 250px, (max-width: 1024px) 295px, 315px"
+                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105 pointer-events-none"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#070410]/90 via-transparent to-transparent pointer-events-none" />
               </>
             ) : (
-              <div className="relative h-full w-full overflow-hidden bg-white transition-colors">
-                <PdfCanvas
-                  src={cert.fileUrl}
-                  className="pointer-events-none h-full w-full object-cover object-top"
-                />
+              <div className="relative h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-[#120B24]/90 to-[#0A0515]/95 border border-white/[0.06] rounded-xl pointer-events-none">
+                <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 flex items-center justify-center text-accent-soft mb-2 group-hover:scale-110 transition-transform">
+                  <Award className="w-5 h-5 text-accent-soft" />
+                </div>
+                <span className="josefin-sans-2 text-xs font-semibold uppercase tracking-wider text-foreground/90 text-center line-clamp-1">
+                  {cert.issuer}
+                </span>
+                <span className="josefin-sans-2 text-[10px] uppercase tracking-[0.2em] text-muted/70 mt-1 flex items-center gap-1">
+                  <FileText className="w-3 h-3 text-accent-soft/70" />
+                  Certificate · PDF
+                </span>
               </div>
             )}
-
-            <div className="absolute top-3 left-3">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-eyebrow uppercase tracking-[0.18em] bg-[var(--surface-soft)] border border-border text-accent-soft backdrop-blur-md">
-                <Award className="w-2.5 h-2.5 text-accent-soft" />
-                Verified
-              </span>
-            </div>
           </div>
 
+          {/* Card Body - Styled with josefin-sans-2 */}
           <div className="flex flex-col flex-1 p-5">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-eyebrow text-accent-soft truncate">
+              <span className="josefin-sans-2 text-[11px] font-medium uppercase tracking-[0.2em] text-accent-soft truncate">
                 {cert.issuer}
               </span>
             </div>
 
-            <h3 className="font-heading text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200 line-clamp-2 leading-snug mb-3">
+            <h3 className="josefin-sans-2 text-[15px] sm:text-base font-semibold text-foreground group-hover:text-accent-soft transition-colors duration-200 line-clamp-2 leading-snug mb-3">
               {cert.title}
             </h3>
 
             <div className="mt-auto pt-3 border-t border-border/40 flex items-center justify-between transition-colors">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/[0.12] bg-[var(--surface-soft)] text-xs font-body font-medium text-foreground/90 group-hover:text-foreground group-hover:border-accent transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/[0.12] bg-[var(--surface-soft)] text-xs josefin-sans-2 font-medium uppercase tracking-[0.16em] text-foreground/90 group-hover:text-foreground group-hover:border-accent-soft transition-colors cursor-pointer"
                 onClick={(event) => {
                   event.stopPropagation();
-                  lastTriggerRef.current = event.currentTarget;
-                  setSelectedCert(cert);
+                  openCertificate(cert);
                 }}
               >
                 <span>View Certificate</span>
@@ -299,7 +291,7 @@ export default function CertificatesCarousel({
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       ))}
     </div>
   );
@@ -308,129 +300,120 @@ export default function CertificatesCarousel({
     <div className="relative w-full">
       {/* Top Controls: Counter & Nav Buttons */}
       <div className="flex items-center justify-between mb-6 px-1">
-        <div className="text-xs font-eyebrow text-muted-foreground flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full bg-accent-soft" />
-          <span className="josefin-sans-2 uppercase tracking-[0.18em]">
-            {certificates.length} Verified Credentials
+          <span className="josefin-sans-2 uppercase tracking-[0.2em] text-xs text-muted-foreground">
+            {certificates.length} Certificates
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => {
-              setAnimationDirection("reverse");
-              handleScrollNav("left");
-            }}
+            onClick={() => handleScrollNav("left")}
             aria-label="Previous certificate"
-            className="p-2 rounded-full border border-border bg-[var(--surface-soft)] text-muted hover:text-foreground hover:border-accent transition-all duration-200 cursor-pointer backdrop-blur-md"
+            className="p-2 rounded-lg border border-border bg-[var(--surface-soft)] text-muted hover:text-foreground hover:border-accent transition-all duration-200 cursor-pointer backdrop-blur-md"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             type="button"
-            onClick={() => {
-              setAnimationDirection("normal");
-              handleScrollNav("right");
-            }}
+            onClick={() => handleScrollNav("right")}
             aria-label="Next certificate"
-            className="p-2 rounded-full border border-border bg-[var(--surface-soft)] text-muted hover:text-foreground hover:border-accent transition-all duration-200 cursor-pointer backdrop-blur-md"
+            className="p-2 rounded-lg border border-border bg-[var(--surface-soft)] text-muted hover:text-foreground hover:border-accent transition-all duration-200 cursor-pointer backdrop-blur-md"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* Carousel Container with Edge Mask */}
+      {/* Carousel Container with Edge Mask & Infinite Looping Track */}
       <div
         ref={scrollContainerRef}
+        onScroll={handleScroll}
         className="certificates-marquee-viewport relative overflow-x-auto overflow-y-hidden scrollbar-none [mask-image:linear-gradient(to_right,transparent_0%,black_1.5rem,black_calc(100%-1.5rem),transparent_100%)] sm:[mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem,black_calc(100%-2.5rem),transparent_100%)]"
         onMouseEnter={() => setIsHoverPaused(true)}
         onMouseLeave={() => setIsHoverPaused(false)}
         onFocus={() => setIsHoverPaused(true)}
         onBlur={() => setIsHoverPaused(false)}
         onWheel={handleWheel}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onTouchStart={pauseForInteraction}
+        onTouchEnd={resumeAfterInteraction}
         style={{ touchAction: "pan-y" }}
       >
         <div
+          ref={trackRef}
           className="certificates-marquee-track select-none pb-6 pt-2"
-          style={{
-            animationPlayState:
-              isHoverPaused || isInteractionPaused ? "paused" : "running",
-            animationDirection,
-          }}
         >
+          {/* 3 seamless groups ensure the carousel loops infinitely without ever ending */}
           {renderCertificateGroup(0)}
           {renderCertificateGroup(1)}
+          {renderCertificateGroup(2)}
         </div>
       </div>
 
-      <AnimatePresence>
-        {selectedCert && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#050308]/90 p-4 backdrop-blur-sm sm:p-8"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="certificate-dialog-title"
-            onKeyDown={handleModalKeyDown}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedCert(null)}
+      {/* Certificate Inspection Modal */}
+      {selectedCert && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050308]/90 p-4 backdrop-blur-md sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="certificate-dialog-title"
+          onKeyDown={handleModalKeyDown}
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            ref={modalRef}
+            className="relative flex max-h-[92vh] w-full max-w-4xl flex-col items-center bg-[#0B0616] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
           >
-            <motion.div
-              ref={modalRef}
-              className="relative flex max-h-[92vh] w-full max-w-4xl flex-col items-center bg-transparent"
-              initial={{ scale: 0.94, y: 16 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.96, y: 10 }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="w-full border-b border-white/10 px-3 pb-3 pt-2 pr-14 text-left sm:px-5">
-                <span className="text-[10px] font-eyebrow uppercase tracking-[0.2em] text-accent-soft">
+            <div className="w-full flex items-center justify-between border-b border-white/10 px-4 py-3 bg-[#080312]/80 pr-14 text-left sm:px-6">
+              <div>
+                <span className="josefin-sans-2 text-xs uppercase tracking-[0.2em] text-accent-soft">
                   {selectedCert.issuer}
                 </span>
                 <h2
                   id="certificate-dialog-title"
-                  className="mt-1 font-heading text-lg font-bold text-foreground sm:text-xl"
+                  className="josefin-sans-2 mt-0.5 text-base sm:text-lg font-bold text-foreground"
                 >
                   {selectedCert.title}
                 </h2>
               </div>
-              <button
-                type="button"
-                ref={closeButtonRef}
-                onClick={() => setSelectedCert(null)}
-                aria-label="Close certificate"
-                className="absolute right-4 top-4 z-10 rounded-full border border-white/20 bg-[#0b0712]/90 p-2.5 text-white shadow-lg transition-colors hover:border-accent hover:bg-[#160d24]"
-              >
-                <X className="h-5 w-5" />
-              </button>
+
+            </div>
+            <button
+              type="button"
+              ref={closeButtonRef}
+              onClick={() => setSelectedCert(null)}
+              aria-label="Close certificate"
+              className="absolute right-3.5 top-3.5 z-10 rounded-lg border border-white/20 bg-[#0b0712]/90 p-2 text-white shadow-lg transition-colors hover:border-accent hover:bg-[#160d24] cursor-pointer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="w-full overflow-auto max-h-[82vh] p-2 flex items-center justify-center">
               {selectedCert.type === "image" ? (
                 <Image
                   src={selectedCert.fileUrl}
                   alt={selectedCert.title}
                   width={1600}
                   height={2200}
-                  className="max-h-[82vh] w-auto max-w-full object-contain pt-3"
+                  className="max-h-[80vh] w-auto max-w-full object-contain"
                   sizes="100vw"
                   priority
                 />
               ) : (
                 <PdfCanvas
                   src={selectedCert.fileUrl}
-                  className="max-h-[82vh] max-w-full object-contain pt-3"
+                  className="max-h-[80vh] max-w-full object-contain"
                 />
               )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

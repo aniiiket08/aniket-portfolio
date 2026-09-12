@@ -93,7 +93,7 @@ export default function Navbar() {
                 {isActive && (
                   <motion.span
                     layoutId="activeNavPill"
-                    className="absolute inset-0 rounded-lg bg-accent/15 border border-accent/30 shadow-[0_0_12px_rgba(139,92,246,0.2)]"
+                    className="absolute inset-0 rounded-lg bg-accent/15 border border-accent/30"
                     transition={{ type: "spring", stiffness: 450, damping: 32 }}
                   />
                 )}
@@ -117,7 +117,7 @@ export default function Navbar() {
           <a
             href="/resume/Resume_Aniket.pdf"
             download
-            className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-lg border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200 hover:shadow-[0_0_16px_rgba(139,92,246,0.22)]"
+            className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-lg border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200"
           >
             <span>Download Resume</span>
             <ArrowDownToLine className="w-3.5 h-3.5 opacity-70 group-hover:translate-y-0.5 group-hover:opacity-100 transition-all duration-200" />

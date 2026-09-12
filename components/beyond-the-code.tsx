@@ -33,7 +33,7 @@ export default function BeyondTheCode() {
     {
       icon: <Users className="w-5 h-5" />,
       role: "Treasurer, ARC Stack Tech Club - Event Organizer & Coordinator - HR & Literary Club",
-      period: "2023 – Present",
+      period: "2023 - Present",
       description:
         "Managed financing and fund allocation of Rs. 3,00,000 across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 150+ students; contributed to literary activities and student engagement initiatives.",
     },
@@ -45,7 +45,7 @@ export default function BeyondTheCode() {
         </div>
       ),
       role: "Freelance Graphic Designer & Video Editor",
-      period: "2018 – Present",
+      period: "2018 - Present",
       description:
         "Delivered branding, promotional, and digital content projects; built client coordination and visual storytelling skills.",
     },
@@ -54,8 +54,8 @@ export default function BeyondTheCode() {
   const extracurricular = [
     {
       icon: <Target className="w-5 h-5" />,
-      role: "NCC Sergeant & Contingent Leader – Belagavi Division",
-      period: "2019 – 2021",
+      role: "NCC Sergeant & Contingent Leader - Belagavi Division",
+      period: "2019 - 2021",
       description:
         "Represented Karnataka & Goa Directorate; attended All India Thal Sainik Camp (TSC), New Delhi - Top 10 All India Rank, 0.22 Cal Rifle Shooting (National Level). Participated in IDSSC; qualified for AIGVMSC national-level selection stages.",
     },

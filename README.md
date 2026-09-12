@@ -1,12 +1,12 @@
 <div align="center">
 
-# Aniket Patil — Portfolio
+# Aniket Patil - Portfolio
 
 **Researcher · Intelligent Systems · Computational Builder**
 
 Computer Science (AI) undergraduate at KLE Technological University, building ML-driven systems, embedded projects, and signal processing applications.
 
-[**Live Site**](https://aniket08-portfolio.vercel.app/) · [GitHub](https://github.com/githubaniket08) · [LinkedIn](https://www.linkedin.com/in/aniket0804/)
+[**Live Site**](https://aniket08-portfolio.vercel.app/) · [GitHub](https://github.com/aniiiket08) · [LinkedIn](https://www.linkedin.com/in/aniket0804/)
 
 </div>
 
@@ -14,19 +14,19 @@ Computer Science (AI) undergraduate at KLE Technological University, building ML
 
 ## About
 
-This repository contains the source for my personal portfolio — a single-page site showcasing my research, projects, technical stack, and credentials across machine learning, embedded systems, and computational biology.
+This repository contains the source for my personal portfolio: a single-page site showcasing my research, projects, technical stack, and credentials across machine learning, embedded systems, and computational biology.
 
 ## Sections
 
-- **Hero** — Introduction and current focus
-- **Tech Stack** — Languages, embedded/hardware, AI/ML tools, and backend/DevOps
-- **Projects** — Featured research and engineering work, including:
+- **Hero**: Introduction and current focus
+- **Tech Stack**: Languages, embedded/hardware, AI/ML tools, and backend/DevOps
+- **Projects**: Featured research and engineering work, including:
   - 3D Wi-Fi Based Floor Localization System (IEEE ICONAT 2026)
   - Automated Prostate Cancer Detection (SGCNSP 2025)
   - Smart Wearable Attendance System (ESP32 + ECG biometrics)
-- **Experience** — Leadership, freelance work, and extracurriculars
-- **Certificates** — Verified credentials and courses
-- **Contact** — Ways to get in touch
+- **Experience**: Leadership, freelance work, and extracurriculars
+- **Certificates**: Course certificates and credentials
+- **Contact**: Ways to get in touch
 
 ## Tech Stack
 
@@ -41,7 +41,7 @@ This repository contains the source for my personal portfolio — a single-page 
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/githubaniket08/portfolio.git
+git clone https://github.com/aniiiket08/portfolio.git
 cd portfolio
 npm install
 ```
@@ -62,7 +62,7 @@ This project is deployed on [Vercel](https://vercel.com/). Pushing to the main b
 
 - **Email:** [iamaniketpatil08@gmail.com](mailto:iamaniketpatil08@gmail.com)
 - **LinkedIn:** [aniket0804](https://www.linkedin.com/in/aniket0804/)
-- **GitHub:** [githubaniket08](https://github.com/githubaniket08)
+- **GitHub:** [aniiiket08](https://github.com/aniiiket08)
 
 ---
 

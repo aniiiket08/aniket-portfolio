@@ -48,6 +48,13 @@ export const metadata: Metadata = {
       "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects, and signal processing applications.",
     images: ["/og-image.png"],
   },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/icon.png",
+  },
   metadataBase: new URL("https://aniketpatil.dev"),
 };
 

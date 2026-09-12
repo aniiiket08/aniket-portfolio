@@ -12,6 +12,7 @@ export default function TechCoreVisual() {
     if (!ctx) return;
 
     let raf = 0;
+    let isVisible = false;
     let width = (canvas.width = canvas.offsetWidth);
     let height = (canvas.height = canvas.offsetHeight);
 
@@ -39,19 +40,15 @@ export default function TechCoreVisual() {
 
     let angleX = 0;
     let angleY = 0;
-    let targetRotX = 0.003;
-    let targetRotY = 0.005;
-
-    const onMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const nx = (e.clientX - rect.left) / rect.width - 0.5;
-      const ny = (e.clientY - rect.top) / rect.height - 0.5;
-      targetRotY = 0.004 + nx * 0.008;
-      targetRotX = 0.002 + ny * 0.006;
-    };
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    const targetRotX = 0.0025;
+    const targetRotY = 0.004;
 
     const loop = () => {
+      if (!isVisible) {
+        raf = 0;
+        return;
+      }
+
       angleX += targetRotX;
       angleY += targetRotY;
 
@@ -60,10 +57,10 @@ export default function TechCoreVisual() {
       const cx = width / 2;
       const cy = height / 2;
 
-      // Draw subtle ambient glow in center
+      // Draw subtle ambient glow in center (neutral soft illumination, no purple gradient)
       const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, radius * 1.3);
-      grad.addColorStop(0, "rgba(109, 40, 217, 0.16)");
-      grad.addColorStop(0.5, "rgba(53, 21, 85, 0.06)");
+      grad.addColorStop(0, "rgba(255, 255, 255, 0.04)");
+      grad.addColorStop(0.5, "rgba(255, 255, 255, 0.01)");
       grad.addColorStop(1, "rgba(5, 3, 8, 0)");
       ctx.fillStyle = grad;
       ctx.beginPath();
@@ -73,12 +70,12 @@ export default function TechCoreVisual() {
       // Project 3D nodes
       const projected = nodes.map((node) => {
         // Rotate Y
-        let x1 = node.x * Math.cos(angleY) - node.z * Math.sin(angleY);
-        let z1 = node.z * Math.cos(angleY) + node.x * Math.sin(angleY);
+        const x1 = node.x * Math.cos(angleY) - node.z * Math.sin(angleY);
+        const z1 = node.z * Math.cos(angleY) + node.x * Math.sin(angleY);
 
         // Rotate X
-        let y2 = node.y * Math.cos(angleX) - z1 * Math.sin(angleX);
-        let z2 = z1 * Math.cos(angleX) + node.y * Math.sin(angleX);
+        const y2 = node.y * Math.cos(angleX) - z1 * Math.sin(angleX);
+        const z2 = z1 * Math.cos(angleX) + node.y * Math.sin(angleX);
 
         const fov = 450;
         const scale = fov / (fov + z2 + radius);
@@ -98,8 +95,11 @@ export default function TechCoreVisual() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < radius * 0.65) {
-            const lineAlpha = (1 - dist / (radius * 0.65)) * 0.18 * ((projected[i].alpha + projected[j].alpha) / 2);
-            ctx.strokeStyle = `rgba(167, 139, 250, ${lineAlpha})`;
+            const lineAlpha =
+              (1 - dist / (radius * 0.65)) *
+              0.18 *
+              ((projected[i].alpha + projected[j].alpha) / 2);
+            ctx.strokeStyle = `rgba(180, 180, 210, ${lineAlpha})`;
             ctx.beginPath();
             ctx.moveTo(projected[i].px, projected[i].py);
             ctx.lineTo(projected[j].px, projected[j].py);
@@ -111,7 +111,7 @@ export default function TechCoreVisual() {
       // Draw nodes
       for (let i = 0; i < projected.length; i++) {
         const p = projected[i];
-        ctx.fillStyle = `rgba(196, 181, 253, ${p.alpha * 0.55})`;
+        ctx.fillStyle = `rgba(220, 220, 240, ${p.alpha * 0.55})`;
         ctx.beginPath();
         ctx.arc(p.px, p.py, 1.8 * p.alpha, 0, Math.PI * 2);
         ctx.fill();
@@ -120,12 +120,22 @@ export default function TechCoreVisual() {
       raf = requestAnimationFrame(loop);
     };
 
-    raf = requestAnimationFrame(loop);
+    // Pause RAF when scrolled out of view to preserve CPU/GPU
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !raf) {
+          raf = requestAnimationFrame(loop);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
 
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener("resize", onResize);
-      window.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
 

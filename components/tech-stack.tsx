@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { motion } from "framer-motion";
@@ -14,8 +15,6 @@ import {
   HeartPulse,
   Navigation,
   Gamepad2,
-  Code2,
-  Server,
 } from "lucide-react";
 
 interface TechItem {
@@ -213,6 +212,7 @@ export default function TechStack() {
       id="tech"
       className="relative section-rule py-12 md:py-16 border-t border-border/30 overflow-hidden"
     >
+      <div id="tech-stack" className="absolute -top-10 left-0" aria-hidden="true" />
       <div className="relative section-container z-10">
         {/* Large Centered Heading + Supporting Text */}
         <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
@@ -271,6 +271,7 @@ export default function TechStack() {
                         className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] text-xs sm:text-[12.5px] font-body text-foreground/85 hover:border-accent/50 hover:bg-white/[0.06] hover:text-foreground transition-all duration-200 cursor-default"
                       >
                         {item.icon ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
                           <img
                             src={item.icon}
                             alt=""

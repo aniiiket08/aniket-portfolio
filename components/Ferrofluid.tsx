@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -155,7 +156,7 @@ void main() {
   float body = smoothstep(0.04, 0.42, h);
   float rim  = smoothstep(0.22, 0.05, abs(h - 0.22)) * uRimWidth;
 
-  // Lighting — low intensity, dark and restrained
+  // Lighting - low intensity, dark and restrained
   vec3 lightDir = normalize(vec3(0.5, 0.7, 0.5));
   float diffuse = max(dot(normal, lightDir), 0.0);
   // Restrained specular: NO bright white or pale lavender
@@ -232,9 +233,6 @@ const Ferrofluid = ({
 
     let renderer: Renderer;
     let gl: any;
-    let program: Program;
-    let geometry: Triangle;
-    let mesh: Mesh;
     let raf = 0;
     let disposed = false;
     let contextLost = false;
@@ -280,8 +278,8 @@ const Ferrofluid = ({
     const [br, bg, bb] = parseHex(background);
     const [ar, ag, ab] = parseHex(accentColor);
 
-    geometry = new Triangle(gl);
-    program = new Program(gl, {
+    const geometry = new Triangle(gl);
+    const program = new Program(gl, {
       vertex,
       fragment,
       transparent: false,
@@ -309,7 +307,7 @@ const Ferrofluid = ({
         uMotion: { value: reduceMotion ? 0.2 : 1 },
       },
     });
-    mesh = new Mesh(gl, { geometry, program });
+    const mesh = new Mesh(gl, { geometry, program });
 
     const renderOnce = () => {
       if (disposed || contextLost) return;

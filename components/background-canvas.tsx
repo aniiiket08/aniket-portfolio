@@ -1,8 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Ferrofluid from "./Ferrofluid";
 
 export default function BackgroundCanvas() {
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const updatePauseState = () => {
+      // Pause background WebGL when scrolled past the hero or on mobile to eliminate GPU load
+      const isMobile = window.innerWidth < 768;
+      const isScrolledPastHero = window.scrollY > 850;
+      setPaused(isMobile || isScrolledPastHero);
+    };
+
+    updatePauseState();
+    window.addEventListener("scroll", updatePauseState, { passive: true });
+    window.addEventListener("resize", updatePauseState, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", updatePauseState);
+      window.removeEventListener("resize", updatePauseState);
+    };
+  }, []);
+
   return (
     <div
       aria-hidden="true"
@@ -22,13 +42,13 @@ export default function BackgroundCanvas() {
         shimmer={0.15}
         glow={0.22}
         opacity={0.72}
-        mouseInteraction={true}
-        mouseStrength={0.35}
-        mouseRadius={0.35}
-        paused={false}
+        mouseInteraction={false}
+        mouseStrength={0}
+        mouseRadius={0}
+        paused={paused}
       />
 
-      {/* 2. Atmospheric Darkening Layer — ensures ~90% near-black, 10% subtle deep-violet movement */}
+      {/* 2. Atmospheric Darkening Layer - ensures ~90% near-black, 10% subtle deep-violet movement */}
       <div className="absolute inset-0 bg-[#050308]/45 pointer-events-none" />
 
       {/* 3. Deep Vignette to keep text and foreground content primary */}

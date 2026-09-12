@@ -8,7 +8,7 @@ export default function Contact() {
   const socialLinks = [
     {
       icon: <Github className="w-4 h-4" />,
-      url: "https://github.com/githubaniket08",
+      url: "https://github.com/aniiiket08",
       label: "GitHub",
     },
     {
@@ -44,8 +44,8 @@ export default function Contact() {
       viewport={{ once: true, amount: 0.15 }}
       className="section-rule pt-24 pb-20 md:pt-36 md:pb-28 border-t border-border/40 relative overflow-hidden"
     >
-      {/* Subtle deep-violet atmospheric glow */}
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[380px] bg-[radial-gradient(circle_at_bottom,_rgba(124,58,237,0.12)_0%,_transparent_70%)] pointer-events-none z-0" />
+      {/* Subtle neutral atmospheric illumination */}
+      <div className="absolute bottom-0 right-1/4 w-[600px] h-[380px] bg-[radial-gradient(circle_at_bottom,_rgba(255,255,255,0.02)_0%,_transparent_70%)] pointer-events-none z-0" />
 
       <div className="relative section-container z-10">
         {/* Top Eyebrow */}
@@ -54,12 +54,12 @@ export default function Contact() {
           <span className="josefin-sans-2">CONTACT &amp; COLLABORATION</span>
         </div>
 
-        {/* Massive Editorial Headline: “Let’s Build Something.” */}
-        <div className="mb-14 md:mb-20">
-          <h2 className="font-heading font-bold text-[clamp(3.2rem,8.5vw,7.2rem)] leading-[0.95] tracking-[-0.03em] text-foreground max-w-[1080px]">
+        {/* Editorial Headline: “Let’s Build Something.” */}
+        <div className="mb-10 md:mb-14">
+          <h2 className="font-heading font-bold text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] tracking-tight text-foreground max-w-[900px]">
             Let&apos;s Build Something.
           </h2>
-          <p className="josefin-sans-1 text-subheading mt-5 max-w-[640px] text-base sm:text-lg">
+          <p className="josefin-sans-1 text-subheading mt-4 max-w-[640px] text-base sm:text-lg">
             Open for research collaborations, engineering opportunities, and ambitious technical projects.
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function Contact() {
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="mailto:iamaniketpatil08@gmail.com"
-                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_20px_rgba(139,92,246,0.18)] transition-all duration-200 font-medium text-sm"
+                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200 font-medium text-sm"
                 >
                   <Mail className="w-4 h-4 text-accent-soft" />
                   <span>Send an email</span>
@@ -93,7 +93,7 @@ export default function Contact() {
                 <a
                   href="/resume/Resume_Aniket.pdf"
                   download
-                  className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200 hover:shadow-[0_0_16px_rgba(139,92,246,0.22)]"
+                  className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200"
                 >
                   <span>Download Resume</span>
                   <ArrowDownToLine className="w-4 h-4 opacity-70 group-hover:translate-y-0.5 group-hover:opacity-100 transition-all duration-200" />
@@ -141,7 +141,7 @@ export default function Contact() {
                   }}
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
-                  className="p-2.5 rounded-xl border border-border bg-[var(--surface-soft)] text-muted hover:text-accent-soft hover:border-accent/60 hover:shadow-[0_0_14px_rgba(139,92,246,0.18)] transition-all duration-200"
+                  className="p-2.5 rounded-xl border border-border bg-[var(--surface-soft)] text-muted hover:text-accent-soft hover:border-accent/60 transition-all duration-200"
                   aria-label={social.label}
                 >
                   {social.icon}

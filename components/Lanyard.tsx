@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unknown-property */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars, react-hooks/immutability */
 "use client";
 
 import { memo, Suspense, useEffect, useMemo, useRef, useState } from "react";
@@ -45,12 +45,14 @@ const Lanyard = memo(function Lanyard({
   gravity = [0, -40, 0],
   fov = 13,
   transparent = true,
-  frontImage = "/profile-picture/aniket-card-front.png",
+  frontImage = "/profile-picture/aniket-card-front2.png",
   backImage = "/profile-picture/aniket-card-back.png",
   imageFit = "contain",
   lanyardImage = null,
   lanyardWidth = 1,
 }: LanyardProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== "undefined" && window.innerWidth < 768
   );
@@ -61,11 +63,25 @@ const Lanyard = memo(function Lanyard({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="lanyard-wrapper">
+    <div ref={wrapperRef} className="lanyard-wrapper">
       <Canvas
+        frameloop={inView ? "always" : "never"}
         camera={{ position, fov }}
-        dpr={[1, 3]}
+        dpr={[1, 2]}
         gl={{
           alpha: transparent,
           antialias: true,
@@ -177,15 +193,21 @@ function Band({
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
-  const [curve] = useState(
-    () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-      ])
-  );
+  const curve = useMemo(() => {
+    const c = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+    ]);
+    c.curveType = "chordal";
+    return c;
+  }, []);
+
+  useEffect(() => {
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  }, [texture]);
+
   const [dragged, drag] = useState<any>(false);
   const [physicsActive, setPhysicsActive] = useState(false);
   const [hovered, hover] = useState(false);
@@ -197,13 +219,7 @@ function Band({
     [0, 0, 0],
     [0, 1.5, 0],
   ]);
-
-  useEffect(() => {
-    if (hovered) {
-      document.body.style.cursor = dragged ? "grabbing" : "grab";
-      return () => void (document.body.style.cursor = "auto");
-    }
-  }, [hovered, dragged]);
+  // Self-contained interaction - do not mutate document.body cursor
 
   useFrame((state, delta) => {
     if (dragged) {
@@ -242,9 +258,6 @@ function Band({
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
     }
   });
-
-  curve.curveType = "chordal";
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
   return (
     <>
