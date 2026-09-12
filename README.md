@@ -4,9 +4,9 @@
 
 **Researcher · Intelligent Systems · Computational Builder**
 
-Computer Science (AI) undergraduate at KLE Technological University, building ML-driven systems, embedded projects, and signal processing applications.
+Computer Science (AI) undergraduate at KLE Technological University, building ML-driven systems, embedded projects and signal processing applications.
 
-[**Live Site**](https://aniket08-portfolio.vercel.app/) · [GitHub](https://github.com/aniiiket08) · [LinkedIn](https://www.linkedin.com/in/aniket0804/)
+[**Live Site**](https://aniket08.vercel.app/) · [GitHub](https://github.com/aniiiket08) · [LinkedIn](https://www.linkedin.com/in/aniket0804/)
 
 </div>
 
