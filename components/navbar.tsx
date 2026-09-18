@@ -72,7 +72,7 @@ export default function Navbar() {
           className="font-heading font-bold text-sm sm:text-base tracking-tight text-foreground hover:text-accent-soft transition-colors pl-2 sm:pl-3 flex items-center gap-2 group"
         >
           <span>Aniket Patil</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-accent opacity-80 group-hover:scale-125 transition-transform" />
+          <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.7)] opacity-90 group-hover:scale-125 transition-transform" />
         </a>
 
         {/* Center: Nav links in refined container */}

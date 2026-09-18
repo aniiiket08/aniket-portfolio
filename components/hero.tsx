@@ -65,7 +65,7 @@ export default function Hero() {
             {/* 1. Restrained Uppercase Availability Badge */}
             <div className="mb-5">
               <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md border border-border/80 bg-[var(--surface-soft)] backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.7)] animate-pulse" />
                 <span className="josefin-sans-2 text-[10px] font-eyebrow uppercase tracking-[0.22em] text-foreground">
                   AVAILABLE
                 </span>
