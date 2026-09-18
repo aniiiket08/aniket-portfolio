@@ -71,7 +71,7 @@ export default function RootLayout({
         {/* Persistent Site-wide Ferrofluid WebGL Background Layer */}
         <BackgroundCanvas />
 
-        {/* Page Content Stacked Above Background */}
+        {/* Page Content */}
         <div className="relative z-10 flex-1 flex flex-col">
           {children}
         </div>

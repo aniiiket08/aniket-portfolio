@@ -2,7 +2,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import TechCoreVisual from "./tech-core-visual";
 import {
   Cpu,
   Radio,
@@ -227,12 +226,8 @@ export default function TechStack() {
           </p>
         </div>
 
-        {/* Central Technology Core Visual + Categorized Layered Panels */}
+        {/* Categorized Layered Panels (2x2 on desktop, single column on mobile) */}
         <div className="relative max-w-5xl mx-auto">
-          {/* Central 3D Technology Core behind panels */}
-          <TechCoreVisual />
-
-          {/* Categorized Layered Panels (2x2 on desktop, single column on mobile) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 sm:gap-x-6 gap-y-4 relative z-10">
             {categories.map((category, idx) => (
               <motion.article
@@ -243,16 +238,12 @@ export default function TechStack() {
                 transition={{ duration: 0.55, delay: idx * 0.08 }}
                 className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md px-6 pt-6 pb-5 sm:px-7 sm:pt-7 sm:pb-5 hover:border-white/[0.15] hover:bg-white/[0.04] transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col"
               >
-                {/* Panel Header */}
                 <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5 mb-4">
                   <div className="flex items-center gap-2.5">
                     <h3 className="font-body text-xs font-semibold uppercase tracking-[0.16em] text-accent-soft">
                       {category.title}
                     </h3>
                   </div>
-                  <span className="text-[10px] font-eyebrow uppercase tracking-widest text-muted/50">
-                    0{idx + 1}
-                  </span>
                 </div>
 
                 <p className="josefin-sans-1 text-xs text-muted/80 font-body font-light mb-5 leading-relaxed">

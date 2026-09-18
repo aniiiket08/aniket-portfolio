@@ -234,7 +234,7 @@ export default function CertificatesCarousel({
               openCertificate(cert);
             }
           }}
-          className="group flex-shrink-0 w-[250px] sm:w-[295px] lg:w-[315px] flex flex-col rounded-2xl surface-glass certificate-card-glow transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent select-none"
+          className="group flex-shrink-0 w-[250px] sm:w-[295px] lg:w-[315px] flex flex-col rounded-2xl surface-glass transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent select-none"
         >
           {/* Thumbnail Preview without overlaid badge */}
           <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/40 bg-black/40 flex items-center justify-center p-4">

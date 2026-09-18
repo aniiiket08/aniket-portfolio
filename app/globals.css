@@ -189,18 +189,7 @@ body {
   padding: 0 0.625rem;
 }
 
-.certificate-card-glow {
-  box-shadow:
-    0 10px 30px -15px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
-}
 
-.certificate-card-glow:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 16px 36px -15px rgba(0, 0, 0, 0.85),
-    0 0 20px -10px rgba(255, 255, 255, 0.08);
-}
 
 @media (min-width: 640px) {
   .certificates-marquee-group {

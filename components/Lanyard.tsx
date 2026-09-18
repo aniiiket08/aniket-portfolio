@@ -175,6 +175,7 @@ function Band({
   const j2 = useRef<any>(null);
   const j3 = useRef<any>(null);
   const card = useRef<any>(null);
+  const pointerDownTime = useRef<number>(0);
 
   const { vec, ang, rot, dir } = useMemo(
     () => ({
@@ -212,7 +213,14 @@ function Band({
 
   useEffect(() => {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  }, [texture]);
+    [frontTex, backTex].forEach((t) => {
+      t.anisotropy = 16;
+      t.minFilter = THREE.LinearMipmapLinearFilter;
+      t.magFilter = THREE.LinearFilter;
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.needsUpdate = true;
+    });
+  }, [texture, frontTex, backTex]);
 
   const [dragged, drag] = useState<any>(false);
   const [physicsActive, setPhysicsActive] = useState(false);
@@ -306,27 +314,37 @@ function Band({
             position={[0, -2.55, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={(e) => (
-              (e.target as HTMLElement).releasePointerCapture(e.pointerId),
-              drag(false)
-            )}
-            onPointerDown={(e) => (
-              (e.target as HTMLElement).setPointerCapture(e.pointerId),
-              setPhysicsActive(true),
+            onPointerUp={(e) => {
+              (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+              drag(false);
+              if (Date.now() - pointerDownTime.current < 200) {
+                // Wait for the next physics tick so type switches back to dynamic
+                setTimeout(() => {
+                  if (card.current) {
+                    card.current.setLinvel({ x: 0, y: 12, z: 18 }, true);
+                    card.current.setAngvel({ x: 0, y: 4, z: 0 }, true);
+                  }
+                }, 50);
+              }
+            }}
+            onPointerDown={(e) => {
+              (e.target as HTMLElement).setPointerCapture(e.pointerId);
+              setPhysicsActive(true);
+              pointerDownTime.current = Date.now();
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
                   .sub(vec.copy(card.current.translation()))
-              )
-            )}
+              );
+            }}
           >
             <mesh position={[0, 0.52, 0.012]}>
               <planeGeometry args={[0.667, 1]} />
-              <meshBasicMaterial map={frontTex} toneMapped={false} />
+              <meshBasicMaterial map={frontTex} toneMapped={false} transparent={true} />
             </mesh>
             <mesh position={[0, 0.52, -0.012]} rotation={[0, Math.PI, 0]}>
               <planeGeometry args={[0.667, 1]} />
-              <meshBasicMaterial map={backTex} toneMapped={false} />
+              <meshBasicMaterial map={backTex} toneMapped={false} transparent={true} />
             </mesh>
             <mesh
               geometry={nodes.clip.geometry}

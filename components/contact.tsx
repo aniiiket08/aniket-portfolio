@@ -44,8 +44,6 @@ export default function Contact() {
       viewport={{ once: true, amount: 0.15 }}
       className="section-rule pt-24 pb-20 md:pt-36 md:pb-28 border-t border-border/40 relative overflow-hidden"
     >
-      {/* Subtle neutral atmospheric illumination */}
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[380px] bg-[radial-gradient(circle_at_bottom,_rgba(113,134,154,0.08)_0%,_transparent_70%)] pointer-events-none z-0" />
 
       <div className="relative section-container z-10">
         {/* Top Eyebrow */}

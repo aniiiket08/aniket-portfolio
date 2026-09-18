@@ -65,7 +65,7 @@ export default function Hero() {
             {/* 1. Restrained Uppercase Availability Badge */}
             <div className="mb-5">
               <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md border border-border/80 bg-[var(--surface-soft)] backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.7)] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                 <span className="josefin-sans-2 text-[10px] font-eyebrow uppercase tracking-[0.22em] text-foreground">
                   AVAILABLE
                 </span>
@@ -101,7 +101,7 @@ export default function Hero() {
             {/* 3. Small uppercase descriptor with generous letter spacing */}
             <div className="flex items-center gap-3 text-[11px] font-eyebrow uppercase tracking-[0.22em] text-accent-soft mt-4">
               <span className="h-px w-8 bg-accent-soft" />
-              <span className="josefin-sans-2">RESEARCHER / INTELLIGENT SYSTEMS / COMPUTATIONAL BUILDER</span>
+              <span className="josefin-sans-2">MACHINE LEARNING / EMBEDDED SYSTEMS / SOFTWARE ENGINEERING</span>
             </div>
 
             {/* 4. Refined editorial summary */}
@@ -147,28 +147,12 @@ export default function Hero() {
             className="lg:col-span-5 flex justify-center items-start relative"
             style={{ zIndex: 10, overflow: "visible" }}
           >
-            {/* Soft Ambient Glow BEHIND the 3D Lanyard */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 pointer-events-none -z-10 flex items-center justify-center"
-            >
-              <div
-                className="w-72 h-72 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(113,134,154,0.08) 0%, transparent 70%)",
-                  filter: "blur(48px)",
-                }}
-              />
-            </div>
-
-            {/* Lanyard container - canvas fills the right column, band anchor maps
-              to above the visible area, card hangs naturally in the mid section */}
+            {/* Lanyard container */}
             <div
               className="w-full flex items-start justify-center"
               style={{
                 height: "760px",
-                marginTop: "-5rem",
+                marginTop: "-9rem", 
                 paddingTop: 0,
               }}
             >

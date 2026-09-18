@@ -188,8 +188,6 @@ export default function ProjectsGrid() {
                       rel="noopener noreferrer"
                       className="block relative rounded-2xl border border-border bg-[var(--surface-glass)] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.65)] hover:border-accent/40 transition-all duration-300 group/img"
                     >
-                      <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
                       <div className="relative aspect-[16/10] w-full overflow-hidden">
                         <Image
                           src={project.image}
@@ -199,7 +197,6 @@ export default function ProjectsGrid() {
                           sizes="(max-width: 1024px) 100vw, 55vw"
                           className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)]/70 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </a>
                   </div>
@@ -309,8 +306,6 @@ export default function ProjectsGrid() {
                             rel="noopener noreferrer"
                             className="block relative rounded-2xl border border-border bg-[var(--surface-glass)] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.65)] hover:border-accent/40 transition-all duration-300 group/img"
                           >
-                            <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
                             <div className="relative aspect-[16/10] w-full overflow-hidden">
                               <Image
                                 src={project.image}
@@ -320,7 +315,6 @@ export default function ProjectsGrid() {
                                 sizes="(max-width: 1024px) 100vw, 55vw"
                                 className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                               />
-                              <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)]/70 via-transparent to-transparent pointer-events-none" />
                             </div>
                           </a>
                         </div>
