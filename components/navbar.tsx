@@ -63,7 +63,7 @@ export default function Navbar() {
     <header className="fixed top-3 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-[920px]">
       <nav
         aria-label="Main navigation"
-        className="flex items-center justify-between px-3 sm:px-5 py-2 rounded-2xl bg-[#080312]/85 backdrop-blur-md border border-[rgba(179,157,230,0.18)] shadow-[0_12px_40px_rgba(0,0,0,0.7)]"
+        className="flex items-center justify-between px-3 sm:px-5 py-2 rounded-2xl bg-[#080808]/85 backdrop-blur-md border border-[#292929] shadow-[0_12px_40px_rgba(0,0,0,0.7)]"
       >
         {/* Left: Stylized Wordmark */}
         <a

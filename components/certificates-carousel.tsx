@@ -247,10 +247,10 @@ export default function CertificatesCarousel({
                   sizes="(max-width: 640px) 250px, (max-width: 1024px) 295px, 315px"
                   className="object-cover object-center transition-transform duration-500 group-hover:scale-105 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#070410]/90 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
               </>
             ) : (
-              <div className="relative h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-[#120B24]/90 to-[#0A0515]/95 border border-white/[0.06] rounded-xl pointer-events-none">
+              <div className="relative h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.06] rounded-xl pointer-events-none">
                 <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 flex items-center justify-center text-accent-soft mb-2 group-hover:scale-110 transition-transform">
                   <Award className="w-5 h-5 text-accent-soft" />
                 </div>
@@ -358,7 +358,7 @@ export default function CertificatesCarousel({
       {/* Certificate Inspection Modal */}
       {selectedCert && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050308]/90 p-4 backdrop-blur-md sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-labelledby="certificate-dialog-title"
@@ -367,10 +367,10 @@ export default function CertificatesCarousel({
         >
           <div
             ref={modalRef}
-            className="relative flex max-h-[92vh] w-full max-w-4xl flex-col items-center bg-[#0B0616] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+            className="relative flex max-h-[92vh] w-full max-w-4xl flex-col items-center bg-[#080808] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="w-full flex items-center justify-between border-b border-white/10 px-4 py-3 bg-[#080312]/80 pr-14 text-left sm:px-6">
+            <div className="w-full flex items-center justify-between border-b border-white/10 px-4 py-3 bg-white/[0.02] pr-14 text-left sm:px-6">
               <div>
                 <span className="josefin-sans-2 text-xs uppercase tracking-[0.2em] text-accent-soft">
                   {selectedCert.issuer}
@@ -389,7 +389,7 @@ export default function CertificatesCarousel({
               ref={closeButtonRef}
               onClick={() => setSelectedCert(null)}
               aria-label="Close certificate"
-              className="absolute right-3.5 top-3.5 z-10 rounded-lg border border-white/20 bg-[#0b0712]/90 p-2 text-white shadow-lg transition-colors hover:border-accent hover:bg-[#160d24] cursor-pointer"
+              className="absolute right-3.5 top-3.5 z-10 rounded-lg border border-white/20 bg-black/60 p-2 text-white shadow-lg transition-colors hover:border-accent hover:bg-white/[0.1] cursor-pointer"
             >
               <X className="h-4 w-4" />
             </button>

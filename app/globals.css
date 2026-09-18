@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #070410;
-  --foreground: #EDE8F6;
-  --foreground-soft: #D9D2EA;
-  --muted: #9E94B5;
-  --accent: #8B5CF6;
-  --accent-soft: #B9A6F0;
-  --border: rgba(179, 157, 230, 0.13);
-  --border-strong: rgba(179, 157, 230, 0.22);
-  --surface-glass: rgba(18, 11, 36, 0.62);
-  --surface-elevated: rgba(24, 15, 48, 0.74);
-  --surface-soft: rgba(22, 14, 44, 0.4);
+  --background: #070707;
+  --foreground: #F2F0EB;
+  --foreground-soft: #9A9A98;
+  --muted: #9A9A98;
+  --accent: #71869A;
+  --accent-soft: #A5B5C2;
+  --border: #292B2D;
+  --border-strong: #292B2D;
+  --surface-glass: #101112;
+  --surface-elevated: #101112;
+  --surface-soft: #101112;
   --card-bg: var(--surface-glass);
-  --ink: #0C0620;
-  --shadow-violet: 0 10px 40px -12px rgba(139, 92, 246, 0.28);
+  --ink: #000000;
+  --shadow-violet: 0 10px 40px -12px rgba(113, 134, 154, 0.15);
 }
 
 @theme {
@@ -37,7 +37,7 @@
 /* Custom resets & smooth scrolling */
 html {
   scroll-behavior: smooth;
-  background-color: #070410;
+  background-color: #080808;
   color: var(--foreground);
 }
 
@@ -229,8 +229,8 @@ body {
 }
 .surface-hover:hover {
   transform: translateY(-4px);
-  border-color: rgba(139, 92, 246, 0.55);
-  box-shadow: 0 22px 50px -22px rgba(139, 92, 246, 0.38);
+  border-color: var(--accent);
+  box-shadow: 0 22px 50px -22px rgba(113, 134, 154, 0.2);
 }
 
 /* Section container (keeps children aligned with site max-width) */
@@ -320,18 +320,18 @@ body {
   outline-offset: 4px;
 }
 
-/* Custom scrollbar styling for deep violet/black theme */
+/* Custom scrollbar styling for monochrome theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #070410;
+  background: #080808;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(179, 157, 230, 0.18);
+  background: #292929;
   border-radius: 4px;
 }
 

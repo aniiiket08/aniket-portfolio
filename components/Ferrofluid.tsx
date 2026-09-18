@@ -167,12 +167,12 @@ void main() {
   float shimmer = fbm(p * 8.0 + t * 0.25) * 0.5 + 0.5;
   shimmer = pow(shimmer, 5.0) * uShimmer;
 
-  // Very dark, deep-violet palette:
+  // Very dark, monochrome palette:
   // 1. Deep near-black fluid trench
   vec3 deepShade = mix(uBackground, uColor, 0.35);
-  // 2. Muted deep violet body
+  // 2. Muted dark body
   vec3 midShade  = mix(uColor, uAccent, 0.45);
-  // 3. Restrained deep violet crest highlight (NOT white or light lavender!)
+  // 3. Restrained dark crest highlight
   vec3 crestHighlight = mix(uAccent, uColor * 1.15, 0.35);
 
   vec3 col = mix(deepShade, midShade, body);
@@ -181,7 +181,7 @@ void main() {
   col += fresnel * 0.16 * uAccent;
   col += shimmer * uAccent * 0.12;
 
-  // Soft low-intensity violet glow
+  // Soft low-intensity glow
   float glow = smoothstep(0.52, 0.94, fluid) * uGlow;
   col += glow * uColor * 0.15;
 
@@ -208,9 +208,9 @@ const parseHex = (hex: string) => [
 ];
 
 const Ferrofluid = ({
-  color = "#1E0E38",
-  background = "#050308",
-  accentColor = "#351555",
+  color = "#1a1a1a",
+  background = "#080808",
+  accentColor = "#292929",
   speed = 0.16,
   scale = 0.72,
   turbulence = 0.62,

@@ -38,6 +38,7 @@ export interface LanyardProps {
   imageFit?: "cover" | "contain";
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  cardScale?: number;
 }
 
 const Lanyard = memo(function Lanyard({
@@ -50,6 +51,7 @@ const Lanyard = memo(function Lanyard({
   imageFit = "contain",
   lanyardImage = null,
   lanyardWidth = 1,
+  cardScale = 4,
 }: LanyardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(true);
@@ -86,11 +88,12 @@ const Lanyard = memo(function Lanyard({
           alpha: transparent,
           antialias: true,
           powerPreference: "high-performance",
-          toneMapping: THREE.NoToneMapping,
+          toneMapping: THREE.ACESFilmicToneMapping,
         }}
-        onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-        }
+        onCreated={({ gl }) => {
+          gl.toneMappingExposure = 1.2;
+          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+        }}
       >
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
@@ -102,6 +105,7 @@ const Lanyard = memo(function Lanyard({
               imageFit={imageFit}
               lanyardImage={lanyardImage}
               lanyardWidth={lanyardWidth}
+              cardScale={cardScale}
             />
           </Physics>
           <Environment blur={0.75}>
@@ -151,6 +155,7 @@ interface BandProps {
   imageFit?: "cover" | "contain";
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  cardScale?: number;
 }
 
 function Band({
@@ -162,6 +167,7 @@ function Band({
   imageFit = "cover",
   lanyardImage = null,
   lanyardWidth = 1,
+  cardScale = 4,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -294,9 +300,9 @@ function Band({
           gravityScale={physicsActive ? 1 : 0}
           type={dragged ? "kinematicPosition" : "dynamic"}
         >
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <CuboidCollider args={[0.8 * (cardScale / 4), 1.125 * (cardScale / 4), 0.01]} />
           <group
-            scale={4}
+            scale={cardScale}
             position={[0, -2.55, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}

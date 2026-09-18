@@ -65,7 +65,7 @@ export default function Hero() {
             {/* 1. Restrained Uppercase Availability Badge */}
             <div className="mb-5">
               <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md border border-border/80 bg-[var(--surface-soft)] backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                 <span className="josefin-sans-2 text-[10px] font-eyebrow uppercase tracking-[0.22em] text-foreground">
                   AVAILABLE
                 </span>
@@ -116,7 +116,7 @@ export default function Hero() {
                 whileHover={{ y: -1 }}
                 whileTap={{ y: 0 }}
                 transition={{ duration: 0.2 }}
-                className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-accent/50 bg-transparent text-foreground font-medium text-sm hover:border-accent hover:text-accent-soft transition-all duration-200"
+                className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-accent/50 bg-transparent text-foreground font-medium text-sm hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200"
               >
                 <span>Get in touch</span>
                 <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
@@ -127,7 +127,7 @@ export default function Hero() {
                 whileHover={{ y: -1 }}
                 whileTap={{ y: 0 }}
                 transition={{ duration: 0.2 }}
-                className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-[var(--surface-soft)] backdrop-blur-sm text-foreground/90 font-medium text-sm hover:border-border-strong hover:text-foreground transition-all duration-200"
+                className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-[var(--surface-soft)] backdrop-blur-sm text-foreground/90 font-medium text-sm hover:border-border-strong hover:text-foreground hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200"
               >
                 <span>Explore research</span>
                 <ArrowDown className="w-3.5 h-3.5 opacity-60 group-hover:translate-y-0.5 transition-all duration-200" />
@@ -156,7 +156,7 @@ export default function Hero() {
                 className="w-72 h-72 rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 55%, transparent 72%)",
+                    "radial-gradient(circle, rgba(113,134,154,0.08) 0%, transparent 70%)",
                   filter: "blur(48px)",
                 }}
               />
@@ -168,7 +168,7 @@ export default function Hero() {
               className="w-full flex items-start justify-center"
               style={{
                 height: "760px",
-                marginTop: "-7rem",
+                marginTop: "-5rem",
                 paddingTop: 0,
               }}
             >
@@ -177,10 +177,11 @@ export default function Hero() {
                   position={[0, 0, 22]}
                   gravity={[0, -40, 0]}
                   fov={20}
-                  frontImage="/profile-picture/aniket-card-front2.png"
+                  frontImage="/profile-picture/aniket-card-front.png"
                   backImage="/profile-picture/aniket-card-back.png"
                   imageFit="cover"
                   lanyardWidth={1.35}
+                  cardScale={4.2}
                 />
               ) : (
                 <div className="w-full h-[520px] flex items-center justify-center">

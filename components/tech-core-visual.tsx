@@ -61,7 +61,7 @@ export default function TechCoreVisual() {
       const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, radius * 1.3);
       grad.addColorStop(0, "rgba(255, 255, 255, 0.04)");
       grad.addColorStop(0.5, "rgba(255, 255, 255, 0.01)");
-      grad.addColorStop(1, "rgba(5, 3, 8, 0)");
+      grad.addColorStop(1, "rgba(8, 8, 8, 0)");
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(cx, cy, radius * 1.3, 0, Math.PI * 2);
@@ -99,7 +99,7 @@ export default function TechCoreVisual() {
               (1 - dist / (radius * 0.65)) *
               0.18 *
               ((projected[i].alpha + projected[j].alpha) / 2);
-            ctx.strokeStyle = `rgba(180, 180, 210, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(200, 200, 200, ${lineAlpha})`;
             ctx.beginPath();
             ctx.moveTo(projected[i].px, projected[i].py);
             ctx.lineTo(projected[j].px, projected[j].py);
@@ -111,7 +111,7 @@ export default function TechCoreVisual() {
       // Draw nodes
       for (let i = 0; i < projected.length; i++) {
         const p = projected[i];
-        ctx.fillStyle = `rgba(220, 220, 240, ${p.alpha * 0.55})`;
+        ctx.fillStyle = `rgba(220, 220, 220, ${p.alpha * 0.55})`;
         ctx.beginPath();
         ctx.arc(p.px, p.py, 1.8 * p.alpha, 0, Math.PI * 2);
         ctx.fill();

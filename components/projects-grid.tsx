@@ -123,7 +123,7 @@ export default function ProjectsGrid() {
                         {project.number}
                       </span>
                       <span className="h-3 w-px bg-white/10" />
-                      <span className="josefin-sans-2 px-2.5 py-1 rounded-md border border-white/[0.12] bg-[#090514]/80 backdrop-blur-md font-body text-[10px] font-medium uppercase tracking-widest text-accent-soft">
+                      <span className="josefin-sans-2 px-2.5 py-1 rounded-md border border-border bg-[var(--surface-soft)] backdrop-blur-md font-body text-[10px] font-medium uppercase tracking-widest text-accent-soft">
                         Case Study
                       </span>
                       <span className="h-3 w-px bg-white/10" />
@@ -186,7 +186,7 @@ export default function ProjectsGrid() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block relative rounded-2xl border border-white/[0.10] bg-[#070310] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.65)] hover:border-accent/40 transition-all duration-300 group/img"
+                      className="block relative rounded-2xl border border-border bg-[var(--surface-glass)] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.65)] hover:border-accent/40 transition-all duration-300 group/img"
                     >
                       <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
@@ -199,7 +199,7 @@ export default function ProjectsGrid() {
                           sizes="(max-width: 1024px) 100vw, 55vw"
                           className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#070310]/70 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)]/70 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </a>
                   </div>
@@ -248,7 +248,7 @@ export default function ProjectsGrid() {
                               {project.number}
                             </span>
                             <span className="h-3 w-px bg-white/10" />
-                            <span className="josefin-sans-2 px-2.5 py-1 rounded-md border border-white/[0.12] bg-[#090514]/80 backdrop-blur-md font-body text-[10px] font-medium uppercase tracking-widest text-accent-soft">
+                            <span className="josefin-sans-2 px-2.5 py-1 rounded-md border border-border bg-[var(--surface-soft)] backdrop-blur-md font-body text-[10px] font-medium uppercase tracking-widest text-accent-soft">
                               Case Study
                             </span>
                             <span className="h-3 w-px bg-white/10" />
@@ -307,7 +307,7 @@ export default function ProjectsGrid() {
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block relative rounded-2xl border border-white/[0.10] bg-[#070310] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.65)] hover:border-accent/40 transition-all duration-300 group/img"
+                            className="block relative rounded-2xl border border-border bg-[var(--surface-glass)] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.65)] hover:border-accent/40 transition-all duration-300 group/img"
                           >
                             <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
@@ -320,7 +320,7 @@ export default function ProjectsGrid() {
                                 sizes="(max-width: 1024px) 100vw, 55vw"
                                 className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                               />
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#070310]/70 via-transparent to-transparent pointer-events-none" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)]/70 via-transparent to-transparent pointer-events-none" />
                             </div>
                           </a>
                         </div>
@@ -338,7 +338,7 @@ export default function ProjectsGrid() {
           <button
             type="button"
             onClick={() => setShowAll((prev) => !prev)}
-            className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-xl border border-white/[0.15] bg-[#0B0616]/90 hover:border-accent/70 hover:bg-[#13092A] text-xs sm:text-[13px] font-body font-medium text-foreground transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.8)] cursor-pointer"
+            className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-xl border border-border bg-[var(--surface-soft)] hover:border-accent/70 hover:bg-[var(--surface-elevated)] hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] text-xs sm:text-[13px] font-body font-medium text-foreground transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] cursor-pointer"
           >
             <span>{showAll ? "Show Less" : "View All Projects"}</span>
             <ChevronDown

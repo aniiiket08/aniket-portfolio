@@ -53,7 +53,7 @@ export default function TechStack() {
         {
           name: "SQL",
           lucideIcon: Database,
-          accentColor: "#38BDF8",
+          accentColor: "#E2E8F0",
         },
       ],
     },
@@ -65,12 +65,12 @@ export default function TechStack() {
         {
           name: "ESP32",
           lucideIcon: Cpu,
-          accentColor: "#E11D48",
+          accentColor: "#E2E8F0",
         },
         {
           name: "AD8232 (ECG)",
           lucideIcon: HeartPulse,
-          accentColor: "#EF4444",
+          accentColor: "#CBD5E1",
         },
         {
           name: "Arduino IDE",
@@ -79,12 +79,12 @@ export default function TechStack() {
         {
           name: "USRP B210 (SDR)",
           lucideIcon: Radio,
-          accentColor: "#A78BFA",
+          accentColor: "#E2E8F0",
         },
         {
           name: "GPS Modules",
           lucideIcon: Navigation,
-          accentColor: "#06B6D4",
+          accentColor: "#CBD5E1",
         },
         {
           name: "Raspberry Pi",
@@ -109,7 +109,7 @@ export default function TechStack() {
         {
           name: "XGBoost",
           lucideIcon: Binary,
-          accentColor: "#22C55E",
+          accentColor: "#E2E8F0",
         },
         {
           name: "NumPy",
@@ -126,7 +126,7 @@ export default function TechStack() {
         {
           name: "Seaborn",
           lucideIcon: TrendingUp,
-          accentColor: "#38BDF8",
+          accentColor: "#CBD5E1",
         },
         {
           name: "OpenCV",
@@ -135,17 +135,17 @@ export default function TechStack() {
         {
           name: "SFML",
           lucideIcon: Gamepad2,
-          accentColor: "#A855F7",
+          accentColor: "#E2E8F0",
         },
         {
           name: "VCell Simulation",
           lucideIcon: Activity,
-          accentColor: "#EC4899",
+          accentColor: "#CBD5E1",
         },
         {
           name: "Cytoscape.js",
           lucideIcon: Network,
-          accentColor: "#F59E0B",
+          accentColor: "#E2E8F0",
         },
       ],
     },
@@ -185,7 +185,7 @@ export default function TechStack() {
         {
           name: "REST APIs",
           lucideIcon: Terminal,
-          accentColor: "#A78BFA",
+          accentColor: "#E2E8F0",
         },
         {
           name: "React",
@@ -241,7 +241,7 @@ export default function TechStack() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.55, delay: idx * 0.08 }}
-                className="group relative rounded-2xl border border-white/[0.08] bg-[#080312]/80 backdrop-blur-md px-6 pt-6 pb-5 sm:px-7 sm:pt-7 sm:pb-5 hover:border-accent/40 hover:bg-[#0C051A]/85 transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col"
+                className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md px-6 pt-6 pb-5 sm:px-7 sm:pt-7 sm:pb-5 hover:border-white/[0.15] hover:bg-white/[0.04] transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col"
               >
                 {/* Panel Header */}
                 <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5 mb-4">
@@ -283,7 +283,7 @@ export default function TechStack() {
                         ) : LucideIconComp ? (
                           <LucideIconComp
                             className="w-3.5 h-3.5 shrink-0"
-                            style={{ color: item.accentColor || "#A78BFA" }}
+                            style={{ color: item.accentColor || "#E2E8F0" }}
                           />
                         ) : null}
                         <span>{item.name}</span>

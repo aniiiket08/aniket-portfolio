@@ -45,7 +45,7 @@ export default function Contact() {
       className="section-rule pt-24 pb-20 md:pt-36 md:pb-28 border-t border-border/40 relative overflow-hidden"
     >
       {/* Subtle neutral atmospheric illumination */}
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[380px] bg-[radial-gradient(circle_at_bottom,_rgba(255,255,255,0.02)_0%,_transparent_70%)] pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-1/4 w-[600px] h-[380px] bg-[radial-gradient(circle_at_bottom,_rgba(113,134,154,0.08)_0%,_transparent_70%)] pointer-events-none z-0" />
 
       <div className="relative section-container z-10">
         {/* Top Eyebrow */}
@@ -84,7 +84,7 @@ export default function Contact() {
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="mailto:iamaniketpatil08@gmail.com"
-                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200 font-medium text-sm"
+                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200 font-medium text-sm"
                 >
                   <Mail className="w-4 h-4 text-accent-soft" />
                   <span>Send an email</span>
@@ -93,7 +93,7 @@ export default function Contact() {
                 <a
                   href="/resume/Resume_Aniket.pdf"
                   download
-                  className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200"
+                  className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200"
                 >
                   <span>Download Resume</span>
                   <ArrowDownToLine className="w-4 h-4 opacity-70 group-hover:translate-y-0.5 group-hover:opacity-100 transition-all duration-200" />
