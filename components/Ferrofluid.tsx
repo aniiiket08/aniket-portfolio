@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type React from "react";
 import { Renderer, Program, Mesh, Triangle, Vec3 } from "ogl";
 import "./Ferrofluid.css";
 
@@ -21,7 +22,10 @@ export interface FerrofluidProps {
   mouseInteraction?: boolean;
   mouseStrength?: number;
   mouseRadius?: number;
+  /** Legacy boolean prop — still supported */
   paused?: boolean;
+  /** Preferred: a stable ref whose .current is read each RAF frame, avoiding re-renders */
+  pausedRef?: React.RefObject<boolean>;
 }
 
 const vertex = /* glsl */ `
@@ -224,6 +228,7 @@ const Ferrofluid = ({
   mouseStrength = 0.35,
   mouseRadius = 0.35,
   paused = false,
+  pausedRef,
 }: FerrofluidProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -348,7 +353,8 @@ const Ferrofluid = ({
 
     const onVisibility = () => {
       pageVisible = !document.hidden;
-      if (pageVisible && !paused && !raf) {
+      const isPaused = pausedRef ? pausedRef.current : paused;
+      if (pageVisible && !isPaused && !raf) {
         raf = requestAnimationFrame(loop);
       }
       if (!pageVisible && raf) {
@@ -364,22 +370,31 @@ const Ferrofluid = ({
     };
 
     const loop = (now: number) => {
-      if (disposed || contextLost || paused) return;
+      if (disposed || contextLost) return;
+      // Check pausedRef each frame (avoids prop re-render to pause)
+      const isPaused = pausedRef ? pausedRef.current : paused;
+      if (isPaused) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
       const elapsed = (now - startTime) * 0.001;
-      const idleX = 0.5 + Math.sin(elapsed * 0.15) * 0.14;
-      const idleY = 0.5 + Math.cos(elapsed * 0.12) * 0.10;
-      const targetX = pointer.activeTarget > 0 ? pointer.tx : idleX;
-      const targetY = pointer.activeTarget > 0 ? pointer.ty : idleY;
-      const damping = pointer.activeTarget > 0 ? 0.08 : 0.03;
-      pointer.x += (targetX - pointer.x) * damping;
-      pointer.y += (targetY - pointer.y) * damping;
-      pointer.active += ((pointer.activeTarget > 0 ? 1 : 0.15) - pointer.active) * 0.035;
 
-      program.uniforms.uPointer.value[0] = pointer.x;
-      program.uniforms.uPointer.value[1] = pointer.y;
-      program.uniforms.uPointerActive.value = pointer.active;
+      // Only compute idle pointer animation when mouse interaction is enabled
+      if (mouseInteraction) {
+        const idleX = 0.5 + Math.sin(elapsed * 0.15) * 0.14;
+        const idleY = 0.5 + Math.cos(elapsed * 0.12) * 0.10;
+        const targetX = pointer.activeTarget > 0 ? pointer.tx : idleX;
+        const targetY = pointer.activeTarget > 0 ? pointer.ty : idleY;
+        const damping = pointer.activeTarget > 0 ? 0.08 : 0.03;
+        pointer.x += (targetX - pointer.x) * damping;
+        pointer.y += (targetY - pointer.y) * damping;
+        pointer.active += ((pointer.activeTarget > 0 ? 1 : 0.15) - pointer.active) * 0.035;
+        program.uniforms.uPointer.value[0] = pointer.x;
+        program.uniforms.uPointer.value[1] = pointer.y;
+        program.uniforms.uPointerActive.value = pointer.active;
+      }
+
       program.uniforms.uTime.value = elapsed;
-
       renderer.render({ scene: mesh });
       raf = requestAnimationFrame(loop);
     };
@@ -394,7 +409,8 @@ const Ferrofluid = ({
     mediaQuery?.addEventListener?.("change", onReducedMotion);
 
     resize();
-    if (!paused && pageVisible) {
+    const isPausedOnMount = pausedRef ? pausedRef.current : paused;
+    if (!isPausedOnMount && pageVisible) {
       raf = requestAnimationFrame(loop);
     }
 
@@ -428,7 +444,7 @@ const Ferrofluid = ({
     mouseInteraction,
     mouseStrength,
     mouseRadius,
-    paused,
+    // paused / pausedRef intentionally omitted — read via ref each frame
   ]);
 
   return <div ref={containerRef} className="ferrofluid" aria-hidden="true" />;

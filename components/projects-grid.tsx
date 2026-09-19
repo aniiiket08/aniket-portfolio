@@ -18,11 +18,8 @@ export interface FeaturedProject {
   visualAlign: "right" | "left";
 }
 
-export default function ProjectsGrid() {
-  const [showAll, setShowAll] = useState(false);
-
-  // 1. Featured Top 3 Projects (Always shown on Homepage)
-  const featuredProjects: FeaturedProject[] = [
+// Module scope — never recreated on re-render
+const FEATURED_PROJECTS: FeaturedProject[] = [
     {
       number: "01",
       category: "RF SIGNAL PROCESSING & SDR",
@@ -56,10 +53,10 @@ export default function ProjectsGrid() {
       githubUrl: "https://github.com/aniiiket08/smart-wearable-attendance-esp32",
       visualAlign: "right",
     },
-  ];
+];
 
-  // 2. Remaining Projects (Revealed behind "View All Projects")
-  const additionalProjects: FeaturedProject[] = [
+// Module scope — never recreated on re-render
+const ADDITIONAL_PROJECTS: FeaturedProject[] = [
     {
       number: "04",
       category: "COMPUTATIONAL BIOLOGY & DIGITAL TWINS",
@@ -71,7 +68,10 @@ export default function ProjectsGrid() {
       githubUrl: "https://github.com/aniiiket08/neurosleep-digital-twin",
       visualAlign: "left",
     },
-  ];
+];
+
+export default function ProjectsGrid() {
+  const [showAll, setShowAll] = useState(false);
 
   return (
     <section
@@ -94,7 +94,7 @@ export default function ProjectsGrid() {
 
         {/* Vertical Editorial Sequence (Alternating Left/Right) */}
         <div className="space-y-24 md:space-y-36">
-          {featuredProjects.map((project) => {
+        {FEATURED_PROJECTS.map((project) => {
             const isVisualRight = project.visualAlign === "right";
 
             return (
@@ -218,7 +218,7 @@ export default function ProjectsGrid() {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 className="space-y-24 md:space-y-36 overflow-hidden pt-4"
               >
-                {additionalProjects.map((project, idx) => {
+                {ADDITIONAL_PROJECTS.map((project, idx) => {
                   const isVisualRight = project.visualAlign === "right";
 
                   return (

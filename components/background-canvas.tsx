@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Ferrofluid from "./Ferrofluid";
 
 export default function BackgroundCanvas() {
-  const [paused, setPaused] = useState(false);
+  // Use a ref so scroll/resize events never trigger a React re-render or
+  // Ferrofluid prop change — the RAF loop reads this ref directly.
+  const pausedRef = useRef(false);
 
   useEffect(() => {
     const updatePauseState = () => {
-      // Pause background WebGL when scrolled past the hero or on mobile to eliminate GPU load
       const isMobile = window.innerWidth < 768;
       const isScrolledPastHero = window.scrollY > 850;
-      setPaused(isMobile || isScrolledPastHero);
+      pausedRef.current = isMobile || isScrolledPastHero;
     };
 
     updatePauseState();
@@ -28,7 +29,7 @@ export default function BackgroundCanvas() {
       aria-hidden="true"
       className="fixed inset-0 w-screen h-screen min-h-screen -z-10 pointer-events-none overflow-hidden bg-[#080808]"
     >
-      {/* 1. Very Dark, Atmospheric Ferrofluid WebGL Background */}
+      {/* Ferrofluid receives a stable pausedRef — no re-renders on scroll */}
       <Ferrofluid
         color="#1a1a1a"
         background="#080808"
@@ -45,13 +46,13 @@ export default function BackgroundCanvas() {
         mouseInteraction={false}
         mouseStrength={0}
         mouseRadius={0}
-        paused={paused}
+        pausedRef={pausedRef}
       />
 
-      {/* 2. Atmospheric Darkening Layer - ensures ~90% near-black, 10% subtle movement */}
+      {/* Atmospheric darkening layer */}
       <div className="absolute inset-0 bg-[#080808]/45 pointer-events-none" />
 
-      {/* 3. Deep Vignette to keep text and foreground content primary */}
+      {/* Deep vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,_transparent_40%,_rgba(8,8,8,0.85)_100%)] pointer-events-none" />
     </div>
   );

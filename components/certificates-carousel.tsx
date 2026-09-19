@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import {
@@ -46,7 +46,7 @@ export default function CertificatesCarousel({
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
   const [isHoverPaused, setIsHoverPaused] = useState(false);
   const [isInteractionPaused, setIsInteractionPaused] = useState(false);
-  const [inView, setInView] = useState(true);
+  const [inView, setInView] = useState(false); // start false — IO sets true when scrolled in
 
   // Measure group width and set initial scroll position to middle group
   const measureGroupWidth = useCallback(() => {
@@ -224,77 +224,81 @@ export default function CertificatesCarousel({
     }
   };
 
-  const renderCertificateGroup = (copy: number) => (
-    <div className="certificates-marquee-group" aria-hidden={copy > 0} key={copy}>
-      {certificates.map((cert, idx) => (
-        <div
-          key={`${copy}-${cert.id || idx}`}
-          onClick={() => {
-            if (!isDraggingRef.current) {
-              openCertificate(cert);
-            }
-          }}
-          className="group flex-shrink-0 w-[250px] sm:w-[295px] lg:w-[315px] flex flex-col rounded-2xl surface-glass transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent select-none"
-        >
-          {/* Thumbnail Preview without overlaid badge */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/40 bg-black/40 flex items-center justify-center p-4">
-            {cert.type === "image" ? (
-              <>
-                <Image
-                  src={cert.fileUrl}
-                  alt={cert.title}
-                  fill
-                  sizes="(max-width: 640px) 250px, (max-width: 1024px) 295px, 315px"
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105 pointer-events-none"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-              </>
-            ) : (
-              <div className="relative h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.06] rounded-xl pointer-events-none">
-                <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 flex items-center justify-center text-accent-soft mb-2 group-hover:scale-110 transition-transform">
-                  <Award className="w-5 h-5 text-accent-soft" />
+  const carouselGroups = useMemo(() => {
+    const renderGroup = (copy: number) => (
+      <div className="certificates-marquee-group" aria-hidden={copy > 0} key={copy}>
+        {certificates.map((cert, idx) => (
+          <div
+            key={`${copy}-${cert.id || idx}`}
+            onClick={() => {
+              if (!isDraggingRef.current) {
+                openCertificate(cert);
+              }
+            }}
+            className="group flex-shrink-0 w-[250px] sm:w-[295px] lg:w-[315px] flex flex-col rounded-2xl surface-glass transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent select-none"
+          >
+            {/* Thumbnail Preview */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/40 bg-black/40 flex items-center justify-center p-4">
+              {cert.type === "image" ? (
+                <>
+                  <Image
+                    src={cert.fileUrl}
+                    alt={cert.title}
+                    fill
+                    sizes="(max-width: 640px) 250px, (max-width: 1024px) 295px, 315px"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                </>
+              ) : (
+                <div className="relative h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.06] rounded-xl pointer-events-none">
+                  <div className="w-11 h-11 rounded-lg bg-accent/15 border border-accent/30 flex items-center justify-center text-accent-soft mb-2 group-hover:scale-110 transition-transform">
+                    <Award className="w-5 h-5 text-accent-soft" />
+                  </div>
+                  <span className="josefin-sans-2 text-xs font-semibold uppercase tracking-wider text-foreground/90 text-center line-clamp-1">
+                    {cert.issuer}
+                  </span>
+                  <span className="josefin-sans-2 text-[10px] uppercase tracking-[0.2em] text-muted/70 mt-1 flex items-center gap-1">
+                    <FileText className="w-3 h-3 text-accent-soft/70" />
+                    Certificate · PDF
+                  </span>
                 </div>
-                <span className="josefin-sans-2 text-xs font-semibold uppercase tracking-wider text-foreground/90 text-center line-clamp-1">
+              )}
+            </div>
+
+            {/* Card Body */}
+            <div className="flex flex-col flex-1 p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="josefin-sans-2 text-[11px] font-medium uppercase tracking-[0.2em] text-accent-soft truncate">
                   {cert.issuer}
                 </span>
-                <span className="josefin-sans-2 text-[10px] uppercase tracking-[0.2em] text-muted/70 mt-1 flex items-center gap-1">
-                  <FileText className="w-3 h-3 text-accent-soft/70" />
-                  Certificate · PDF
-                </span>
               </div>
-            )}
-          </div>
 
-          {/* Card Body - Styled with josefin-sans-2 */}
-          <div className="flex flex-col flex-1 p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="josefin-sans-2 text-[11px] font-medium uppercase tracking-[0.2em] text-accent-soft truncate">
-                {cert.issuer}
-              </span>
-            </div>
+              <h3 className="josefin-sans-2 text-[15px] sm:text-base font-semibold text-foreground group-hover:text-accent-soft transition-colors duration-200 line-clamp-2 leading-snug mb-3">
+                {cert.title}
+              </h3>
 
-            <h3 className="josefin-sans-2 text-[15px] sm:text-base font-semibold text-foreground group-hover:text-accent-soft transition-colors duration-200 line-clamp-2 leading-snug mb-3">
-              {cert.title}
-            </h3>
-
-            <div className="mt-auto pt-3 border-t border-border/40 flex items-center justify-between transition-colors">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/[0.12] bg-[var(--surface-soft)] text-xs josefin-sans-2 font-medium uppercase tracking-[0.16em] text-foreground/90 group-hover:text-foreground group-hover:border-accent-soft transition-colors cursor-pointer"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  openCertificate(cert);
-                }}
-              >
-                <span>View Certificate</span>
-                <ExternalLink className="w-3 h-3 text-accent-soft opacity-70 group-hover:opacity-100 transition-opacity" />
-              </button>
+              <div className="mt-auto pt-3 border-t border-border/40 flex items-center justify-between transition-colors">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/[0.12] bg-[var(--surface-soft)] text-xs josefin-sans-2 font-medium uppercase tracking-[0.16em] text-foreground/90 group-hover:text-foreground group-hover:border-accent-soft transition-colors cursor-pointer"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    openCertificate(cert);
+                  }}
+                >
+                  <span>View Certificate</span>
+                  <ExternalLink className="w-3 h-3 text-accent-soft opacity-70 group-hover:opacity-100 transition-opacity" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    );
+    return [renderGroup(0), renderGroup(1), renderGroup(2)];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [certificates]);
 
   return (
     <div className="relative w-full">
@@ -349,9 +353,7 @@ export default function CertificatesCarousel({
           className="certificates-marquee-track select-none pb-6 pt-2"
         >
           {/* 3 seamless groups ensure the carousel loops infinitely without ever ending */}
-          {renderCertificateGroup(0)}
-          {renderCertificateGroup(1)}
-          {renderCertificateGroup(2)}
+          {carouselGroups}
         </div>
       </div>
 

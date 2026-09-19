@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Briefcase, Medal, FlaskConical, Users, Target } from "lucide-react";
 
+// Module scope — never recreated on re-render
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -28,41 +29,41 @@ const cardVariants = {
   }),
 };
 
+const RESEARCH = [
+  {
+    icon: <FlaskConical className="w-5 h-5" />,
+    role: "3D Wi-Fi Based Floor Localization System",
+    period: "Jan 2026 - May 2026",
+    description:
+      "Research on indoor floor-level localization using Wi-Fi RSSI fingerprinting, USRP B210 SDR data, and a 1D CNN model. Published at the IEEE International Conference on Advanced Networks and Telecommunications (IEEE ICONAT) 2026.",
+  },
+  {
+    icon: <FlaskConical className="w-5 h-5" />,
+    role: "Automated Prostate Cancer Detection from Histopathology Images",
+    period: "Sep 2025 - Jan 2026",
+    description:
+      "Research using the SICAPv2 histopathology dataset with MobileNetV3 feature extraction and XGBoost classification for automated prostate cancer detection. Presented at the Singapore Global Conference on Networking, Signal Processing and Communications (SGCNSP) 2025, Singapore.",
+  },
+];
+
+const COCURRICULAR = [
+  {
+    icon: <Users className="w-5 h-5" />,
+    role: "Treasurer, ARC Stack Tech Club - Event Organizer & Coordinator - HR & Literary Club",
+    period: "2023 - Present",
+    description:
+      "Managed financing and fund allocation of Rs. 4,00,000+ across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 300+ students; contributed to literary activities and student engagement initiatives.",
+  },
+  {
+    icon: <Target className="w-5 h-5" />,
+    role: "NCC Sergeant & Contingent Leader - Belagavi Division",
+    period: "2019 - 2021",
+    description:
+      "Represented Karnataka & Goa Directorate; attended All India Thal Sainik Camp (TSC), New Delhi - Top 10 All India Rank, 0.22 Cal Rifle Shooting (National Level). Participated in IDSSC; qualified for AIGVMSC national-level selection stages.",
+  },
+];
+
 export default function BeyondTheCode() {
-  const research = [
-    {
-      icon: <FlaskConical className="w-5 h-5" />,
-      role: "3D Wi-Fi Based Floor Localization System",
-      period: "Jan 2026 - May 2026",
-      description:
-        "Research on indoor floor-level localization using Wi-Fi RSSI fingerprinting, USRP B210 SDR data, and a 1D CNN model. Published at the IEEE International Conference on Advanced Networks and Telecommunications (IEEE ICONAT) 2026.",
-    },
-    {
-      icon: <FlaskConical className="w-5 h-5" />,
-      role: "Automated Prostate Cancer Detection from Histopathology Images",
-      period: "Sep 2025 - Jan 2026",
-      description:
-        "Research using the SICAPv2 histopathology dataset with MobileNetV3 feature extraction and XGBoost classification for automated prostate cancer detection. Presented at the Singapore Global Conference on Networking, Signal Processing and Communications (SGCNSP) 2025, Singapore.",
-    },
-  ];
-
-  const cocurricular = [
-    {
-      icon: <Users className="w-5 h-5" />,
-      role: "Treasurer, ARC Stack Tech Club - Event Organizer & Coordinator - HR & Literary Club",
-      period: "2023 - Present",
-      description:
-        "Managed financing and fund allocation of Rs. 4,00,000+ across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 300+ students; contributed to literary activities and student engagement initiatives.",
-    },
-    {
-      icon: <Target className="w-5 h-5" />,
-      role: "NCC Sergeant & Contingent Leader - Belagavi Division",
-      period: "2019 - 2021",
-      description:
-        "Represented Karnataka & Goa Directorate; attended All India Thal Sainik Camp (TSC), New Delhi - Top 10 All India Rank, 0.22 Cal Rifle Shooting (National Level). Participated in IDSSC; qualified for AIGVMSC national-level selection stages.",
-    },
-  ];
-
   return (
     <motion.section
       id="beyond"
@@ -93,9 +94,8 @@ export default function BeyondTheCode() {
 
             <div className="relative">
               <div className="absolute left-[19px] top-2 bottom-2 w-px bg-border/60 hidden sm:block" />
-
               <div className="flex flex-col gap-6">
-                {research.map((item, idx) => (
+                {RESEARCH.map((item, idx) => (
                   <motion.div
                     key={idx}
                     custom={idx}
@@ -111,15 +111,10 @@ export default function BeyondTheCode() {
                       </div>
                       <div className="sm:hidden w-1.5 h-1.5 rounded-full bg-accent mt-2.5" />
                     </div>
-
                     <div className="flex-1 surface-glass surface-hover p-5 sm:p-6">
                       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2.5">
-                        <h3 className="h-card text-base sm:text-lg">
-                          {item.role}
-                        </h3>
-                        <span className="josefin-sans-2 font-eyebrow whitespace-nowrap">
-                          {item.period}
-                        </span>
+                        <h3 className="h-card text-base sm:text-lg">{item.role}</h3>
+                        <span className="josefin-sans-2 font-eyebrow whitespace-nowrap">{item.period}</span>
                       </div>
                       <p className="josefin-sans-1 text-subheading text-sm sm:text-[0.95rem]">
                         {item.description}
@@ -141,12 +136,11 @@ export default function BeyondTheCode() {
 
             <div className="relative">
               <div className="absolute left-[19px] top-2 bottom-2 w-px bg-border/60 hidden sm:block" />
-
               <div className="flex flex-col gap-6">
-                {cocurricular.map((item, idx) => (
+                {COCURRICULAR.map((item, idx) => (
                   <motion.div
                     key={idx}
-                    custom={idx + research.length}
+                    custom={idx + RESEARCH.length}
                     variants={cardVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -159,15 +153,10 @@ export default function BeyondTheCode() {
                       </div>
                       <div className="sm:hidden w-1.5 h-1.5 rounded-full bg-accent mt-2.5" />
                     </div>
-
                     <div className="flex-1 surface-glass surface-hover p-5 sm:p-6">
                       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2.5">
-                        <h3 className="h-card text-base sm:text-lg">
-                          {item.role}
-                        </h3>
-                        <span className="josefin-sans-2 font-eyebrow whitespace-nowrap">
-                          {item.period}
-                        </span>
+                        <h3 className="h-card text-base sm:text-lg">{item.role}</h3>
+                        <span className="josefin-sans-2 font-eyebrow whitespace-nowrap">{item.period}</span>
                       </div>
                       <p className="josefin-sans-1 text-subheading text-sm sm:text-[0.95rem]">
                         {item.description}

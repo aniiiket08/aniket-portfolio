@@ -83,7 +83,7 @@ const Lanyard = memo(function Lanyard({
       <Canvas
         frameloop={inView ? "always" : "never"}
         camera={{ position, fov }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         gl={{
           alpha: transparent,
           antialias: true,
@@ -158,7 +158,7 @@ interface BandProps {
   cardScale?: number;
 }
 
-function Band({
+const Band = memo(function Band({
   maxSpeed = 50,
   minSpeed = 0,
   isMobile = false,
@@ -371,4 +371,4 @@ function Band({
       </mesh>
     </>
   );
-}
+});
