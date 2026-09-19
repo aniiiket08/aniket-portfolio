@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, Medal, Palette, Video, Users, Target } from "lucide-react";
+import { Briefcase, Medal, FlaskConical, Users, Target } from "lucide-react";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -29,7 +29,24 @@ const cardVariants = {
 };
 
 export default function BeyondTheCode() {
-  const experience = [
+  const research = [
+    {
+      icon: <FlaskConical className="w-5 h-5" />,
+      role: "3D Wi-Fi Based Floor Localization System",
+      period: "Jan 2026 - May 2026",
+      description:
+        "Research on indoor floor-level localization using Wi-Fi RSSI fingerprinting, USRP B210 SDR data, and a 1D CNN model. Published at the IEEE International Conference on Advanced Networks and Telecommunications (IEEE ICONAT) 2026.",
+    },
+    {
+      icon: <FlaskConical className="w-5 h-5" />,
+      role: "Automated Prostate Cancer Detection from Histopathology Images",
+      period: "Sep 2025 - Jan 2026",
+      description:
+        "Research using the SICAPv2 histopathology dataset with MobileNetV3 feature extraction and XGBoost classification for automated prostate cancer detection. Presented at the Singapore Global Conference on Networking, Signal Processing and Communications (SGCNSP) 2025, Singapore.",
+    },
+  ];
+
+  const cocurricular = [
     {
       icon: <Users className="w-5 h-5" />,
       role: "Treasurer, ARC Stack Tech Club - Event Organizer & Coordinator - HR & Literary Club",
@@ -37,21 +54,6 @@ export default function BeyondTheCode() {
       description:
         "Managed financing and fund allocation of Rs. 3,00,000 across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 150+ students; contributed to literary activities and student engagement initiatives.",
     },
-    {
-      icon: (
-        <div className="flex -space-x-1.5">
-          <Palette className="w-5 h-5" />
-          <Video className="w-5 h-5" />
-        </div>
-      ),
-      role: "Freelance Graphic Designer & Video Editor",
-      period: "2018 - Present",
-      description:
-        "Delivered branding, promotional, and digital content projects; built client coordination and visual storytelling skills.",
-    },
-  ];
-
-  const extracurricular = [
     {
       icon: <Target className="w-5 h-5" />,
       role: "NCC Sergeant & Contingent Leader - Belagavi Division",
@@ -81,11 +83,11 @@ export default function BeyondTheCode() {
         </div>
 
         <div className="space-y-16">
-          {/* SUB-SECTION: EXPERIENCE */}
+          {/* SUB-SECTION: RESEARCH EXPERIENCE */}
           <div>
             <div className="flex items-center gap-3 mb-8">
               <Briefcase className="w-4 h-4 text-accent" />
-              <span className="josefin-sans-2 font-eyebrow">Experience</span>
+              <span className="josefin-sans-2 font-eyebrow">Research Experience</span>
               <div className="flex-1 h-px bg-border/60" />
             </div>
 
@@ -93,7 +95,7 @@ export default function BeyondTheCode() {
               <div className="absolute left-[19px] top-2 bottom-2 w-px bg-border/60 hidden sm:block" />
 
               <div className="flex flex-col gap-6">
-                {experience.map((item, idx) => (
+                {research.map((item, idx) => (
                   <motion.div
                     key={idx}
                     custom={idx}
@@ -129,11 +131,11 @@ export default function BeyondTheCode() {
             </div>
           </div>
 
-          {/* SUB-SECTION: EXTRACURRICULAR ACTIVITIES */}
+          {/* SUB-SECTION: CO-CURRICULAR ACTIVITIES */}
           <div>
             <div className="flex items-center gap-3 mb-8">
               <Medal className="w-4 h-4 text-accent" />
-              <span className="josefin-sans-2 font-eyebrow">Extracurricular Activities</span>
+              <span className="josefin-sans-2 font-eyebrow">Co-Curricular Activities</span>
               <div className="flex-1 h-px bg-border/60" />
             </div>
 
@@ -141,10 +143,10 @@ export default function BeyondTheCode() {
               <div className="absolute left-[19px] top-2 bottom-2 w-px bg-border/60 hidden sm:block" />
 
               <div className="flex flex-col gap-6">
-                {extracurricular.map((item, idx) => (
+                {cocurricular.map((item, idx) => (
                   <motion.div
                     key={idx}
-                    custom={idx + experience.length}
+                    custom={idx + research.length}
                     variants={cardVariants}
                     initial="hidden"
                     whileInView="visible"
