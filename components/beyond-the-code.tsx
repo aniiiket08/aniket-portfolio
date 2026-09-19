@@ -52,7 +52,7 @@ export default function BeyondTheCode() {
       role: "Treasurer, ARC Stack Tech Club - Event Organizer & Coordinator - HR & Literary Club",
       period: "2023 - Present",
       description:
-        "Managed financing and fund allocation of Rs. 3,00,000 across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 150+ students; contributed to literary activities and student engagement initiatives.",
+        "Managed financing and fund allocation of Rs. 4,00,000+ across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 300+ students; contributed to literary activities and student engagement initiatives.",
     },
     {
       icon: <Target className="w-5 h-5" />,
