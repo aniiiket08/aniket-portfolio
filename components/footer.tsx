@@ -77,13 +77,23 @@ export default function Footer() {
           >
             <Instagram className="w-4 h-4" />
           </a>
-          <a
-            href="mailto:iamaniketpatil08@gmail.com"
-            className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-muted/70 hover:text-foreground hover:border-white/40 hover:bg-white/[0.05] transition-all duration-200"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              navigator.clipboard.writeText("iamaniketpatil08@gmail.com");
+              const target = e.currentTarget;
+              const originalColor = target.style.color;
+              target.style.color = "var(--accent-soft)";
+              setTimeout(() => {
+                target.style.color = originalColor;
+              }, 2000);
+              window.location.href = "mailto:iamaniketpatil08@gmail.com";
+            }}
+            className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-muted/70 hover:text-foreground hover:border-white/40 hover:bg-white/[0.05] transition-all duration-200 cursor-pointer"
             aria-label="Email"
           >
             <Mail className="w-4 h-4" />
-          </a>
+          </button>
         </div>
 
         {/* 4. Subtle Minimal Copyright */}

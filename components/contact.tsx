@@ -58,21 +58,44 @@ export default function Contact() {
               DIRECT INQUIRIES
             </span>
             <div className="flex flex-col gap-4 relative z-20">
-              <a
-                href="mailto:iamaniketpatil08@gmail.com"
-                className="font-heading font-bold text-2xl sm:text-3xl md:text-4xl text-foreground hover:text-accent-soft transition-colors duration-200 tracking-tight break-all"
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigator.clipboard.writeText("iamaniketpatil08@gmail.com");
+                  const target = e.currentTarget;
+                  const originalText = target.innerText;
+                  target.innerText = "Copied to clipboard!";
+                  target.style.color = "var(--accent-soft)";
+                  setTimeout(() => {
+                    target.innerText = "iamaniketpatil08@gmail.com";
+                    target.style.color = "";
+                  }, 2000);
+                }}
+                className="font-heading font-bold text-left text-2xl sm:text-3xl md:text-4xl text-foreground hover:text-accent-soft transition-colors duration-200 tracking-tight break-all cursor-pointer"
               >
                 iamaniketpatil08@gmail.com
-              </a>
+              </button>
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="mailto:iamaniketpatil08@gmail.com"
-                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200 font-medium text-sm"
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigator.clipboard.writeText("iamaniketpatil08@gmail.com");
+                    const span = e.currentTarget.querySelector("span");
+                    if (span) {
+                      const originalText = span.innerText;
+                      span.innerText = "Copied!";
+                      setTimeout(() => {
+                        span.innerText = originalText;
+                      }, 2000);
+                    }
+                    window.location.href = "mailto:iamaniketpatil08@gmail.com";
+                  }}
+                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200 font-medium text-sm cursor-pointer"
                 >
                   <Mail className="w-4 h-4 text-accent-soft" />
                   <span>Send an email</span>
                   <ArrowUpRight className="w-4 h-4 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
-                </a>
+                </button>
                 <a
                   href="/resume/Resume_Aniket.pdf"
                   download
