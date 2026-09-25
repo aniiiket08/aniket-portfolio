@@ -70,6 +70,7 @@ export default function Contact() {
                     target.innerText = "iamaniketpatil08@gmail.com";
                     target.style.color = "";
                   }, 2000);
+                  window.open("https://mail.google.com/mail/?view=cm&fs=1&to=iamaniketpatil08@gmail.com", "_blank");
                 }}
                 className="font-heading font-bold text-left text-2xl sm:text-3xl md:text-4xl text-foreground hover:text-accent-soft transition-colors duration-200 tracking-tight break-all cursor-pointer"
               >
@@ -88,7 +89,7 @@ export default function Contact() {
                         span.innerText = originalText;
                       }, 2000);
                     }
-                    window.location.href = "mailto:iamaniketpatil08@gmail.com";
+                    window.open("https://mail.google.com/mail/?view=cm&fs=1&to=iamaniketpatil08@gmail.com", "_blank");
                   }}
                   className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200 font-medium text-sm cursor-pointer"
                 >

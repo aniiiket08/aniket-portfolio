@@ -87,7 +87,7 @@ export default function Footer() {
               setTimeout(() => {
                 target.style.color = originalColor;
               }, 2000);
-              window.location.href = "mailto:iamaniketpatil08@gmail.com";
+              window.open("https://mail.google.com/mail/?view=cm&fs=1&to=iamaniketpatil08@gmail.com", "_blank");
             }}
             className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-muted/70 hover:text-foreground hover:border-white/40 hover:bg-white/[0.05] transition-all duration-200 cursor-pointer"
             aria-label="Email"
