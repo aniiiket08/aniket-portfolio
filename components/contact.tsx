@@ -60,8 +60,6 @@ export default function Contact() {
             <div className="flex flex-col gap-4 relative z-20">
               <a
                 href="mailto:iamaniketpatil08@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="font-heading font-bold text-2xl sm:text-3xl md:text-4xl text-foreground hover:text-accent-soft transition-colors duration-200 tracking-tight break-all"
               >
                 iamaniketpatil08@gmail.com
@@ -69,8 +67,6 @@ export default function Contact() {
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="mailto:iamaniketpatil08@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200 font-medium text-sm"
                 >
                   <Mail className="w-4 h-4 text-accent-soft" />
