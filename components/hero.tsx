@@ -149,10 +149,9 @@ export default function Hero() {
           >
             {/* Lanyard container */}
             <div
-              className="w-full flex items-start justify-center"
+              className="w-full flex items-start justify-center -mt-8 sm:-mt-12 md:-mt-16 lg:-mt-[9rem]"
               style={{
                 height: "760px",
-                marginTop: "-9rem", 
                 paddingTop: 0,
               }}
             >
