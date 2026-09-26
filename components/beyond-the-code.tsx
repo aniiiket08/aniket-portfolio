@@ -1,7 +1,13 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Briefcase, Medal, FlaskConical, Users, Target } from "lucide-react";
+import { Briefcase, Medal, FlaskConical, Users, Target, X, ExternalLink } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const PdfCanvas = dynamic(() => import("./pdf-canvas"), {
+  ssr: false,
+});
 
 // Module scope — never recreated on re-render
 const sectionVariants = {
@@ -36,6 +42,11 @@ const RESEARCH = [
     period: "Jan 2026 - May 2026",
     description:
       "Research on indoor floor-level localization using Wi-Fi RSSI fingerprinting, USRP B210 SDR data, and a 1D CNN model. Published at the IEEE International Conference on Advanced Networks and Telecommunications (IEEE ICONAT) 2026.",
+    certificate: {
+      title: "ICONAT 2026 Presentation Certificate",
+      issuer: "IEEE",
+      fileUrl: "/certificates/ICONAT 2026 Presentation Certificate.pdf",
+    },
   },
   {
     icon: <FlaskConical className="w-5 h-5" />,
@@ -43,6 +54,11 @@ const RESEARCH = [
     period: "Sep 2025 - Jan 2026",
     description:
       "Research using the SICAPv2 histopathology dataset with MobileNetV3 feature extraction and XGBoost classification for automated prostate cancer detection. Presented at the Singapore Global Conference on Networking, Signal Processing and Communications (SGCNSP) 2025, Singapore.",
+    certificate: {
+      title: "SGCNSP 2025 Presentation Certificate",
+      issuer: "SGCNSP",
+      fileUrl: "/certificates/SGCNSP 2025 Presentation Certificate.pdf",
+    },
   },
 ];
 
@@ -64,6 +80,29 @@ const COCURRICULAR = [
 ];
 
 export default function BeyondTheCode() {
+  const [selectedCert, setSelectedCert] = useState<{title: string, issuer: string, fileUrl: string} | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (selectedCert) {
+      document.body.style.overflow = "hidden";
+      const frame = requestAnimationFrame(() => closeButtonRef.current?.focus());
+      return () => {
+        cancelAnimationFrame(frame);
+        document.body.style.overflow = "unset";
+      };
+    }
+    document.body.style.overflow = "unset";
+    return undefined;
+  }, [selectedCert]);
+
+  const handleModalKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setSelectedCert(null);
+    }
+  };
+
   return (
     <motion.section
       id="beyond"
@@ -113,7 +152,19 @@ export default function BeyondTheCode() {
                     </div>
                     <div className="flex-1 surface-glass surface-hover p-5 sm:p-6">
                       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2.5">
-                        <h3 className="h-card text-base sm:text-lg">{item.role}</h3>
+                        <div className="flex items-center flex-wrap gap-4 sm:gap-5">
+                          <h3 className="h-card text-base sm:text-lg">{item.role}</h3>
+                          {item.certificate && (
+                            <button
+                              type="button"
+                              onClick={() => setSelectedCert(item.certificate)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 bg-white/[0.03] text-[11px] sm:text-[12px] josefin-sans-1 text-foreground/90 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all duration-300 cursor-pointer group"
+                            >
+                              <span>View Certificate</span>
+                              <ExternalLink className="w-[11px] h-[11px] text-accent-soft opacity-80 group-hover:opacity-100 transition-opacity" />
+                            </button>
+                          )}
+                        </div>
                         <span className="josefin-sans-2 font-eyebrow whitespace-nowrap">{item.period}</span>
                       </div>
                       <p className="josefin-sans-1 text-subheading text-sm sm:text-[0.95rem]">
@@ -169,6 +220,52 @@ export default function BeyondTheCode() {
           </div>
         </div>
       </div>
+
+      {/* Certificate Inspection Modal */}
+      {selectedCert && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="certificate-dialog-title"
+          onKeyDown={handleModalKeyDown}
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            className="relative flex max-h-[92vh] w-full max-w-4xl flex-col items-center bg-[#080808] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="w-full flex items-center justify-between border-b border-white/10 px-4 py-3 bg-white/[0.02] pr-14 text-left sm:px-6">
+              <div>
+                <span className="josefin-sans-2 text-xs uppercase tracking-[0.2em] text-accent-soft">
+                  {selectedCert.issuer}
+                </span>
+                <h2
+                  id="certificate-dialog-title"
+                  className="josefin-sans-2 mt-0.5 text-base sm:text-lg font-bold text-foreground"
+                >
+                  {selectedCert.title}
+                </h2>
+              </div>
+            </div>
+            <button
+              type="button"
+              ref={closeButtonRef}
+              onClick={() => setSelectedCert(null)}
+              aria-label="Close certificate"
+              className="absolute right-3.5 top-3.5 z-10 rounded-lg border border-white/20 bg-black/60 p-2 text-white shadow-lg transition-colors hover:border-accent hover:bg-white/[0.1] cursor-pointer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="w-full overflow-auto max-h-[82vh] p-2 flex items-center justify-center">
+              <PdfCanvas
+                src={selectedCert.fileUrl}
+                className="max-h-[80vh] max-w-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </motion.section>
   );
 }

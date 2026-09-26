@@ -19,7 +19,6 @@ const certificateCatalog = [
   ["Infosys DEVOPS.pdf", "DevOps Mindset", "Infosys"],
   ["Infosys JENKIN.pdf", "Jenkins for DevOps", "Infosys"],
   ["Forage Deloitte Australia Data Analytics.pdf", "Deloitte Australia Data Analytics", "Forage"],
-  ["SGCNSP 2025 Presentation Certificate.pdf", "SCGNSP 2025 - Presentation Certificate", "SCGNSP 2025"],
   ["NABH Certificate.pdf", "Digital Health", "NABH"],
   ["PrepInsta CN.pdf", "Computer Networks", "PrepInsta"],
   ["PrepInsta HTML.pdf", "HTML", "PrepInsta"],
