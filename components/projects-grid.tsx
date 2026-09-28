@@ -24,7 +24,7 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
       number: "01",
       category: "RF SIGNAL PROCESSING & SDR",
       title: "3D Wi-Fi Based Floor Localization System",
-      image: "/projects/wifi-localization.webp",
+      image: "/projects/indoor-floor-prediction-wifi-sdr.png",
       description:
         "Indoor floor localization system using Wi-Fi RSSI fingerprinting with a USRP B210 SDR and a 1D CNN, achieving 93.34% validation accuracy. Published at IEEE ICONAT 2026.",
       tags: ["Python", "SDR", "Deep Learning", "CNN"],
@@ -35,7 +35,7 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
       number: "02",
       category: "EDGE AI & MEDICAL HISTOPATHOLOGY",
       title: "Automated Prostate Cancer Detection",
-      image: "/projects/prostate-detection.webp",
+      image: "/projects/automated-prostate-cancer-detection.png",
       description:
         "Edge-optimized prostate cancer detection pipeline from histopathology images using MobileNetV3 and XGBoost, achieving 84.37% accuracy and 0.9243 ROC-AUC on the SICAPv2 dataset. Presented at SGCNSP 2025, Singapore.",
       tags: ["MobileNetV3", "XGBoost", "Medical Imaging", "Edge AI"],
@@ -44,13 +44,13 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
     },
     {
       number: "03",
-      category: "EMBEDDED IOT & BIOMETRICS",
-      title: "Smart Wearable Attendance System",
-      image: "/projects/wearable-attendance.webp",
+      category: "COMPUTATIONAL BIOLOGY & DIGITAL TWINS",
+      title: "NeuroSleep Digital Twin Platform",
+      image: "/projects/neurosleep-digital-twin.png",
       description:
-        "ESP32-based wearable for automated attendance using ECG-based authentication and GPS geofencing, with real-time sync to Firebase.",
-      tags: ["ESP32", "IoT", "Firebase", "ECG Biometrics"],
-      githubUrl: "https://github.com/aniiiket08/smart-wearable-attendance-esp32",
+        "A multi-scale Digital Twin combining VCell metabolic simulation, spiking neuronal modeling, Cytoscape.js brain mapping, and ML-based brain-state classification to study simulated sleep deprivation.",
+      tags: ["Python", "React", "VCell", "Cytoscape.js"],
+      githubUrl: "https://github.com/aniiiket08/neurosleep-digital-twin",
       visualAlign: "right",
     },
 ];
@@ -59,14 +59,25 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
 const ADDITIONAL_PROJECTS: FeaturedProject[] = [
     {
       number: "04",
-      category: "COMPUTATIONAL BIOLOGY & DIGITAL TWINS",
-      title: "NeuroSleep Digital Twin Platform",
-      image: "/projects/neurosleep-digital-twin.webp",
+      category: "EMBEDDED IOT & BIOMETRICS",
+      title: "Smart Wearable Attendance System",
+      image: "/projects/smart-wearable-attendance-esp32.png",
       description:
-        "A multi-scale computational Digital Twin linking cellular metabolic simulation (VCell), a spiking neuronal model, brain connectivity mapping (Cytoscape.js), and ML-based brain-state classification into one interactive dashboard for studying simulated sleep-deprivation effects.",
-      tags: ["Python", "React", "VCell", "Cytoscape.js"],
-      githubUrl: "https://github.com/aniiiket08/neurosleep-digital-twin",
+        "ESP32-based wearable for automated attendance using ECG-based authentication and GPS geofencing, with real-time sync to Firebase.",
+      tags: ["ESP32", "IoT", "Firebase", "ECG Biometrics"],
+      githubUrl: "https://github.com/aniiiket08/smart-wearable-attendance-esp32",
       visualAlign: "left",
+    },
+    {
+      number: "05",
+      category: "MACHINE LEARNING & NEUROIMAGING",
+      title: "ADHD Diagnostic Modeling & fMRI Analysis",
+      image: "/projects/adhd-diagnostic-modeling-fmri.png",
+      description:
+        "ML-based ADHD classification using neuroimaging and behavioral data with PCA, SMOTE, SVM, Random Forest, and XGBoost, plus fMRI-based analysis of sex-related brain-connectivity patterns. Top 10 Global - WiDS Datathon 2025.",
+      tags: ["Machine Learning", "Neuroimaging", "fMRI", "XGBoost"],
+      githubUrl: "https://github.com/aniiiket08/adhd-diagnostic-modeling-fmri.git",
+      visualAlign: "right",
     },
 ];
 
@@ -195,7 +206,7 @@ export default function ProjectsGrid() {
                           fill
                           loading="lazy"
                           sizes="(max-width: 1024px) 100vw, 55vw"
-                          className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                         />
                       </div>
                     </a>
@@ -313,7 +324,7 @@ export default function ProjectsGrid() {
                                 fill
                                 loading="lazy"
                                 sizes="(max-width: 1024px) 100vw, 55vw"
-                                className="object-cover object-top transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
+                                className="object-cover object-center transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                               />
                             </div>
                           </a>
