@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Libre_Baskerville, Archivo, Josefin_Sans } from "next/font/google";
+import { Libre_Baskerville, Archivo, Josefin_Sans, Martel_Sans } from "next/font/google";
 import BackgroundCanvas from "@/components/background-canvas";
+import LoadingIntro from "@/components/loading-intro";
 import "./globals.css";
 
 const libreBaskerville = Libre_Baskerville({
@@ -20,6 +21,13 @@ const archivo = Archivo({
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   variable: "--font-josefin",
+  display: "swap",
+});
+
+const martelSans = Martel_Sans({
+  weight: ["300", "400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-martel",
   display: "swap",
 });
 
@@ -65,9 +73,35 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth bg-[#070410]">
+      <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              #loading-intro-ssr {
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                background-color: #070707;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              #loading-intro-ssr.hide {
+                display: none;
+              }
+            `,
+          }}
+        />
+      </head>
       <body
-        className={`${libreBaskerville.variable} ${archivo.variable} ${josefinSans.variable} font-body text-foreground antialiased min-h-screen flex flex-col relative selection:bg-accent selection:text-foreground`}
+        className={`${libreBaskerville.variable} ${archivo.variable} ${josefinSans.variable} ${martelSans.variable} font-body text-foreground antialiased min-h-screen flex flex-col relative selection:bg-accent selection:text-foreground`}
       >
+        {/* SSR Loading Overlay - Shows immediately on first paint */}
+        <div id="loading-intro-ssr" />
+
+        {/* Loading Intro */}
+        <LoadingIntro />
+
         {/* Persistent Site-wide Ferrofluid WebGL Background Layer */}
         <BackgroundCanvas />
 

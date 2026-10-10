@@ -1,0 +1,20 @@
+{
+  "admin@meetingorganizer.internal": [
+    { "start": "2026-10-05T09:00:00Z", "end": "2026-10-05T10:00:00Z", "title": "Department Briefing" },
+    { "start": "2026-10-05T14:00:00Z", "end": "2026-10-05T15:30:00Z", "title": "Faculty Senate" }
+  ],
+  "coordinator@meetingorganizer.internal": [
+    { "start": "2026-10-05T11:00:00Z", "end": "2026-10-05T12:00:00Z", "title": "Lab Prep" },
+    { "start": "2026-10-05T15:00:00Z", "end": "2026-10-05T16:00:00Z", "title": "Student Office Hours" }
+  ],
+  "approver@meetingorganizer.internal": [
+    { "start": "2026-10-05T10:00:00Z", "end": "2026-10-05T11:30:00Z", "title": "Curriculum Review" },
+    { "start": "2026-10-05T14:00:00Z", "end": "2026-10-05T15:00:00Z", "title": "Research Grant Call" }
+  ],
+  "attendee1@meetingorganizer.internal": [
+    { "start": "2026-10-05T13:00:00Z", "end": "2026-10-05T14:00:00Z", "title": "Project Sprint Sync" }
+  ],
+  "attendee2@meetingorganizer.internal": [
+    { "start": "2026-10-05T09:30:00Z", "end": "2026-10-05T10:30:00Z", "title": "Vendor Call" }
+  ]
+}

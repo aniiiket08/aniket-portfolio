@@ -32,6 +32,7 @@
   --font-sans: var(--font-body), "Archivo", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-heading), "Libre Baskerville", Georgia, serif;
   --font-body: var(--font-body), "Archivo", system-ui, -apple-system, sans-serif;
+  --font-martel: var(--font-martel), "Martel Sans", system-ui, sans-serif;
 }
 
 /* Custom resets & smooth scrolling */
