@@ -18,15 +18,16 @@ export default function LoadingIntro() {
 
     // Check if user has seen intro this session
     const hasSeenIntro = sessionStorage.getItem(STORAGE_KEY);
-    
+
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    
+
     if (hasSeenIntro || prefersReducedMotion) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsVisible(false);
       return;
     }
-    
+
     // Prevent scroll during intro
     document.body.style.overflow = "hidden";
 
@@ -63,12 +64,19 @@ export default function LoadingIntro() {
     <div
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#070707]"
       style={{
-        transform: isExiting ? "translateY(-100%)" : "translateY(0)",
+        // translate3d (not translateY+translateZ) guarantees a 3D rendering context
+        // in all browsers. backfaceVisibility:hidden locks the element to its own
+        // GPU compositor layer from mount — no late promotion, no stutter on any device.
+        transform: isExiting ? "translate3d(0, -100%, 0)" : "translate3d(0, 0, 0)",
         transition: isExiting ? "transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)" : "none",
+        willChange: "transform",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
       }}
       aria-hidden="true"
     >
-      {/* Text with progressive left-to-right reveal using mask */}
+      {/* clip-path reveal: GPU-composited on all modern browsers.
+          mask-size was CPU-painted on every frame, causing jank on low-end devices. */}
       <div className="relative inline-block px-8">
         <h1
           className="select-none text-center"
@@ -79,25 +87,15 @@ export default function LoadingIntro() {
             letterSpacing: "-0.015em",
             lineHeight: 1.2,
             color: "var(--foreground)",
-            WebkitMaskImage: isRevealing 
-              ? "linear-gradient(to right, black 0%, black 100%)"
-              : "linear-gradient(to right, black 0%, black 0%, transparent 0%)",
-            maskImage: isRevealing
-              ? "linear-gradient(to right, black 0%, black 100%)"
-              : "linear-gradient(to right, black 0%, black 0%, transparent 0%)",
-            WebkitMaskSize: isRevealing ? "100% 100%" : "0% 100%",
-            maskSize: isRevealing ? "100% 100%" : "0% 100%",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            WebkitMaskPosition: "left center",
-            maskPosition: "left center",
-            transition: isRevealing 
-              ? "mask-size 1.5s cubic-bezier(0.33, 0, 0.2, 1), -webkit-mask-size 1.5s cubic-bezier(0.33, 0, 0.2, 1)" 
+            // inset(0 100% 0 0) = fully clipped from right → inset(0 0% 0 0) = fully visible
+            clipPath: isRevealing ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+            transition: isRevealing
+              ? "clip-path 1.5s cubic-bezier(0.33, 0, 0.2, 1)"
               : "none",
-            willChange: isRevealing ? "mask-size, -webkit-mask-size" : "auto",
+            willChange: "clip-path",
           }}
         >
-          Aniket's Portfolio
+          Aniket&apos;s Portfolio
         </h1>
       </div>
     </div>

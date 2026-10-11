@@ -39,7 +39,7 @@ const RESEARCH = [
     role: "3D Wi-Fi Based Floor Localization System",
     period: "Jan 2026 – May 2026",
     description:
-      "Research on indoor floor-level localization using Wi-Fi RSSI fingerprinting, USRP B210 SDR data, and a 1D CNN model. Published at the IEEE International Conference on Advanced Networks and Telecommunications (IEEE ICONAT) 2026.",
+      "Research on indoor floor-level localization using Wi-Fi RSSI fingerprinting, USRP B210 SDR data and a 1D CNN model. Published at the IEEE International Conference on Advanced Networks and Telecommunications (IEEE ICONAT) 2026.",
     certificate: {
       title: "ICONAT 2026 Presentation Certificate",
       issuer: "IEEE",
@@ -120,7 +120,7 @@ function TimelineGroup({
             {/* Content — no card, sits directly beside the line */}
             <div className="flex-1 pb-2 min-w-0">
               {/* Period eyebrow */}
-              <span className="josefin-sans-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60 mb-2 block">
+              <span className="space-grotesk-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60 mb-2 block">
                 {item.period}
               </span>
 
@@ -130,7 +130,7 @@ function TimelineGroup({
               </h3>
 
               {/* Description */}
-              <p className="josefin-sans-1 text-[0.925rem] sm:text-[0.975rem] leading-[1.8] text-muted/80 max-w-[720px]">
+              <p className="space-grotesk-1 text-[0.925rem] sm:text-[0.975rem] leading-[1.8] text-muted/80 max-w-[720px]">
                 {item.description}
               </p>
 
@@ -139,7 +139,7 @@ function TimelineGroup({
                 <button
                   type="button"
                   onClick={() => onCertClick(item.certificate!)}
-                  className="mt-4 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-white/20 bg-white/[0.04] text-[11px] josefin-sans-2 tracking-[0.12em] uppercase text-foreground/70 hover:text-foreground hover:border-white/40 hover:bg-white/[0.08] transition-all duration-200 cursor-pointer"
+                  className="mt-4 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-white/20 bg-white/[0.04] text-[11px] space-grotesk-2 tracking-[0.12em] uppercase text-foreground/70 hover:text-foreground hover:border-white/40 hover:bg-white/[0.08] transition-all duration-200 cursor-pointer"
                 >
                   <span>View Certificate</span>
                   <ExternalLink className="w-3 h-3 opacity-70" />
@@ -192,15 +192,15 @@ export default function BeyondTheCode() {
         <div className="mb-14 md:mb-20">
           <div className="flex items-center gap-3 mb-4">
             <span className="h-px w-8 bg-accent-soft" />
-            <span className="josefin-sans-2 text-[11px] uppercase tracking-[0.22em] text-accent-soft">
+            <span className="space-grotesk-2 text-[11px] uppercase tracking-[0.22em] text-accent-soft">
               Beyond The Code
             </span>
           </div>
           <h2 className="h-section text-[clamp(1.75rem,4vw,3rem)]">
             Experience &amp; Activities
           </h2>
-          <p className="josefin-sans-1 text-subheading mt-3 max-w-lg text-[0.9rem]">
-            Leadership, creative pursuits, and meaningful contributions alongside technical work.
+          <p className="space-grotesk-1 text-subheading mt-3 max-w-lg text-[0.9rem]">
+            Leadership, creative pursuits and meaningful contributions alongside technical work.
           </p>
         </div>
 
@@ -211,7 +211,7 @@ export default function BeyondTheCode() {
             {/* Sub-section label */}
             <div className="flex items-center gap-3 mb-8">
               <Briefcase className="w-3.5 h-3.5 text-accent/70" />
-              <span className="josefin-sans-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60">
+              <span className="space-grotesk-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60">
                 Research Experience
               </span>
               <div className="flex-1 h-px bg-border/40" />
@@ -228,7 +228,7 @@ export default function BeyondTheCode() {
           <div>
             <div className="flex items-center gap-3 mb-8">
               <Medal className="w-3.5 h-3.5 text-accent/70" />
-              <span className="josefin-sans-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60">
+              <span className="space-grotesk-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60">
                 Co-Curricular Activities
               </span>
               <div className="flex-1 h-px bg-border/40" />
@@ -260,7 +260,7 @@ export default function BeyondTheCode() {
           >
             <div className="w-full flex items-center border-b border-white/10 px-5 py-3.5 bg-white/[0.02] pr-14">
               <div>
-                <span className="josefin-sans-2 text-[10px] uppercase tracking-[0.22em] text-accent-soft block mb-0.5">
+                <span className="space-grotesk-2 text-[10px] uppercase tracking-[0.22em] text-accent-soft block mb-0.5">
                   {selectedCert.issuer}
                 </span>
                 <h2

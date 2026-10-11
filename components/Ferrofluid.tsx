@@ -428,6 +428,7 @@ const Ferrofluid = ({
       if (canvas.parentNode === container) container.removeChild(canvas);
       (renderer as any)?.dispose?.();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     color,
     background,

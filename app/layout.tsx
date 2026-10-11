@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Libre_Baskerville, Archivo, Josefin_Sans, Martel_Sans } from "next/font/google";
+import { Libre_Baskerville, Archivo, Space_Grotesk, Martel_Sans } from "next/font/google";
 import BackgroundCanvas from "@/components/background-canvas";
 import LoadingIntro from "@/components/loading-intro";
 import "./globals.css";
@@ -18,9 +18,9 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const josefinSans = Josefin_Sans({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-josefin",
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -34,11 +34,11 @@ const martelSans = Martel_Sans({
 export const metadata: Metadata = {
   title: "Aniket Patil - Portfolio",
   description:
-    "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects, and signal processing applications.",
+    "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects and signal processing applications.",
   openGraph: {
     title: "Aniket Patil - Portfolio",
     description:
-      "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects, and signal processing applications.",
+      "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects and signal processing applications.",
     images: [
       {
         url: "/og-image.png",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Aniket Patil - Portfolio",
     description:
-      "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects, and signal processing applications.",
+      "Computer Science (AI) undergrad at KLE Technological University building ML-driven systems, embedded projects and signal processing applications.",
     images: ["/og-image.png"],
   },
   icons: {
@@ -94,7 +94,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${libreBaskerville.variable} ${archivo.variable} ${josefinSans.variable} ${martelSans.variable} font-body text-foreground antialiased min-h-screen flex flex-col relative selection:bg-accent selection:text-foreground`}
+        className={`${libreBaskerville.variable} ${archivo.variable} ${spaceGrotesk.variable} ${martelSans.variable} font-body text-foreground antialiased min-h-screen flex flex-col relative selection:bg-accent selection:text-foreground`}
       >
         {/* SSR Loading Overlay - Shows immediately on first paint */}
         <div id="loading-intro-ssr" />

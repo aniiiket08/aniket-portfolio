@@ -33,6 +33,7 @@
   --font-heading: var(--font-heading), "Libre Baskerville", Georgia, serif;
   --font-body: var(--font-body), "Archivo", system-ui, -apple-system, sans-serif;
   --font-martel: var(--font-martel), "Martel Sans", system-ui, sans-serif;
+  --font-space-grotesk: var(--font-space-grotesk), "Space Grotesk", sans-serif;
 }
 
 /* Custom resets & smooth scrolling */
@@ -136,18 +137,18 @@ body {
 
 /* ---------- TYPOGRAPHY OVERRIDES ----------- */
 /* Keep these final so they win only where intentionally applied. */
-.josefin-sans-1,
-.josefin-sans-2 {
-  font-family: var(--font-josefin), "Josefin Sans", sans-serif;
+.space-grotesk-1,
+.space-grotesk-2 {
+  font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
 
-.josefin-sans-1 {
+.space-grotesk-1 {
   font-weight: 400;
 }
 
-.josefin-sans-2 {
+.space-grotesk-2 {
   font-weight: 500;
 }
 

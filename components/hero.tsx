@@ -63,14 +63,14 @@ export default function Hero() {
             className="lg:col-span-7 flex flex-col items-start"
           >
             {/* 1. Restrained Uppercase Availability Badge */}
-            <div className="mb-5">
-              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md border border-border/80 bg-[var(--surface-soft)] backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                <span className="josefin-sans-2 text-[10px] font-eyebrow uppercase tracking-[0.22em] text-foreground">
+            <div className="mb-5 sm:mb-6">
+              <div className="inline-flex items-center gap-3 sm:gap-3.5 px-4 py-1.5 sm:py-2 rounded-full border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" aria-hidden="true" />
+                <span className="space-grotesk-2 text-[10.5px] sm:text-[11px] font-eyebrow uppercase tracking-[0.18em] text-foreground/85 leading-none">
                   AVAILABLE
                 </span>
-                <span className="h-2.5 w-px bg-border/80" />
-                <span className="josefin-sans-1 text-xs font-body text-muted font-normal tracking-normal whitespace-nowrap">
+                <span className="h-3 w-px bg-white/[0.12] shrink-0" aria-hidden="true" />
+                <span className="space-grotesk-1 text-xs sm:text-[12.5px] text-muted/80 font-normal tracking-normal whitespace-nowrap leading-none">
                   For Research &amp; Project Work
                 </span>
               </div>
@@ -101,12 +101,12 @@ export default function Hero() {
             {/* 3. Small uppercase descriptor with generous letter spacing */}
             <div className="flex items-center gap-3 text-[11px] font-eyebrow uppercase tracking-[0.22em] text-accent-soft mt-4">
               <span className="h-px w-8 bg-accent-soft" />
-              <span className="josefin-sans-2">MACHINE LEARNING / EMBEDDED SYSTEMS / SOFTWARE ENGINEERING</span>
+              <span className="space-grotesk-2">MACHINE LEARNING / EMBEDDED SYSTEMS / SOFTWARE ENGINEERING</span>
             </div>
 
             {/* 4. Refined editorial summary */}
-            <p className="josefin-sans-1 text-base sm:text-[1.0625rem] text-[var(--foreground-soft)] font-body font-light max-w-lg leading-relaxed mt-6">
-              Computer Science (Artificial Intelligence) undergraduate at KLE Technological University, working across machine learning, RF/SDR, embedded systems, and computational biology through applied research and projects.
+            <p className="space-grotesk-1 text-base sm:text-[1.0625rem] text-[var(--foreground-soft)] font-body font-light max-w-lg leading-relaxed mt-6">
+              Computer Science (Artificial Intelligence) undergraduate at KLE Technological University, working across machine learning, RF/SDR, embedded systems and computational biology through applied research and projects.
             </p>
 
             {/* 5. Minimal Ghost/Outline Action Buttons */}
@@ -184,7 +184,7 @@ export default function Hero() {
           className="max-w-[1050px] mt-12 md:mt-20 pt-12 border-t border-border/30"
         >
           <WarpText
-            text={"BUILDING SYSTEMS THAT CONNECT\nAI, HARDWARE, AND RESEARCH."}
+            text={"BUILDING SYSTEMS THAT CONNECT\nAI, HARDWARE AND RESEARCH."}
             color="#EDE8F6"
             fontSize="clamp(2.1rem, 5.4vw, 4.4rem)"
             fontWeight={700}
@@ -212,14 +212,14 @@ export default function Hero() {
           className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-[1050px] mt-8"
         >
           <div className="md:col-span-5 flex flex-col justify-start gap-4">
-            <p className="josefin-sans-1 text-base sm:text-lg font-body font-medium leading-relaxed text-foreground border-l-2 border-accent pl-4 py-1">
-              Building end-to-end systems across machine learning, embedded systems, and computational research.
+            <p className="space-grotesk-1 text-base sm:text-lg font-body font-medium leading-relaxed text-foreground border-l-2 border-accent pl-4 py-1">
+              Building end-to-end systems across machine learning, embedded systems and computational research.
             </p>
             <div className="pl-4 text-[11px] sm:text-xs font-body font-light leading-snug text-muted">
-              <h3 className="josefin-sans-2 text-[10px] uppercase tracking-[0.16em] text-accent-soft mb-1.5">
+              <h3 className="space-grotesk-2 text-[10px] uppercase tracking-[0.16em] text-accent-soft mb-1.5">
                 Key Focus Areas
               </h3>
-              <ul className="josefin-sans-1 list-none pl-0 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 whitespace-nowrap text-left text-[11px] sm:text-xs text-foreground/75">
+              <ul className="space-grotesk-1 list-none pl-0 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 whitespace-nowrap text-left text-[11px] sm:text-xs text-foreground/75">
                 <li className="flex items-center justify-start gap-2"><span className="font-bold text-accent-soft">-</span><span>Machine Learning &amp; Deep Learning</span></li>
                 <li className="flex items-center justify-start gap-2"><span className="font-bold text-accent-soft sm:translate-x-1">-</span><span>Software &amp; Backend Development</span></li>
                 <li className="flex items-center justify-start gap-2"><span className="font-bold text-accent-soft">-</span><span>Embedded Systems, IoT &amp; Hardware</span></li>
@@ -231,10 +231,10 @@ export default function Hero() {
           </div>
 
           <div className="md:col-span-7 flex flex-col gap-4 text-muted font-body font-light text-sm sm:text-base leading-relaxed">
-            <p className="josefin-sans-1">
-              My work ranges from Wi-Fi RSSI fingerprinting for indoor localization to multi-scale digital twin simulations, machine learning, and edge-optimized medical imaging pipelines.
+            <p className="space-grotesk-1">
+              My work ranges from Wi-Fi RSSI fingerprinting for indoor localization to multi-scale digital twin simulations, machine learning and edge-optimized medical imaging pipelines.
             </p>
-            <p className="josefin-sans-1">
+            <p className="space-grotesk-1">
               Whether training neural models on RF signals, developing ML systems, building backend applications, working with embedded hardware, analyzing medical images, or simulating biological systems with VCell, I focus on taking ideas from research to complete, reliable systems that work in the real world.
             </p>
           </div>

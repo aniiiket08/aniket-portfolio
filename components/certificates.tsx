@@ -5,6 +5,7 @@ import CertificatesCarousel, {
 } from "./certificates-carousel";
 
 const certificateCatalog = [
+  ["NABH Certificate.pdf", "Digital Health", "NABH"],
   ["Oracle Agentic AI Certified Foundations Associate.pdf", "Oracle Agentic AI Certified Foundations", "Oracle"],
   ["Cisco Introduction to Cybersecurity.pdf", "Introduction to Cybersecurity", "Cisco"],
   ["Google Cloud Data Analytics.pdf", "Data Analytics", "Google Cloud"],
@@ -19,7 +20,6 @@ const certificateCatalog = [
   ["Infosys DEVOPS.pdf", "DevOps Mindset", "Infosys"],
   ["Infosys JENKIN.pdf", "Jenkins for DevOps", "Infosys"],
   ["Forage Deloitte Australia Data Analytics.pdf", "Deloitte Australia Data Analytics", "Forage"],
-  ["NABH Certificate.pdf", "Digital Health", "NABH"],
   ["PrepInsta CN.pdf", "Computer Networks", "PrepInsta"],
   ["PrepInsta HTML.pdf", "HTML", "PrepInsta"],
 ] as const;
@@ -69,15 +69,15 @@ export default function Certificates() {
         <div className="mb-10 md:mb-14">
           <div className="flex items-center gap-3 font-eyebrow mb-3">
             <span className="h-px w-8 bg-accent-soft" />
-            <span className="josefin-sans-2 text-xs uppercase tracking-[0.2em] text-accent-soft">
+            <span className="space-grotesk-2 text-xs uppercase tracking-[0.2em] text-accent-soft">
               CREDENTIALS &amp; CERTIFICATIONS
             </span>
           </div>
           <h2 className="h-section text-[clamp(1.75rem,4vw,3rem)]">
             Certificates
           </h2>
-          <p className="josefin-sans-1 text-subheading mt-2.5 max-w-xl">
-            Course certifications, technical training, and academic credentials.
+          <p className="space-grotesk-1 text-subheading mt-2.5 max-w-xl">
+            Course certifications, technical training and academic credentials.
           </p>
         </div>
 

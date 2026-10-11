@@ -14,17 +14,17 @@ Computer Science (AI) undergraduate at KLE Technological University, building ML
 
 ## About
 
-This repository contains the source for my personal portfolio: a single-page site showcasing my research, projects, technical stack, and credentials across machine learning, embedded systems, and computational biology.
+This repository contains the source for my personal portfolio: a single-page site showcasing my research, projects, technical stack and credentials across machine learning, embedded systems and computational biology.
 
 ## Sections
 
 - **Hero**: Introduction and current focus
-- **Tech Stack**: Languages, embedded/hardware, AI/ML tools, and backend/DevOps
+- **Tech Stack**: Languages, embedded/hardware, AI/ML tools and backend/DevOps
 - **Projects**: Featured research and engineering work, including:
   - 3D Wi-Fi Based Floor Localization System (IEEE ICONAT 2026)
   - Automated Prostate Cancer Detection (SGCNSP 2025)
   - Smart Wearable Attendance System (ESP32 + ECG biometrics)
-- **Experience**: Leadership, freelance work, and extracurriculars
+- **Experience**: Leadership, freelance work and extracurriculars
 - **Certificates**: Course certificates and credentials
 - **Contact**: Ways to get in touch
 

@@ -103,8 +103,11 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right: Header prioritized actions: LinkedIn + Download Resume */}
+        {/* Right: Header prioritized actions: Divider + LinkedIn + Download Resume */}
         <div className="hidden md:flex items-center gap-2.5 pr-1">
+          {/* Vertical divider between Contact link and LinkedIn icon */}
+          <div className="w-px h-[26px] bg-white/[0.12] mx-1.5 shrink-0" aria-hidden="true" />
+
           <a
             href="https://www.linkedin.com/in/aniket0804/"
             target="_blank"
@@ -117,10 +120,10 @@ export default function Navbar() {
           <a
             href="/resume/Resume_Aniket.pdf"
             download
-            className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-lg border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft transition-all duration-200"
+            className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-lg border border-white/[0.2] bg-transparent text-foreground/85 hover:border-white/[0.35] hover:text-foreground transition-all duration-200"
           >
             <span>Download Resume</span>
-            <ArrowDownToLine className="w-3.5 h-3.5 opacity-70 group-hover:translate-y-0.5 group-hover:opacity-100 transition-all duration-200" />
+            <ArrowDownToLine className="w-3.5 h-3.5 opacity-80 group-hover:translate-y-0.5 group-hover:opacity-100 transition-all duration-200" />
           </a>
         </div>
       </nav>
