@@ -109,7 +109,7 @@ export default function Navbar() {
           <div className="w-px h-[26px] bg-white/[0.12] mx-1.5 shrink-0" aria-hidden="true" />
 
           <a
-            href="https://www.linkedin.com/in/aniket0804/"
+            href="https://www.linkedin.com/in/aniiiket08/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted hover:text-accent-soft p-1.5 rounded-lg border border-transparent hover:border-border hover:bg-white/[0.04] transition-all"

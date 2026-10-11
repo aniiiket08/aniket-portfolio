@@ -19,7 +19,7 @@ const sectionVariants = {
 
 const SOCIAL_LINKS = [
   { icon: <Github className="w-4 h-4" />, url: "https://github.com/aniiiket08", label: "GitHub" },
-  { icon: <Linkedin className="w-4 h-4" />, url: "https://www.linkedin.com/in/aniket0804/", label: "LinkedIn" },
+  { icon: <Linkedin className="w-4 h-4" />, url: "https://www.linkedin.com/in/aniiiket08/", label: "LinkedIn" },
   { icon: <Instagram className="w-4 h-4" />, url: "https://www.instagram.com/aniiiket08/", label: "Instagram" },
 ];
 
