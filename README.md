@@ -4,7 +4,7 @@
 
 building things, mostly supervised by a cat.
 
-[portfolio](https://aniket08.vercel.app/) · [github](https://github.com/aniiiket08) · [linkedin](https://www.linkedin.com/in/aniket0804/)
+[portfolio](https://aniket08.vercel.app/) · [github](https://github.com/aniiiket08) · [linkedin](https://www.linkedin.com/in/aniketpatil08/) · [x](https://x.com/AniketPatil08) · [instagram](https://www.instagram.com/aniiiket08) · [discord](https://discord.gg/XzKFT3Mq2)
 
 <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="400" alt="A tiny cat waving">
 
