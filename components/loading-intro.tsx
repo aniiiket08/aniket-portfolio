@@ -1,60 +1,55 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-const STORAGE_KEY = "portfolio-intro-seen";
+import { useEffect, useRef, useState } from "react";
 
 export default function LoadingIntro() {
   const [isVisible, setIsVisible] = useState(true);
   const [isRevealing, setIsRevealing] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Hide SSR overlay immediately when component mounts
+    // Cleanly remove the static SSR overlay from DOM
     const ssrOverlay = document.getElementById("loading-intro-ssr");
     if (ssrOverlay) {
       ssrOverlay.classList.add("hide");
+      ssrOverlay.remove();
     }
 
-    // Check if user has seen intro this session
-    const hasSeenIntro = sessionStorage.getItem(STORAGE_KEY);
-
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (hasSeenIntro || prefersReducedMotion) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsVisible(false);
-      return;
-    }
-
-    // Prevent scroll during intro
+    // Lock page scroll during the intro animation
     document.body.style.overflow = "hidden";
 
-    // Start text reveal after 300ms delay
+    // 1. Begin the text clip-path reveal smoothly (200ms initial breath)
     const revealTimer = setTimeout(() => {
       setIsRevealing(true);
-    }, 300);
+    }, 200);
 
-    // Start exit transition at 2.4s
+    // 2. Begin upward curtain slide at 1550ms (allows 1.1s reveal + 250ms hold)
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
-    }, 2400);
+    }, 1550);
 
-    // Complete removal at 3.0s
-    const doneTimer = setTimeout(() => {
-      sessionStorage.setItem(STORAGE_KEY, "true");
+    // 3. Fallback safety cleanup in case transitionend event is deferred by tab inactivity
+    const fallbackTimer = setTimeout(() => {
       document.body.style.overflow = "";
       setIsVisible(false);
-    }, 3000);
+    }, 2550);
 
     return () => {
       clearTimeout(revealTimer);
       clearTimeout(exitTimer);
-      clearTimeout(doneTimer);
+      clearTimeout(fallbackTimer);
       document.body.style.overflow = "";
     };
   }, []);
+
+  const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+    // Only dismiss once the outer container has fully completed its upward transform
+    if (e.target === containerRef.current && e.propertyName === "transform" && isExiting) {
+      document.body.style.overflow = "";
+      setIsVisible(false);
+    }
+  };
 
   if (!isVisible) {
     return null;
@@ -62,22 +57,29 @@ export default function LoadingIntro() {
 
   return (
     <div
+      ref={containerRef}
+      onTransitionEnd={handleTransitionEnd}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#070707]"
       style={{
-        // translate3d (not translateY+translateZ) guarantees a 3D rendering context
-        // in all browsers. backfaceVisibility:hidden locks the element to its own
-        // GPU compositor layer from mount — no late promotion, no stutter on any device.
         transform: isExiting ? "translate3d(0, -100%, 0)" : "translate3d(0, 0, 0)",
-        transition: isExiting ? "transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)" : "none",
+        transition: "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1)",
         willChange: "transform",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
+        pointerEvents: isExiting ? "none" : "auto",
       }}
       aria-hidden="true"
     >
-      {/* clip-path reveal: GPU-composited on all modern browsers.
-          mask-size was CPU-painted on every frame, causing jank on low-end devices. */}
-      <div className="relative inline-block px-8">
+      {/* Text container with coordinated upward glide on curtain lift */}
+      <div
+        className="relative inline-block px-8"
+        style={{
+          transform: isExiting ? "translate3d(0, -45px, 0)" : "translate3d(0, 0, 0)",
+          opacity: isExiting ? 0.3 : 1,
+          transition: "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.7s ease",
+          willChange: "transform, opacity",
+        }}
+      >
         <h1
           className="select-none text-center"
           style={{
@@ -87,11 +89,8 @@ export default function LoadingIntro() {
             letterSpacing: "-0.015em",
             lineHeight: 1.2,
             color: "var(--foreground)",
-            // inset(0 100% 0 0) = fully clipped from right → inset(0 0% 0 0) = fully visible
             clipPath: isRevealing ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
-            transition: isRevealing
-              ? "clip-path 1.5s cubic-bezier(0.33, 0, 0.2, 1)"
-              : "none",
+            transition: "clip-path 1.1s cubic-bezier(0.25, 1, 0.5, 1)",
             willChange: "clip-path",
           }}
         >
