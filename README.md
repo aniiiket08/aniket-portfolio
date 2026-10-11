@@ -14,8 +14,6 @@ the cat says hi. that's pretty much it.
 
 <div align="center">
 
-made with a little love & a suspicious amount of cat appreciation ♡
-
 <sub>© 2026 Aniket Patil · Cat not included (she's priceless)</sub>
 
 </div>
