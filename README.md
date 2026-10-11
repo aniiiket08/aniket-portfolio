@@ -1,10 +1,14 @@
 <div align="center">
 
-# Aniket Patil - Portfolio
+```
+  /\_/\
+ ( o.o )  < hi. you found my repo.
+  > ^ <
+```
 
-**Researcher · Intelligent Systems · Computational Builder**
+# Aniket Patil's Portfolio
 
-Computer Science (AI) undergraduate at KLE Technological University, building ML-driven systems, embedded projects and signal processing applications.
+*Teaches computers to think. Teaches a cat to supervise.*
 
 [**Live Site**](https://aniket08.vercel.app/) · [GitHub](https://github.com/aniiiket08) · [LinkedIn](https://www.linkedin.com/in/aniket0804/)
 
@@ -12,53 +16,37 @@ Computer Science (AI) undergraduate at KLE Technological University, building ML
 
 ---
 
-## About
+## What is this?
 
-This repository contains the source for my personal portfolio: a single-page site showcasing my research, projects, technical stack and credentials across machine learning, embedded systems and computational biology.
+My portfolio website. It has my projects, my work, and my certificates, all in one page, so you don't have to scroll through my life story.
 
-## Sections
+The cat is not part of the code. She just sits on the keyboard and calls it "contributing."
 
-- **Hero**: Introduction and current focus
-- **Tech Stack**: Languages, embedded/hardware, AI/ML tools and backend/DevOps
-- **Projects**: Featured research and engineering work, including:
-  - 3D Wi-Fi Based Floor Localization System (IEEE ICONAT 2026)
-  - Automated Prostate Cancer Detection (SGCNSP 2025)
-  - Smart Wearable Attendance System (ESP32 + ECG biometrics)
-- **Experience**: Leadership, freelance work and extracurriculars
-- **Certificates**: Course certificates and credentials
-- **Contact**: Ways to get in touch
+## What's inside
 
-## Tech Stack
+- 🐾 **Hero**: Me, saying hi
+- 🐾 **Tech Stack**: The tools I use and occasionally argue with
+- 🐾 **Projects**: Things I built that actually worked (eventually)
+- 🐾 **Experience**: Clubs, freelance work, and other ways I avoid sleeping
+- 🐾 **Certificates**: Proof I finish courses
+- 🐾 **Contact**: Say hi, I'm friendly
 
-**Languages:** Python · C++ · Java · SQL
-**Embedded/Hardware:** ESP32 · Arduino · USRP B210 (SDR) · Raspberry Pi
-**AI/ML:** TensorFlow/Keras · Scikit-learn · XGBoost · OpenCV · NumPy · Pandas
-**Frontend/Backend:** React · React Native · Spring Boot · Firebase · MongoDB
-**Tools:** Docker · Jenkins · Git/GitHub · REST APIs
-
-## Getting Started
-
-Clone the repository and install dependencies:
+## Run it locally
 
 ```bash
 git clone https://github.com/aniiiket08/portfolio.git
 cd portfolio
 npm install
-```
-
-Run the development server:
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it locally.
+Open [http://localhost:3000](http://localhost:3000) and it should work. If it doesn't, the cat probably unplugged something.
 
 ## Deployment
 
-This project is deployed on [Vercel](https://vercel.com/). Pushing to the main branch triggers an automatic deployment.
+Push to `main` and Vercel deploys it by itself. I just push and the site updates.
 
-## Contact
+## Say hi
 
 - **Email:** [iamaniketpatil08@gmail.com](mailto:iamaniketpatil08@gmail.com)
 - **LinkedIn:** [aniket0804](https://www.linkedin.com/in/aniket0804/)
@@ -67,5 +55,13 @@ This project is deployed on [Vercel](https://vercel.com/). Pushing to the main b
 ---
 
 <div align="center">
-<sub>© 2026 Aniket Patil</sub>
+
+```
+ /\_/\
+( -.- )  zzz... thanks for visiting
+ > ^ <
+```
+
+<sub>© 2026 Aniket Patil · Cat not included (she's priceless)</sub>
+
 </div>
