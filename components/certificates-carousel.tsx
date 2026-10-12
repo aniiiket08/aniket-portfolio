@@ -254,11 +254,12 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
 
   const isDraggingRef = useRef<boolean>(false);
   const dragStartRef = useRef<{ startX: number; scrollLeft: number } | null>(null);
+  const touchStartRef = useRef<{ startX: number; startY: number } | null>(null);
 
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
   const [isHoverPaused, setIsHoverPaused] = useState(false);
   const [isInteractionPaused, setIsInteractionPaused] = useState(false);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(true);
 
   const measureGroupWidth = useCallback(() => {
     if (trackRef.current && trackRef.current.children.length > 0) {
@@ -285,10 +286,13 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
 
   useEffect(() => {
     const el = scrollContainerRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.05 }
+      { threshold: 0 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -302,7 +306,11 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
     const loop = (time: number) => {
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
-      const gw = groupWidthRef.current;
+      let gw = groupWidthRef.current;
+      if (gw <= 0) {
+        measureGroupWidth();
+        gw = groupWidthRef.current;
+      }
       if (gw > 0 && !isHoverPaused && !isInteractionPaused && !selectedCert && inView) {
         scrollPosRef.current += 38 * dt;
         if (scrollPosRef.current >= 2 * gw) scrollPosRef.current -= gw;
@@ -313,7 +321,7 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
     };
     rafId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafId);
-  }, [isHoverPaused, isInteractionPaused, selectedCert, inView]);
+  }, [isHoverPaused, isInteractionPaused, selectedCert, inView, measureGroupWidth]);
 
   const handleScroll = () => {
     const container = scrollContainerRef.current;
@@ -338,7 +346,10 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
 
   const resumeAfterInteraction = () => {
     if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    resumeTimerRef.current = setTimeout(() => setIsInteractionPaused(false), 1400);
+    resumeTimerRef.current = setTimeout(() => {
+      setIsInteractionPaused(false);
+      setIsHoverPaused(false);
+    }, 1400);
   };
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
@@ -371,6 +382,29 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
     dragStartRef.current = null;
     resumeAfterInteraction();
     window.setTimeout(() => { isDraggingRef.current = false; }, 80);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    pauseForInteraction();
+    setIsHoverPaused(false);
+    if (e.touches.length > 0) {
+      touchStartRef.current = { startX: e.touches[0].clientX, startY: e.touches[0].clientY };
+      isDraggingRef.current = false;
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStartRef.current || e.touches.length === 0) return;
+    const dx = Math.abs(e.touches[0].clientX - touchStartRef.current.startX);
+    if (dx > 6) {
+      isDraggingRef.current = true;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    touchStartRef.current = null;
+    resumeAfterInteraction();
+    window.setTimeout(() => { isDraggingRef.current = false; }, 100);
   };
 
   const handleScrollNav = (direction: "left" | "right") => {
@@ -446,17 +480,27 @@ export default function CertificatesCarousel({ certificates }: CertificatesCarou
         ref={scrollContainerRef}
         onScroll={handleScroll}
         className="certificates-marquee-viewport relative overflow-x-auto overflow-y-hidden scrollbar-none [mask-image:linear-gradient(to_right,transparent_0%,black_1.5rem,black_calc(100%-1.5rem),transparent_100%)] sm:[mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem,black_calc(100%-2.5rem),transparent_100%)]"
-        onMouseEnter={() => setIsHoverPaused(true)}
+        onMouseEnter={() => {
+          if (typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches) {
+            setIsHoverPaused(true);
+          }
+        }}
         onMouseLeave={() => setIsHoverPaused(false)}
-        onFocus={() => setIsHoverPaused(true)}
+        onFocus={(e) => {
+          if ((e.target as HTMLElement)?.matches?.(":focus-visible")) {
+            setIsHoverPaused(true);
+          }
+        }}
         onBlur={() => setIsHoverPaused(false)}
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onTouchStart={pauseForInteraction}
-        onTouchEnd={resumeAfterInteraction}
-        style={{ touchAction: "pan-y" }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        style={{ touchAction: "pan-x pan-y" }}
       >
         <div ref={trackRef} className="certificates-marquee-track select-none pb-6 pt-2">
           {carouselGroups}

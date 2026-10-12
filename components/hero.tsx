@@ -20,17 +20,28 @@ export default function Hero() {
 
   useEffect(() => {
     let timeoutId: number | undefined;
-    let idleCallbackId: number | undefined;
-    const load = () => setLoadLanyard(true);
+    let loaded = false;
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      setLoadLanyard(true);
+    };
 
-    if (typeof window.requestIdleCallback === "function") {
-      idleCallbackId = window.requestIdleCallback(load, { timeout: 120 });
-    } else {
-      timeoutId = window.setTimeout(load, 60);
-    }
+    const onIntroDone = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(load, { timeout: 300 });
+      } else {
+        window.setTimeout(load, 100);
+      }
+    };
+
+    window.addEventListener("portfolio-intro-complete", onIntroDone, { once: true });
+    window.addEventListener("portfolio-intro-exit", onIntroDone, { once: true });
+    timeoutId = window.setTimeout(load, 2400);
 
     return () => {
-      if (idleCallbackId !== undefined) window.cancelIdleCallback(idleCallbackId);
+      window.removeEventListener("portfolio-intro-complete", onIntroDone);
+      window.removeEventListener("portfolio-intro-exit", onIntroDone);
       if (timeoutId !== undefined) window.clearTimeout(timeoutId);
     };
   }, []);

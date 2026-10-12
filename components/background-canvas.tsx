@@ -4,21 +4,39 @@ import { useEffect, useRef } from "react";
 import Ferrofluid from "./Ferrofluid";
 
 export default function BackgroundCanvas() {
-  // Use a ref so scroll/resize events never trigger a React re-render or
-  // Ferrofluid prop change — the RAF loop reads this ref directly.
-  const pausedRef = useRef(false);
+  // Start paused while the loading screen is active so GPU resources are 100% dedicated to smooth intro animation
+  const pausedRef = useRef(true);
 
   useEffect(() => {
+    let isIntroActive = true;
+
     const updatePauseState = () => {
+      if (isIntroActive) {
+        pausedRef.current = true;
+        return;
+      }
       const isMobile = window.innerWidth < 768;
       const isScrolledPastHero = window.scrollY > 850;
       pausedRef.current = isMobile || isScrolledPastHero;
     };
 
     updatePauseState();
+
+    const handleIntroExit = () => {
+      isIntroActive = false;
+      updatePauseState();
+    };
+
+    window.addEventListener("portfolio-intro-exit", handleIntroExit, { once: true });
+    window.addEventListener("portfolio-intro-complete", handleIntroExit, { once: true });
+    const fallbackTimer = setTimeout(handleIntroExit, 2400);
+
     window.addEventListener("scroll", updatePauseState, { passive: true });
     window.addEventListener("resize", updatePauseState, { passive: true });
     return () => {
+      clearTimeout(fallbackTimer);
+      window.removeEventListener("portfolio-intro-exit", handleIntroExit);
+      window.removeEventListener("portfolio-intro-complete", handleIntroExit);
       window.removeEventListener("scroll", updatePauseState);
       window.removeEventListener("resize", updatePauseState);
     };
