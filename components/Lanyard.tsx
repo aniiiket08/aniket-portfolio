@@ -20,6 +20,7 @@ extend({ MeshLineGeometry, MeshLineMaterial });
 
 const CARD_GLB = "/card.glb";
 const LANYARD_PNG = "/lanyard.png";
+useGLTF.preload(CARD_GLB);
 
 // 1x1 transparent pixel
 const BLANK_PIXEL =

@@ -16,35 +16,8 @@ const Lanyard = dynamic(() => import("./Lanyard"), {
 });
 
 export default function Hero() {
-  const [loadLanyard, setLoadLanyard] = useState(false);
-
-  useEffect(() => {
-    let timeoutId: number | undefined;
-    let loaded = false;
-    const load = () => {
-      if (loaded) return;
-      loaded = true;
-      setLoadLanyard(true);
-    };
-
-    const onIntroDone = () => {
-      if (typeof window.requestIdleCallback === "function") {
-        window.requestIdleCallback(load, { timeout: 300 });
-      } else {
-        window.setTimeout(load, 100);
-      }
-    };
-
-    window.addEventListener("portfolio-intro-complete", onIntroDone, { once: true });
-    window.addEventListener("portfolio-intro-exit", onIntroDone, { once: true });
-    timeoutId = window.setTimeout(load, 2400);
-
-    return () => {
-      window.removeEventListener("portfolio-intro-complete", onIntroDone);
-      window.removeEventListener("portfolio-intro-exit", onIntroDone);
-      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
-    };
-  }, []);
+  // Start loading Lanyard immediately during the loading screen so it's ready when the curtain lifts
+  const [loadLanyard] = useState(true);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
