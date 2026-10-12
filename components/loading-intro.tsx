@@ -6,6 +6,7 @@ export default function LoadingIntro() {
   const [isVisible, setIsVisible] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const coverRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // Cleanly remove the static SSR overlay from DOM
@@ -18,18 +19,37 @@ export default function LoadingIntro() {
     // Lock page scroll during the intro animation
     document.body.style.overflow = "hidden";
 
-    // Begin upward curtain slide at 1550ms (allows 1.1s reveal + 250ms hold)
+    // Hardware-accelerated Web Animations API wipe
+    const cover = coverRef.current;
+    let anim: Animation | null = null;
+    if (cover) {
+      anim = cover.animate(
+        [
+          { transform: "translate3d(0, 0, 0)" },
+          { transform: "translate3d(100%, 0, 0)" },
+        ],
+        {
+          duration: 1400,
+          delay: 350,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          fill: "forwards",
+        }
+      );
+    }
+
+    // Begin upward curtain slide at 2000ms (0.35s initial black screen + 1.4s reveal + 0.25s hold)
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
-    }, 1550);
+    }, 2000);
 
     // Fallback safety cleanup in case transitionend event is deferred by tab inactivity
     const fallbackTimer = setTimeout(() => {
       document.body.style.overflow = "";
       setIsVisible(false);
-    }, 2550);
+    }, 3000);
 
     return () => {
+      anim?.cancel();
       clearTimeout(exitTimer);
       clearTimeout(fallbackTimer);
       document.body.style.overflow = "";
@@ -49,70 +69,72 @@ export default function LoadingIntro() {
   }
 
   return (
-    <>
-      {/* Pure CSS keyframes — no React re-render, runs entirely on compositor */}
-      <style>{`
-        @keyframes loading-cover-wipe {
-          0% { transform: scaleX(1) translateZ(0); }
-          100% { transform: scaleX(0) translateZ(0); }
-        }
-      `}</style>
+    <div
+      ref={containerRef}
+      onTransitionEnd={handleTransitionEnd}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#070707] px-6 overflow-hidden"
+      style={{
+        transform: isExiting ? "translate3d(0, -100%, 0)" : "translate3d(0, 0, 0)",
+        transition: "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1)",
+        willChange: "transform",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
+        pointerEvents: isExiting ? "none" : "auto",
+      }}
+      aria-hidden="true"
+    >
+      {/* Text container with coordinated upward glide on curtain lift */}
       <div
-        ref={containerRef}
-        onTransitionEnd={handleTransitionEnd}
-        className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#070707]"
+        className="relative inline-block select-none"
         style={{
-          transform: isExiting ? "translate3d(0, -100%, 0)" : "translate3d(0, 0, 0)",
-          transition: "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1)",
-          willChange: "transform",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          pointerEvents: isExiting ? "none" : "auto",
+          transform: isExiting ? "translate3d(0, -45px, 0)" : "translate3d(0, 0, 0)",
+          opacity: isExiting ? 0.3 : 1,
+          transition: "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.7s ease",
+          willChange: "transform, opacity",
         }}
-        aria-hidden="true"
       >
-        {/* Text container with coordinated upward glide on curtain lift */}
-        <div
-          className="relative inline-block px-8"
+        <h1
+          className="text-center"
           style={{
-            transform: isExiting ? "translate3d(0, -45px, 0)" : "translate3d(0, 0, 0)",
-            opacity: isExiting ? 0.3 : 1,
-            transition: "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.7s ease",
-            willChange: "transform, opacity",
-            overflow: "hidden",
+            fontFamily: "var(--font-martel), 'Martel Sans', sans-serif",
+            fontSize: "clamp(2.5rem, 7vw, 5rem)",
+            fontWeight: 300,
+            letterSpacing: "-0.015em",
+            lineHeight: 1.2,
+            color: "var(--foreground)",
+            whiteSpace: "nowrap",
+            transform: "translateZ(0)",
           }}
         >
-          <h1
-            className="select-none text-center"
-            style={{
-              fontFamily: "var(--font-martel), 'Martel Sans', sans-serif",
-              fontSize: "clamp(2.5rem, 7vw, 5rem)",
-              fontWeight: 300,
-              letterSpacing: "-0.015em",
-              lineHeight: 1.2,
-              color: "var(--foreground)",
-              transform: "translateZ(0)",
-            }}
-          >
-            Aniket&apos;s Portfolio
-          </h1>
-          {/* Pure CSS animated cover — scaleX on compositor, zero main-thread work */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundColor: "#070707",
-              transformOrigin: "right center",
-              animation: "loading-cover-wipe 1.1s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards",
-              willChange: "transform",
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-            }}
-          />
-        </div>
+          Aniket&apos;s Portfolio
+        </h1>
+
+        {/* 
+          GPU-composited feathered cover:
+          - Starts covering the text completely with solid #070707
+          - 48px soft feathered leading gradient prevents jagged subpixel text strobing
+          - No parent overflow:hidden clipping ensures zero CPU rasterization on low-end devices
+        */}
+        <div
+          ref={coverRef}
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "-8px",
+            bottom: "-8px",
+            left: "-48px",
+            right: "-24px",
+            background:
+              "linear-gradient(to right, rgba(7, 7, 7, 0) 0%, #070707 48px, #070707 100%)",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            pointerEvents: "none",
+          }}
+        />
       </div>
-    </>
+    </div>
   );
 }
+
 
