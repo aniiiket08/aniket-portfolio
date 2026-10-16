@@ -45,15 +45,8 @@ const CERT_CATEGORY: Record<string, Category> = {
   "Microsoft Introduction to the Basics of Azure Services.pdf": "cloud",
   "NPTEL Introduction to Machine Learning.pdf":           "ai-ml",
   "HackerRank Software_Engineer_Intern.pdf":              "achievement",
-  "HackerRank  SQL_Basic.pdf":                            "data",
-  "HackerRank Python_Basic.pdf":                          "achievement",
-  "Forage TATA GenAI Powered Data Analytics.pdf":         "data",
   "Infosys DEVOPS.pdf":                                   "devops",
-  "Infosys JENKIN.pdf":                                   "devops",
-  "Forage Deloitte Australia Data Analytics.pdf":         "data",
   "NABH Certificate.pdf":                                 "health",
-  "PrepInsta CN.pdf":                                     "networking",
-  "PrepInsta HTML.pdf":                                   "web",
 };
 
 // ── Lightweight inline SVG icons per category ─────────────────────────────────

@@ -72,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth bg-[#070410]">
+    <html lang="en" className="dark scroll-smooth bg-black">
       <head>
         <style
           dangerouslySetInnerHTML={{
@@ -81,13 +81,12 @@ export default function RootLayout({
                 position: fixed;
                 inset: 0;
                 z-index: 9999;
-                background-color: #070707;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                background-color: #000000;
+                transition: opacity 0.2s ease-out;
               }
               #loading-intro-ssr.hide {
-                display: none;
+                opacity: 0;
+                pointer-events: none;
               }
             `,
           }}

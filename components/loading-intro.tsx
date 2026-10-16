@@ -5,21 +5,20 @@ import { useEffect, useRef, useState } from "react";
 export default function LoadingIntro() {
   const [isVisible, setIsVisible] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const textContainerRef = useRef<HTMLDivElement | null>(null);
-  const coverRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
-    // Cleanly remove the static SSR overlay from DOM
+    // 1. Cleanly remove the static SSR overlay once client mounts
     const ssrOverlay = document.getElementById("loading-intro-ssr");
     if (ssrOverlay) {
-      ssrOverlay.classList.add("hide");
-      ssrOverlay.remove();
+      ssrOverlay.style.opacity = "0";
+      setTimeout(() => ssrOverlay.remove(), 100);
     }
 
-    // Lock page scroll during the intro animation
+    // 2. Lock page scroll during the intro
     document.body.style.overflow = "hidden";
 
-    // Fast-path for users who prefer reduced motion
+    // 3. Accessibility bypass for prefers-reduced-motion
     if (
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -33,11 +32,10 @@ export default function LoadingIntro() {
     let isCancelled = false;
     let wipeAnim: Animation | null = null;
     let exitAnim: Animation | null = null;
-    let textAnim: Animation | null = null;
     let holdTimer: ReturnType<typeof setTimeout> | null = null;
 
     const runSequence = async () => {
-      // Ensure fonts are ready before animating so text metrics don't shift mid-wipe
+      // Ensure font is fully loaded so metrics never shift
       if (typeof document !== "undefined" && document.fonts?.ready) {
         try {
           await document.fonts.ready;
@@ -48,22 +46,36 @@ export default function LoadingIntro() {
 
       if (isCancelled) return;
 
-      const cover = coverRef.current;
       const container = containerRef.current;
-      const textContainer = textContainerRef.current;
+      const text = textRef.current;
+      if (!container || !text) return;
 
-      if (!cover || !container || !textContainer) return;
+      // Allow 1 RAF frame for initial DOM paint and GPU composite sync
+      await new Promise((r) => requestAnimationFrame(r));
+      if (isCancelled) return;
 
-      // Phase 1: Silky-smooth compositor-driven text wipe
-      wipeAnim = cover.animate(
+      // Unhide text container so WAAPI animation starts smoothly from darkness
+      text.style.visibility = "visible";
+
+      // ── Phase 1: Text emerges from darkness after link is opened ──────────
+      // Starts fully hidden (clipPath: 100%, opacity: 0) and smoothly reveals
+      wipeAnim = text.animate(
         [
-          { transform: "translate3d(0, 0, 0)" },
-          { transform: "translate3d(100%, 0, 0)" },
+          {
+            clipPath: "inset(0 100% 0 0)",
+            opacity: "0",
+            transform: "translate3d(0, 16px, 0)",
+          },
+          {
+            clipPath: "inset(0 0% 0 0)",
+            opacity: "1",
+            transform: "translate3d(0, 0, 0)",
+          },
         ],
         {
-          duration: 1300,
-          delay: 260,
-          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          duration: 950,
+          delay: 220, // Clean pause in complete darkness before text emerges
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)", // Silky Apple-style ease-out
           fill: "forwards",
         }
       );
@@ -76,38 +88,24 @@ export default function LoadingIntro() {
 
       if (isCancelled) return;
 
-      // Phase 2: Brief satisfying hold on the fully revealed text
+      // ── Phase 2: Calm, satisfying hold on the revealed title ─────────────
       holdTimer = setTimeout(() => {
         if (isCancelled) return;
 
-        // Signal background systems to prepare for reveal
+        // Disable pointer-events immediately as curtain starts lifting
+        container.style.pointerEvents = "none";
         window.dispatchEvent(new CustomEvent("portfolio-intro-exit"));
 
-        // Disable pointer events immediately as curtain begins lifting
-        container.style.pointerEvents = "none";
-
-        // Phase 3: Hardware-composited upward curtain lift
+        // ── Phase 3: Hardware-composited curtain lift ─────────────────────
+        // Lifts the entire screen upwards without conflicting sub-transforms
         exitAnim = container.animate(
           [
             { transform: "translate3d(0, 0, 0)" },
             { transform: "translate3d(0, -100%, 0)" },
           ],
           {
-            duration: 850,
-            easing: "cubic-bezier(0.76, 0, 0.24, 1)",
-            fill: "forwards",
-          }
-        );
-
-        // Coordinated upward glide and soft fade on text
-        textAnim = textContainer.animate(
-          [
-            { transform: "translate3d(0, 0, 0)", opacity: "1" },
-            { transform: "translate3d(0, -45px, 0)", opacity: "0.2" },
-          ],
-          {
             duration: 800,
-            easing: "cubic-bezier(0.76, 0, 0.24, 1)",
+            easing: "cubic-bezier(0.77, 0, 0.175, 1)", // Fluid in-out cubic
             fill: "forwards",
           }
         );
@@ -117,23 +115,22 @@ export default function LoadingIntro() {
           setIsVisible(false);
           window.dispatchEvent(new CustomEvent("portfolio-intro-complete"));
         };
-      }, 240);
+      }, 400);
     };
 
     runSequence();
 
-    // Fallback safety cleanup in case tab is backgrounded
+    // Safety fallback
     const fallbackTimer = setTimeout(() => {
       document.body.style.overflow = "";
       setIsVisible(false);
       window.dispatchEvent(new CustomEvent("portfolio-intro-complete"));
-    }, 3200);
+    }, 3500);
 
     return () => {
       isCancelled = true;
       if (wipeAnim) wipeAnim.cancel();
       if (exitAnim) exitAnim.cancel();
-      if (textAnim) textAnim.cancel();
       if (holdTimer) clearTimeout(holdTimer);
       clearTimeout(fallbackTimer);
       document.body.style.overflow = "";
@@ -147,71 +144,38 @@ export default function LoadingIntro() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#070707] px-6 overflow-hidden select-none"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black px-6 overflow-hidden select-none transform-gpu will-change-transform"
       style={{
-        transform: "translate3d(0, 0, 0)",
-        willChange: "transform",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
-        contain: "paint",
-        isolation: "isolate",
       }}
       aria-hidden="true"
     >
-      {/* Text container with coordinated upward glide on curtain lift */}
-      <div
-        ref={textContainerRef}
-        className="relative inline-block select-none"
-        style={{
-          transform: "translate3d(0, 0, 0)",
-          willChange: "transform, opacity",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          contain: "layout paint",
-        }}
-      >
+      <div className="relative inline-block select-none overflow-hidden py-2 px-4">
+        {/* 
+          CRITICAL: Text starts completely invisible (opacity: 0, clipPath: 100%, visibility: hidden)
+          so the user opens into pure clean blackness before the text gracefully appears.
+        */}
         <h1
-          className="text-center"
+          ref={textRef}
+          className="text-center font-light tracking-tight text-foreground select-none"
           style={{
             fontFamily: "var(--font-martel), 'Martel Sans', sans-serif",
-            fontSize: "clamp(1.85rem, 6.5vw, 4.75rem)",
-            fontWeight: 300,
-            letterSpacing: "-0.015em",
-            lineHeight: 1.2,
-            color: "var(--foreground)",
+            fontSize: "clamp(2rem, 6.5vw, 4.5rem)",
+            lineHeight: 1.15,
             whiteSpace: "nowrap",
-            transform: "translateZ(0)",
+            opacity: 0,
+            clipPath: "inset(0 100% 0 0)",
+            visibility: "hidden",
+            transform: "translate3d(0, 16px, 0)",
+            willChange: "transform, clip-path, opacity",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
         >
           Aniket&apos;s Portfolio
         </h1>
-
-        {/* 
-          GPU-composited feathered cover:
-          - Starts covering the text completely with solid #070707
-          - 48px soft feathered leading gradient prevents jagged subpixel text strobing
-        */}
-        <div
-          ref={coverRef}
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: "-8px",
-            bottom: "-8px",
-            left: "-48px",
-            right: "-24px",
-            background:
-              "linear-gradient(to right, rgba(7, 7, 7, 0) 0%, #070707 48px, #070707 100%)",
-            willChange: "transform",
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            pointerEvents: "none",
-            transform: "translate3d(0, 0, 0)",
-          }}
-        />
       </div>
     </div>
   );
 }
-
-

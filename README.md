@@ -1,6 +1,6 @@
 <div align="center">
 
-# Aniket's corner 🐈
+# Aniket's Corner 🐈
 
 building things, mostly supervised by a cat.
 

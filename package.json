@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean": "node -e \"const fs = require('fs'); ['.next', 'node_modules/.cache'].forEach(p => { if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true }); }); console.log('✓ Cleaned build caches.');\""
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

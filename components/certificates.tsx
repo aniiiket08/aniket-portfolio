@@ -14,14 +14,7 @@ const certificateCatalog = [
   ["Microsoft Introduction to the Basics of Azure Services.pdf", "Introduction to the Basics of Azure Services", "Microsoft"],
   ["NPTEL Introduction to Machine Learning.pdf", "Introduction to Machine Learning", "NPTEL"],
   ["HackerRank Software_Engineer_Intern.pdf", "Software Engineer Intern", "HackerRank"],
-  ["HackerRank  SQL_Basic.pdf", "SQL Basic", "HackerRank"],
-  ["HackerRank Python_Basic.pdf", "Python Basic", "HackerRank"],
-  ["Forage TATA GenAI Powered Data Analytics.pdf", "GenAI Powered Data Analytics", "TATA"],
   ["Infosys DEVOPS.pdf", "DevOps Mindset", "Infosys"],
-  ["Infosys JENKIN.pdf", "Jenkins for DevOps", "Infosys"],
-  ["Forage Deloitte Australia Data Analytics.pdf", "Deloitte Australia Data Analytics", "Forage"],
-  ["PrepInsta CN.pdf", "Computer Networks", "PrepInsta"],
-  ["PrepInsta HTML.pdf", "HTML", "PrepInsta"],
 ] as const;
 
 function createCertificate(fileName: string, title: string, issuer: string): CertificateItem {
