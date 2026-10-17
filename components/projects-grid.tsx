@@ -44,13 +44,13 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
     },
     {
       number: "03",
-      category: "COMPUTATIONAL BIOLOGY & DIGITAL TWINS",
-      title: "NeuroSleep Digital Twin Platform",
-      image: "/projects/neurosleep-digital-twin.png",
+      category: "AGENTIC AI & LLM SYSTEMS",
+      title: "Meeting Organizer Agent",
+      image: "/projects/agentic-meeting-organizer.png",
       description:
-        "A multi-scale Digital Twin combining VCell metabolic simulation, spiking neuronal modeling, Cytoscape.js brain mapping and ML-based brain-state classification to study simulated sleep deprivation.",
-      tags: ["Python", "React", "VCell", "Cytoscape.js"],
-      githubUrl: "https://github.com/aniiiket08/neurosleep-digital-twin",
+        "Multi-agent system that schedules, transcribes, and follows up on meetings using LangGraph, FastAPI, MCP tools and RAG, with human approval gates.",
+      tags: ["Python", "LangGraph", "FastAPI", "MCP"],
+      githubUrl: "https://github.com/aniiiket08/meeting-organizer-agent",
       visualAlign: "right",
     },
 ];
@@ -59,6 +59,17 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
 const ADDITIONAL_PROJECTS: FeaturedProject[] = [
     {
       number: "04",
+      category: "COMPUTATIONAL BIOLOGY & DIGITAL TWINS",
+      title: "NeuroSleep Digital Twin Platform",
+      image: "/projects/neurosleep-digital-twin.png",
+      description:
+        "A multi-scale Digital Twin combining VCell metabolic simulation, spiking neuronal modeling, Cytoscape.js brain mapping and ML-based brain-state classification to study simulated sleep deprivation.",
+      tags: ["Python", "React", "VCell", "Cytoscape.js"],
+      githubUrl: "https://github.com/aniiiket08/neurosleep-digital-twin",
+      visualAlign: "left",
+    },
+    {
+      number: "05",
       category: "EMBEDDED IOT & BIOMETRICS",
       title: "Smart Wearable Attendance System",
       image: "/projects/smart-wearable-attendance-esp32.png",
@@ -66,10 +77,10 @@ const ADDITIONAL_PROJECTS: FeaturedProject[] = [
         "ESP32-based wearable for automated attendance using ECG-based authentication and GPS geofencing, with real-time sync to Firebase.",
       tags: ["ESP32", "IoT", "Firebase", "ECG Biometrics"],
       githubUrl: "https://github.com/aniiiket08/smart-wearable-attendance-esp32",
-      visualAlign: "left",
+      visualAlign: "right",
     },
     {
-      number: "05",
+      number: "06",
       category: "MACHINE LEARNING & NEUROIMAGING",
       title: "ADHD Diagnostic Modeling & fMRI Analysis",
       image: "/projects/adhd-diagnostic-modeling-fmri.png",
@@ -77,7 +88,7 @@ const ADDITIONAL_PROJECTS: FeaturedProject[] = [
         "ML-based ADHD classification using neuroimaging and behavioral data with PCA, SMOTE, SVM, Random Forest and XGBoost, plus fMRI-based analysis of sex-related brain-connectivity patterns. Top 10 Global - WiDS Datathon 2025.",
       tags: ["Machine Learning", "Neuroimaging", "fMRI", "XGBoost"],
       githubUrl: "https://github.com/aniiiket08/adhd-diagnostic-modeling-fmri.git",
-      visualAlign: "right",
+      visualAlign: "left",
     },
 ];
 
@@ -99,7 +110,7 @@ export default function ProjectsGrid() {
             Projects
           </h2>
           <p className="space-grotesk-1 text-sm sm:text-base text-muted font-body font-light mt-3.5 leading-relaxed">
-            Selected research, machine learning, signal processing and computational work.
+            Selected work in machine learning, signal processing, agentic AI and computational biology.
           </p>
         </div>
 
