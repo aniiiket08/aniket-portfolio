@@ -85,7 +85,7 @@ export default function Hero() {
             {/* 3. Small uppercase descriptor with generous letter spacing */}
             <div className="flex items-center gap-3 text-[11px] font-eyebrow uppercase tracking-[0.22em] text-accent-soft mt-4">
               <span className="h-px w-8 bg-accent-soft" />
-              <span className="space-grotesk-2">MACHINE LEARNING / EMBEDDED SYSTEMS / SOFTWARE ENGINEERING</span>
+              <span className="space-grotesk-2">APPLIED AI / EMBEDDED SYSTEMS / SOFTWARE ENGINEERING</span>
             </div>
 
             {/* 4. Refined editorial summary */}
