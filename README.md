@@ -8,7 +8,7 @@ building things, mostly supervised by a cat.
 
 <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="400" alt="A tiny cat waving">
 
-the cat says hi. that's pretty much it.
+the cat says hi. that's pretty much it!
 
 </div>
 
