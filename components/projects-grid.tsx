@@ -50,7 +50,7 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
       description:
         "Multi-agent system that schedules, transcribes, and follows up on meetings using LangGraph, FastAPI, MCP tools and RAG, with human approval gates.",
       tags: ["Python", "LangGraph", "FastAPI", "MCP"],
-      githubUrl: "https://github.com/aniiiket08/meeting-organizer-agent",
+      githubUrl: "https://github.com/aniiiket08/agentic-meeting-organizer",
       visualAlign: "right",
     },
 ];
