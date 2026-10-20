@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import TechStack from "@/components/tech-stack";
 import ProjectsGrid from "@/components/projects-grid";
-import BeyondTheCode from "@/components/beyond-the-code";
+import WorkGrowthImpact from "@/components/work-growth-impact";
 import Certificates from "@/components/certificates";
 import Contact from "@/components/contact";
 import Footer from "@/components/footer";
@@ -24,8 +24,8 @@ export default function Home() {
         {/* 3. Featured Projects Grid Section */}
         <ProjectsGrid />
 
-        {/* 4. Beyond The Code Section */}
-        <BeyondTheCode />
+        {/* 4. Work, Growth & Impact Section */}
+        <WorkGrowthImpact />
 
         {/* 5. Certificates & Credentials Section */}
         <Certificates />

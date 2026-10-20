@@ -33,6 +33,17 @@ const itemVariants = {
   }),
 };
 
+const EXPERIENCE = [
+  {
+    icon: <Briefcase className="w-4 h-4" />,
+    role: "Research Intern - IIIT Dharwad",
+    period: "Mar 2026 – Present",
+    description:
+      "Developed a non-contact rPPG pipeline using ROI-based RGB extraction, Butterworth bandpass filtering and Eulerian Video Magnification (EVM) to extract subtle blood-flow variations from palm recordings during chanting. Extending the pipeline into a multimodal EEG–rPPG framework to compare physiological responses between resting and chanting states.",
+    certificate: undefined,
+  },
+];
+
 const RESEARCH = [
   {
     icon: <FlaskConical className="w-4 h-4" />,
@@ -63,7 +74,7 @@ const RESEARCH = [
 const COCURRICULAR = [
   {
     icon: <Users className="w-4 h-4" />,
-    role: "Treasurer, ARC Stack Tech Club — Event Organizer & Coordinator — HR & Literary Club",
+    role: "Treasurer, ARC Stack Tech Club - Event Organizer & Coordinator - HR & Literary Club",
     period: "2023 – Present",
     description:
       "Managed financing and fund allocation of Rs. 4,00,000+ across department clusters as Treasurer; led technical event planning and community engagement initiatives. Organized HR and Esports college events reaching 300+ students; contributed to literary activities and student engagement initiatives.",
@@ -71,10 +82,10 @@ const COCURRICULAR = [
   },
   {
     icon: <Target className="w-4 h-4" />,
-    role: "NCC Sergeant & Contingent Leader — Belagavi Division",
+    role: "NCC Sergeant & Contingent Leader - Belagavi Division",
     period: "2018 – 2020",
     description:
-      "Represented Karnataka & Goa Directorate; attended All India Thal Sainik Camp (TSC), New Delhi — Top 10 All India Rank, 0.22 Cal Rifle Shooting (National Level). Participated in IDSSC; qualified for AIGVMSC national-level selection stages.",
+      "Represented Karnataka & Goa Directorate; attended All India Thal Sainik Camp (TSC), New Delhi - Top 10 All India Rank, 0.22 Cal Rifle Shooting (National Level). Participated in IDSSC; qualified for AIGVMSC national-level selection stages.",
     certificate: undefined,
   },
 ];
@@ -86,7 +97,7 @@ function TimelineGroup({
   indexOffset = 0,
   onCertClick,
 }: {
-  items: typeof RESEARCH | typeof COCURRICULAR;
+  items: typeof EXPERIENCE | typeof RESEARCH | typeof COCURRICULAR;
   indexOffset?: number;
   onCertClick: (cert: CertInfo) => void;
 }) {
@@ -153,7 +164,7 @@ function TimelineGroup({
   );
 }
 
-export default function BeyondTheCode() {
+export default function WorkGrowthImpact() {
   const [selectedCert, setSelectedCert] = useState<CertInfo | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -193,7 +204,7 @@ export default function BeyondTheCode() {
           <div className="flex items-center gap-3 mb-4">
             <span className="h-px w-8 bg-accent-soft" />
             <span className="space-grotesk-2 text-[11px] uppercase tracking-[0.22em] text-accent-soft">
-              Beyond The Code
+              Work, Growth &amp; Impact
             </span>
           </div>
           <h2 className="h-section text-[clamp(1.75rem,4vw,3rem)]">
@@ -206,11 +217,29 @@ export default function BeyondTheCode() {
 
         <div className="space-y-16 md:space-y-20">
 
-          {/* ── RESEARCH EXPERIENCE ── */}
+          {/* ── EXPERIENCE ── */}
           <div>
             {/* Sub-section label */}
             <div className="flex items-center gap-3 mb-8">
               <Briefcase className="w-3.5 h-3.5 text-accent/70" />
+              <span className="space-grotesk-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60">
+                Experience
+              </span>
+              <div className="flex-1 h-px bg-border/40" />
+            </div>
+
+            <TimelineGroup
+              items={EXPERIENCE}
+              indexOffset={0}
+              onCertClick={setSelectedCert}
+            />
+          </div>
+
+          {/* ── RESEARCH EXPERIENCE ── */}
+          <div>
+            {/* Sub-section label */}
+            <div className="flex items-center gap-3 mb-8">
+              <FlaskConical className="w-3.5 h-3.5 text-accent/70" />
               <span className="space-grotesk-2 font-eyebrow text-[10px] tracking-[0.22em] text-muted/60">
                 Research Experience
               </span>
@@ -219,7 +248,7 @@ export default function BeyondTheCode() {
 
             <TimelineGroup
               items={RESEARCH}
-              indexOffset={0}
+              indexOffset={EXPERIENCE.length}
               onCertClick={setSelectedCert}
             />
           </div>
@@ -236,7 +265,7 @@ export default function BeyondTheCode() {
 
             <TimelineGroup
               items={COCURRICULAR}
-              indexOffset={RESEARCH.length}
+              indexOffset={EXPERIENCE.length + RESEARCH.length}
               onCertClick={setSelectedCert}
             />
           </div>

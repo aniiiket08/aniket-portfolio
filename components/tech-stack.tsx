@@ -10,10 +10,7 @@ import {
   Terminal,
   Binary,
   Database,
-  TrendingUp,
   HeartPulse,
-  Navigation,
-  Gamepad2,
 } from "lucide-react";
 
 interface TechItem {
@@ -33,7 +30,7 @@ interface TechCategory {
 const CATEGORIES: TechCategory[] = [
   {
     title: "Languages",
-    description: "Systems programming, algorithmic modeling and database querying",
+    description: "Systems programming and database querying",
     items: [
       { name: "Python",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
       { name: "C++",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
@@ -46,10 +43,9 @@ const CATEGORIES: TechCategory[] = [
     description: "Embedded systems, RF & IoT",
     items: [
       { name: "ESP32",           lucideIcon: Cpu,        accentColor: "#A5B5C2" },
+      { name: "ESP-IDF",         lucideIcon: Terminal,   accentColor: "#A5B5C2" },
       { name: "AD8232 (ECG)",    lucideIcon: HeartPulse, accentColor: "#A5B5C2" },
-      { name: "Arduino IDE",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" },
       { name: "USRP B210 (SDR)", lucideIcon: Radio,      accentColor: "#A5B5C2" },
-      { name: "GPS Modules",     lucideIcon: Navigation, accentColor: "#A5B5C2" },
       { name: "Raspberry Pi",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" },
     ],
   },
@@ -57,15 +53,15 @@ const CATEGORIES: TechCategory[] = [
     title: "AI / ML & Computational Tools",
     description: "Neural networks, computer vision & computational biology",
     items: [
+      { name: "PyTorch",            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" },
       { name: "TensorFlow / Keras", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
       { name: "Scikit-learn",       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" },
       { name: "XGBoost",            lucideIcon: Binary,     accentColor: "#A5B5C2" },
+      { name: "LangGraph",          lucideIcon: Network,    accentColor: "#A5B5C2" },
+      { name: "RAG",                lucideIcon: Database,   accentColor: "#A5B5C2" },
       { name: "NumPy",              icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" },
       { name: "Pandas",             icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" },
-      { name: "Matplotlib",         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" },
-      { name: "Seaborn",            lucideIcon: TrendingUp, accentColor: "#A5B5C2" },
       { name: "OpenCV",             icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" },
-      { name: "SFML",               lucideIcon: Gamepad2,   accentColor: "#A5B5C2" },
       { name: "VCell Simulation",   lucideIcon: Activity,   accentColor: "#A5B5C2" },
       { name: "Cytoscape.js",       lucideIcon: Network,    accentColor: "#A5B5C2" },
     ],
@@ -74,18 +70,18 @@ const CATEGORIES: TechCategory[] = [
     title: "Backend / Tools / DevOps",
     description: "Cloud, DevOps & application development",
     items: [
+      { name: "FastAPI",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" },
+      { name: "AWS",          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+      { name: "MCP",          lucideIcon: Terminal, accentColor: "#A5B5C2" },
+      { name: "ChromaDB",     lucideIcon: Database, accentColor: "#A5B5C2" },
       { name: "Firebase",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
       { name: "MongoDB",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
       { name: "MySQL",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
       { name: "Docker",       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
       { name: "Jenkins",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" },
       { name: "Git / GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
-      { name: "VS Code",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
       { name: "REST APIs",    lucideIcon: Terminal, accentColor: "#A5B5C2" },
       { name: "React",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "React Native", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "Spring Boot",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
-      { name: "LaTeX (IEEE)", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/latex/latex-original.svg" },
     ],
   },
 ];

@@ -105,7 +105,7 @@ export default function Contact() {
                   <ArrowUpRight className="w-4 h-4 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
                 </button>
                 <a
-                  href="/resume/Resume_Aniket.pdf"
+                  href="/resume/Aniket_Patil_Resume.pdf"
                   download
                   className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent-soft hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200"
                 >

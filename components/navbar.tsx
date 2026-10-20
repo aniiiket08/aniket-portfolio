@@ -117,7 +117,7 @@ export default function Navbar() {
             <Linkedin className="w-4 h-4" />
           </a>
           <a
-            href="/resume/Resume_Aniket.pdf"
+            href="/resume/Aniket_Patil_Resume.pdf"
             download
             className="group inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-lg border border-white/[0.2] bg-transparent text-foreground/85 hover:border-white/[0.35] hover:text-foreground transition-all duration-200"
           >

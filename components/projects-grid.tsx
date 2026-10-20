@@ -22,6 +22,17 @@ export interface FeaturedProject {
 const FEATURED_PROJECTS: FeaturedProject[] = [
     {
       number: "01",
+      category: "AGENTIC AI & LLM SYSTEMS",
+      title: "Meeting Workflow Engine",
+      image: "/projects/meeting-workflow-engine.png",
+      description:
+        "Multi-agent system that schedules, transcribes, and follows up on meetings using LangGraph, FastAPI, MCP tools and RAG, with human approval gates.",
+      tags: ["Python", "LangGraph", "FastAPI", "MCP"],
+      githubUrl: "https://github.com/aniiiket08/meeting-workflow-engine",
+      visualAlign: "right",
+    },
+    {
+      number: "02",
       category: "RF SIGNAL PROCESSING & SDR",
       title: "3D Wi-Fi Based Floor Localization System",
       image: "/projects/indoor-floor-prediction-wifi-sdr.png",
@@ -29,10 +40,10 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
         "Indoor floor localization system using Wi-Fi RSSI fingerprinting with a USRP B210 SDR and a 1D CNN, achieving 93.34% validation accuracy. Published at IEEE ICONAT 2026.",
       tags: ["Python", "SDR", "Deep Learning", "CNN"],
       githubUrl: "https://github.com/aniiiket08/indoor-floor-prediction-wifi-sdr",
-      visualAlign: "right",
+      visualAlign: "left",
     },
     {
-      number: "02",
+      number: "03",
       category: "EDGE AI & MEDICAL HISTOPATHOLOGY",
       title: "Automated Prostate Cancer Detection",
       image: "/projects/automated-prostate-cancer-detection.png",
@@ -40,17 +51,6 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
         "Edge-optimized prostate cancer detection pipeline from histopathology images using MobileNetV3 and XGBoost, achieving 84.37% accuracy and 0.9243 ROC-AUC on the SICAPv2 dataset. Presented at SGCNSP 2025, Singapore.",
       tags: ["MobileNetV3", "XGBoost", "Medical Imaging", "Edge AI"],
       githubUrl: "https://github.com/aniiiket08/automated-prostate-cancer-detection",
-      visualAlign: "left",
-    },
-    {
-      number: "03",
-      category: "AGENTIC AI & LLM SYSTEMS",
-      title: "Meeting Organizer Agent",
-      image: "/projects/agentic-meeting-organizer.png",
-      description:
-        "Multi-agent system that schedules, transcribes, and follows up on meetings using LangGraph, FastAPI, MCP tools and RAG, with human approval gates.",
-      tags: ["Python", "LangGraph", "FastAPI", "MCP"],
-      githubUrl: "https://github.com/aniiiket08/agentic-meeting-organizer",
       visualAlign: "right",
     },
 ];
@@ -110,7 +110,7 @@ export default function ProjectsGrid() {
             Projects
           </h2>
           <p className="space-grotesk-1 text-sm sm:text-base text-muted font-body font-light mt-3.5 leading-relaxed">
-            Selected work in machine learning, signal processing, agentic AI and computational biology.
+            Projects spanning AI, multi-agent systems, embedded hardware and applied research.
           </p>
         </div>
 
