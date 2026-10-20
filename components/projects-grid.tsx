@@ -129,9 +129,7 @@ export default function ProjectsGrid() {
                 className="group relative"
               >
                 <div
-                  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${
-                    isVisualRight ? "" : "lg:flex-row-reverse"
-                  }`}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
                 >
                   {/* Text Column (approx 45% on desktop) */}
                   <div
@@ -213,9 +211,10 @@ export default function ProjectsGrid() {
                       <div className="relative aspect-[16/10] w-full overflow-hidden">
                         <Image
                           src={project.image}
-                          alt={project.title}
+                          alt={`Screenshot of ${project.title}`}
                           fill
-                          loading="lazy"
+                          loading={project.number === "01" ? "eager" : "lazy"}
+                          priority={project.number === "01"}
                           sizes="(max-width: 1024px) 100vw, 55vw"
                           className="object-cover object-center transition-transform duration-500 ease-out group-hover/img:scale-[1.03]"
                         />
@@ -252,9 +251,7 @@ export default function ProjectsGrid() {
                       className="group relative"
                     >
                       <div
-                        className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${
-                          isVisualRight ? "" : "lg:flex-row-reverse"
-                        }`}
+                        className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
                       >
                         {/* Text Column */}
                         <div
