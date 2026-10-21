@@ -36,10 +36,18 @@ const itemVariants = {
 const EXPERIENCE = [
   {
     icon: <Briefcase className="w-4 h-4" />,
-    role: "Research Intern - IIIT Dharwad",
+    role: "Machine Learning Researcher - Carnegie Mellon University",
+    period: "Oct 2026 – Present",
+    description:
+      "Part of the CMU ML Research Collective, working on LLM reasoning, multi-agent systems and efficient ML through literature reviews, experimentation and model evaluation, with a focus on contributing to research for leading ML conferences.",
+    certificate: undefined,
+  },
+  {
+    icon: <Briefcase className="w-4 h-4" />,
+    role: "AI/ML Intern - IIIT Dharwad",
     period: "Mar 2026 – Present",
     description:
-      "Developed a non-contact rPPG pipeline using ROI-based RGB extraction, Butterworth bandpass filtering and Eulerian Video Magnification (EVM) to extract subtle blood-flow variations from palm recordings during chanting. Extending the pipeline into a multimodal EEG–rPPG framework to compare physiological responses between resting and chanting states.",
+      "Developed a non-contact rPPG pipeline with ROI-based RGB extraction, Butterworth band-pass filtering and Eulerian Video Magnification (EVM) to enhance subtle visual variations in palm recordings during chanting. Extending the pipeline to a multimodal EEG and rPPG framework to compare resting and chanting states.",
     certificate: undefined,
   },
 ];
